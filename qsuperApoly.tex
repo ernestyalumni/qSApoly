@@ -62,6 +62,9 @@
 \newtheorem{definition}{Definition}
 \newtheorem{remark}{Remark}
 
+\newenvironment{claim}[1]{\par\noindent\underline{Claim:}\space#1}{}
+\newenvironment{claimproof}[1]{\par\noindent\underline{Proof:}\space#1}{\hfill $\blacksquare$}
+
 %This defines a new command \questionhead which takes one argument and
 %prints out Question #. with some space.
 \newcommand{\questionhead}[1]
@@ -1529,9 +1532,642 @@ dual $\pi^*$ of $\pi$ is a representation.
 
 
 
+\section{Principal bundles}
+
+Let's follow Taubes (2011) from Chapter 10 ``Principal bundles'', on \cite{CTaubes2011}.
+
+
+\begin{definition}
+  Let smooth manifold $M$, Lie group $G$. \\
+  \emph{principal} $G$-bundle $\equiv $ smooth manifold $P$ s.t. 
+\begin{itemize}
+  \item smooth action of $G$ by diffeomorphisms $\equiv$ map $m: G \times P \to P$ s.t. 
+    \begin{itemize}
+      \item $m(1,p) =p$
+      \item $m(h,m(g,p)) = m(hg,p)$
+    \end{itemize}
+    Notation: $(g,p) \mapsto pg^{-1}$
+
+EY : 20151007 note that 
+\[
+(g,p) \mapsto pg^{-1} \xrightarrow{m(h)} pg^{-1}h^{-1} = p(hg)^{-1} = m(hg,p)
+\]
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+G\times P & G \\
+P & \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$$} (m-1-2)
+          edge node [left] {$m$} (m-2-1)
+  ;
+\end{tikzpicture} \quad \quad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+(g,p) & g \\
+m(p,g) = pg^{-1} & \\
+};
+  \path[|->]
+  (m-1-1) edge node [auto] {$$} (m-1-2)
+          edge node [left] {$m$} (m-2-1)
+  ;
+\end{tikzpicture}
+  \item projection from $P$ to $M$, $\pi \equiv $ surjective $\pi : P \to M$ that's $G$-invariant, i.e. $\pi(pg^{-1}) =p$
+  \item $\forall \, p \in M$, $\exists \, $ open $U \ni p$, with $G$-equivariant diffeomorphism $\varphi : \left. P \right|_{U} \to U\times G$ s.t. \\
+if $\varphi(p)  = (\pi(p), h(p))$, $h(p) \in G$, then $\varphi(pg^{-1}) = (\pi(p), h(p)g^{-1})$
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\left. P \right|_{\pi^{-1}(U)} & U\times G \\
+U\subset M  & \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\varphi$} (m-1-2)
+          edge node [left] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$$} (m-2-1)
+  ;
+\end{tikzpicture} \quad \quad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+p & \varphi(p) = (\pi(p),h(p)) \\
+\pi(p) & \\
+};
+  \path[|->]
+  (m-1-1) edge node [auto] {$\varphi$} (m-1-2)
+          edge node [left] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$$} (m-2-1)
+  ;
+\end{tikzpicture} \quad \quad \, 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+m(p,g) = pg^{-1} & \varphi(pg^{-1}) = (\pi(pg^{-1}), h(pg^{-1})) = (\pi(p),h(p)g^{-1}) \\
+\pi(pg^{-1}) = \pi(p) & \\
+};
+  \path[|->]
+  (m-1-1) edge node [auto] {$\varphi$} (m-1-2)
+          edge node [left] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$$} (m-2-1)
+  ;
+\end{tikzpicture}
+\end{itemize}
+\end{definition} cf. Section 10.1 ``The definition'' of Taubes (2011) \cite{CTaubes2011}
+
+\subsubsection{Cocycle definition (Sec. 10.2 ``A cocycle definition'') \cite{CTaubes2011} }
+
+Let locally finite, open cover $\mathcal{U} = \lbrace U_{\alpha} \rbrace$ of $M$ (recall \emph{locally finite}: $\forall \, p \in M$, $\exists \, $ open $\mathcal{O} \ni p$ s.t. $\mathcal{O} \bigcap U_{\alpha}$ for only finite many $\alpha$'s).  
+
+\begin{definition}
+  \emph{principal bundle transition functions} $\equiv \lbrace g_{\alpha \beta} : U_{\alpha} \bigcap U_{\beta} \to G \rbrace_{U_{\alpha},U_{\beta} \in \mathcal{U}}$ i.e. collection of smooth maps from intersections of $U_{\alpha},U_{\beta} \in \mathcal{U}$ s.t. \emph{cocycle constraints} hold:
+\begin{itemize}
+  \item $g_{\alpha \alpha} =1$ 
+  \item $g^{-1}_{\alpha \beta} = g_{\beta \alpha }$
+    \item if $U_{\alpha}, U_{\beta}, U_{\gamma} \in \mathcal{U}$, $U_{\alpha} \bigcap U_{\beta} \bigcap U_{\gamma} \neq \emptyset$, $g_{\alpha \beta} g_{\beta \gamma} g_{\gamma \alpha } =1$
+\end{itemize}
+\end{definition}
+
+\begin{claim}
+  principle $G$-bundle $P = \coprod_{U \in \mathcal{U}} U_{\alpha} \times G / \sim$
+
+with equivalence relation $\sim$ s.t. $\forall \, \begin{aligned} & \quad \\
+  & (x,g) \in U_{\alpha} \times G \\
+  & (x',g') \in U_{\beta} \times G \end{aligned}$, $(x,g) \sim (x',g')$ iff $x=x'$ and $g=g_{\alpha \beta} g'$
+\end{claim}
+
+\begin{proof}
+  Let $[(x,g)] \in \coprod_{U_{\alpha} \in \mathcal{U}} U_{\alpha} \times G / \sim$
+
+  Now for $m : G \times P \to P$, $m(h) : P \to P$ for $h\in G$, 
+  \[
+\begin{gathered}
+  \begin{aligned}
+    & [(x,g)] =(x,g) \xrightarrow{ m(h)}(x,gh^{-1}) \\ 
+    & [(x,g)] = (x,g') \xrightarrow{ m(h)} (x,g'h^{-1}) = (x,g^{-1}_{\alpha \beta} gh^{-1}) = (x,g_{\beta \alpha} gh^{-1})
+  \end{aligned}
+\end{gathered}
+\]
+Now $(x,gh^{-1}) \sim (x,g_{\beta \alpha} gh^{-1})$.  So we have a well-defined smooth action of $G$ by diffeomorphisms $m: G\times P \to P$, but now on the equivalence classes of $\coprod_{U_{\alpha} \in \mathcal{U}} U_{\alpha}\times G/\sim$, i.e.
+\[
+[(x,g)] \xrightarrow{ m(h)} [(x,gh^{-1})]
+\]  
+
+Second, 
+\[
+[(x,g)] \xrightarrow{ \pi} x\in M
+\]
+unequivocally.  So we have a surjective projection from $P$ to $M$, $\pi$, but now a surjective projection from $\coprod_{U_{\alpha} \in \mathcal{U}} U_{\alpha}\times G/\sim$ to $M$.
+
+% EY : 20151007 Third part, I'm not clear about and need some help.  
+
+%Third, recall $G$-equivalent diffeomorphism $\varphi : \left. P \right|_{U} \to U \times G$ for some open $U \ni x \in M$.  Fix this $U$ to be $U$.  
+%\[
+%\begin{aligned}
+%  & [U\times G] \xrightarrow{ \varphi } U\times G \\ 
+%  & [(x,g)] \xrightarrow{ \varphi } \varphi([(x,g)]) = (\pi((x,g)), h((x,g)) ) = (x,h((x,g)) ) = (x,h(x)g^{-1})
+%\end{aligned}
+%\]
+%I'll try to check the well-definedness:
+%\[
+%\begin{gathered}
+%  \varphi([x,g]) = \varphi((x,g')) = \varphi((x,g_{\beta\alpha}g) ) = (x,h(x)(g_{\beta \alpha} g)^{-1}) = (x,h(x) g^{-1}g_{\beta\alpha}^{-1}) = (x,h(x)g^{-1}g_{\alpha\beta})
+%\end{gathered}
+%\]
+
+Third, define a $G$-equivariant diffeomorphism as such: Let $[(x,g)] \in \coprod_{U_{\alpha} \in \mathcal{U}} U_{\alpha}\times G/\sim$.  In fact, let $[(x,g)] \in U_{\alpha}\times G/\sim$.  So $\forall \, x \in M$, $\exists \, U_{\alpha} \ni x$, $U_{\alpha} \in \mathcal{U}$, and we \emph{define} $G$-equivariant diffeomorphism $\varphi : \left. \coprod_{U_{\alpha} \in \mathcal{U}} U_{\alpha}\times G/\sim \right|_{U_{\alpha}\times G} \to U_{\alpha}\times G$ s.t.
+\begin{equation}
+  \begin{aligned}
+&    \varphi : \left. \coprod_{U_{\alpha} \in \mathcal{U}} U_{\alpha}\times G/\sim \right|_{U_{\alpha}\times G} \to U_{\alpha}\times G \\
+& \varphi : [(x,g)] \mapsto (x,g)
+  \end{aligned}
+\end{equation}
+Indeed, this $\varphi$ does what we want, for 
+\[
+m(h)[(x,g)] = (x,gh^{-1}) \xrightarrow{\varphi} (x,gh^{-1})
+\]
+
+\subsubsection{Frame bundles}
+
+cf. Sec. 10.3 ``Principal bundles constructed from vector bundles'', Subsection 10.3.1 ``Frame bundles'' of Taubes (2011) \cite{CTaubes2011}
+
+\begin{definition}
+Let rank $n$ vector bundle $\pi : E \to M$.  
+
+Let submanifold $\begin{aligned} & \quad \\
+  & P_{\text{GL}(E)} \to M \subseteq \oplus^n E \text{ s.t. } \\
+  & (e_1 \dots e_n) \in P_{\text{GL}(E)} \end{aligned}$
+
+\emph{frame bundle of $E$} $\equiv$ principal $GL(n;\mathbb{R})$-bundle over $M$ $\equiv $ manifold $P_{\text{GL}(E)}$. 
+
+\end{definition}
+This submanifold $P_{\text{GL}(E)}$ is indeed a principal $\text{GL}(n;\mathbb{R})$-bundle, as shown below.
+
+Let $g\in GL(n;\mathbb{R})$.  
+\[
+\begin{aligned}
+ m: \text{GL}(E) \times P_{\text{GL}(E)}  & \to \text{GL}(E) \\ 
+(g, (e_1 \dots e_n)) & \mapsto (e_k g_{k1}^{-1}, e_k g_{k2}^{-1} \dots e_k g_{kn}^{-1} ) \\ 
+e_j & \mapsto e_k g_{kj}^{-1} \\ 
+x = x^j e_j & \mapsto x^j e_k g_{kj}^{-1} = g_{kj}^{-1}x^j e_k
+\end{aligned}
+\]
+Consider open $U \subset M$ s.t. $\exists \, $ vector bundle isomorphism $\varphi_U : \left. E \right|_{\pi^{-1}(U)} \to U \times \mathbb{R}^n$
+\[
+\varphi_U : \left. ( \oplus^n E ) \right|_U \to U \times ( \oplus^n \mathbb{R}^n) \Longrightarrow \varphi_U : \left. P_{\text{GL}(E)} \right|_U \to U \times \text{GL}(n;\mathbb{R})
+\]
+
+\end{proof}
+
+\begin{definition}
+We can define a homomorphism of principal $G$-bundles from $(P_G,\pi)$ to $(Q_H,\theta)$ as a pair $(\eta , \rho )$\footnote{pp. 32 \url{http://www2.math.umd.edu/~jmr/Toronto/BaumNotes.pdf} }
+\[
+(P_G , \pi) \xrightarrow{ (\eta, \rho)} (Q_H, \theta)
+\]
+s.t.
+\begin{enumerate}
+\item $\rho $ homomorphism $\rho:G \to H$ 
+\item $P \xrightarrow{ \eta} Q$ cont. map s.t.
+\[
+\begin{aligned} 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P & Q \\
+M & M \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$\theta$} (m-2-2)
+  (m-2-1) edge node [auto] {$1$} (m-2-2)
+  ;
+\end{tikzpicture} & \quad \quad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P\times G & Q\times H \\
+P & Q \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta \times \rho $} (m-1-2)
+          edge node [auto] {$$} (m-2-1)
+  (m-1-2) edge node [auto] {$$} (m-2-2)
+  (m-2-1) edge node [auto] {$\eta$} (m-2-2)
+  ;
+\end{tikzpicture} \\
+\pi(p) = \theta(\eta p) \quad \quad \, & \quad \quad \, \eta(pg) = (\eta p)(\rho g)
+\end{aligned}
+\]
+\end{enumerate}
+
+\end{definition}
+
+\begin{definition}
+Lee  defines the \textbf{principal $G$-bundle morphism} on pp. 298 of Lee (2009)\cite{JLee2009} as a pair $(\widetilde{f}, f)$ 
+\[
+(P_G, \pi, M_1) \xrightarrow{ (\widetilde{f},f) } (Q_G, \theta, M_2)
+\]
+
+s.t.
+\begin{enumerate}
+\item smooth $f : M_1 \to M_2$
+\item $P \xrightarrow{ \widetilde{f}} Q$ morphism s.t.
+\[
+\begin{aligned} 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P & Q \\
+M_1 & M_2 \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\widetilde{f}$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$\theta$} (m-2-2)
+  (m-2-1) edge node [auto] {$f$} (m-2-2)
+  ;
+\end{tikzpicture} & \quad \quad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P\times G & Q\times G \\
+P & Q \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$ \widetilde{f}\times 1 $} (m-1-2)
+          edge node [auto] {$$} (m-2-1)
+  (m-1-2) edge node [auto] {$$} (m-2-2)
+  (m-2-1) edge node [auto] {$\widetilde{f}$} (m-2-2)
+  ;
+\end{tikzpicture} \\
+f(\pi(p)) = \theta(\widetilde{f}(p)) \quad \quad \, & \quad \quad \, \widetilde{f}(pg) = \widetilde{f}(p)g
+\end{aligned}
+\]
+\end{enumerate}
+\end{definition}
+
+Now \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P & Q \\
+M &  \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$ \widetilde{f} $} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$\theta$} (m-2-1)
+  ;
+\end{tikzpicture}
+so that $\pi(p) = \theta(\widetilde{f}(p))$, is a \emph{bundle isomorphism} (EY : 20151008 how is $\widetilde{f} :P \to Q$ an isomorphism? And how is it a diffeomorphism when restricted to fibers?)
+ 
+From Taubes (2011) Sec. 10.9 ``Associated vector bundles'' \cite{CTaubes2011}, 
+
+Suppose Lie group $G$, principal $G$-bundle $\pi: P\to M$.  \\
+Let representation $\rho$, $\rho: G \to GL(V)$ \\
+$\exists \, $ corresponding vector bundle denoted $P\times_{\rho} V := P\times V/\sim$ where $(p,v) \sim (p g^{-1}, \rho(g)v) $ \quad \, $\forall \, g \in G$.  
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P\times_{\rho} V   \\
+M \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}  \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\ni (p,v)  \\
+\ni \pi(p) \\
+};
+  \path[|->]
+  (m-1-1) edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}
+
+Define \emph{zero section} $0$, to be 
+\[
+\begin{aligned}
+  & 0 \in \Gamma(P\times_{\rho} V) \\
+  & 0 = [(p,0)] \quad \, (p,0) \in P\times V
+\end{aligned}
+\]
+
+Define the usual scalar multiplication by $z\in \mathbb{R} \text{ or } \mathbb{C}$, $ ( \mathbb{R} \text{ or } \mathbb{C} )\times P\times_{\rho}V \to P\times_{\rho}V$ by $(p,v) \mapsto (p,zv)$.  
+
+
+Recall from the definition of a principal $G$-bundle the existence of a $G$-equivariant diffeomorphism $\varphi$: 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\left. P \right|_{\pi^{-1}(U)} & U\times G  \\
+U \subset M & \\ 
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\varphi$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}
+i.e. $\varphi$ is $G$-equivariant diffeomorphism $\varphi : \left. P \right|_{\pi^{-1}(U)} \to U\times G$\, $\forall \, p \in M$ (that $\exists \, $ open $U \ni p$) s.t. 
+
+if $\varphi(p) = (\pi(p),h(p))$, \, $h(p) \in G$, then $\varphi(pg^{-1}) = (\pi(p), h(p)g^{-1} )$, i.e.
+\[
+\text{ if } \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+p & (\pi(p), h(p))   \\
+\pi(p) &  \\
+};
+  \path[|->]
+  (m-1-1) edge node [auto] {$$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture} \text{ then } 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+pg^{-1} & (\pi(p), h(p)g^{-1})   \\
+\pi(p) &  \\
+};
+  \path[|->]
+  (m-1-1) edge node [auto] {$$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}
+\]
+i.e. (EY : 20151015 I was wondering how best to diagram this smooth right action of $G$ by diffeomorphisms, $pg^{-1}$)
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=4.8em, minimum width=2.2em]
+  {
+    G & \\
+    \left. P \right|_{\pi^{-1}(U)} \times G & \\
+ \left. P \right|_{\pi^{-1}(U)} & U\times G   \\
+  p \in U\subset M &  \\
+};
+  \path[->]
+  (m-2-1) edge node [auto] {$$} (m-1-1)
+          edge node [auto] {$m$} (m-3-1)
+  (m-3-1) edge node [auto] {$\varphi$} (m-3-2)
+          edge node [auto] {$\pi$} (m-4-1)
+  ;
+\end{tikzpicture} \quad \quad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=4.8em, minimum width=2.2em]
+  {
+    g & \\
+    (p,g) & \\
+ pg^{-1} \equiv m(p,g) & (\pi(p), h(p)g^{-1}) \\ 
+\pi(p)  \\
+};
+  \path[|->]
+  (m-2-1) edge node [auto] {$$} (m-1-1)
+          edge node [auto] {$m$} (m-3-1)
+  (m-3-1) edge node [auto] {$\varphi$} (m-3-2)
+          edge node [auto] {$\pi$} (m-4-1)
+  ;
+\end{tikzpicture}
+
+or 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\left. P \right|_{\pi^{-1}(U)} & U \times G   \\
+p \in U \subset M  &  \\
+};
+  \path[->]
+  (m-1-1) edge [loop above] node [auto] {$m(g)$} (m-1-1)
+          edge node [auto] {$\varphi$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}
+\quad \quad \, 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+pg^{-1} & (\pi(p), h(p)g^{-1})   \\
+\pi(p) &  \\
+};
+  \path[|->]
+  (m-1-1) edge [loop above] node [auto] {$m(g)$} (m-1-1)
+          edge node [auto] {$\varphi$} (m-1-2)
+          edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}
+
+
+
+Recall $\begin{aligned} & \quad \\
+  & (\varphi^V)^{-1} : U \times V \to P\times_{\rho} V \\
+  & (\varphi^V)^{-1}(x,v) = [ (\varphi^{-1}(x,1),v) ]
+\end{aligned}$
+
+Then 
+\[
+\begin{gathered}
+  \varphi^V \circ (\varphi^V)^{-1}(x,v) = \varphi^V( [(\varphi^{-1}(x,1),v)]) = \varphi^V( (\varphi^{-1}(x,1),v) ) = (x,\rho(1)v) = (x,1v) = (x,v) 
+\end{gathered}
+\]
+Checking well-definedness (of the $\varphi^V$ operation), so given that 
+\[
+(\varphi^{-1}(x,1), v) \sim (\varphi^{-1}(x,1) g^{-1}, \rho(g)v) \quad \, \forall \, g\in G
+\]
+and so 
+\[
+\begin{gathered}
+  \varphi^V(\varphi^{-1}(x,1)g^{-1},\rho(g)v) = (\pi(\varphi^{-1}(x,1)g^{-1}), \rho(\psi(\varphi^{-1}(x,1)g^{-1}) )\rho(g)v) = (x,\rho(\psi(\varphi^{-1}(x,1)))\rho(g^{-1})\rho(g)v)= (x,v)
+\end{gathered}
+\]
+Thus, $\varphi^V\circ (\varphi^V)^{-1} = 1_{U\times V}$.  
+
+Let (or recall) principal bundle isomorphisms $\begin{aligned} & \quad \\
+  & \varphi_{\alpha} : \left. P \right|_{\pi^{-1}(U_{\alpha})} \to U_{\alpha} \times G \\
+  & \varphi_{\beta} : \left. P \right|_{\pi^{-1}(U_{\beta})} \to U_{\beta} \times G \\
+\end{aligned}$.  Then $\begin{aligned} & \quad \\
+  & \varphi_{\beta} \varphi_{\alpha}^{-1} : U_{\alpha} \bigcap U_{\beta} \times G \to U_{\alpha} \bigcap U_{\beta} \times G \\
+  & \varphi_{\beta} \varphi_{\alpha}^{-1} : (x,g) \mapsto (x,g_{\beta \alpha} g) \end{aligned}$ (i.e. principle $G$-bundles have principal bundle transition functions $g_{\beta\alpha}$'s).  
+
+Then for $\begin{aligned} & \quad \\
+  & \varphi^V :P\times_{\rho}V \to U\times V \\
+  & \varphi^V: [(p,v)] = (p,v) \mapsto (\pi(p), \rho(\psi(p))v ) \end{aligned}$, 
+
+\[
+\begin{aligned}
+  & \left. \varphi_{\alpha}^V :( P \times_{\rho} V ) \right|_{\pi^{-1}(U_{\alpha})} \to U_{\alpha} \times V \\ 
+  & \left. \varphi_{\beta}^V :( P \times_{\rho} V ) \right|_{\pi^{-1}(U_{\beta})} \to U_{\beta} \times V 
+\end{aligned}
+ \Longrightarrow 
+\begin{aligned} 
+  & \varphi_{\beta}^V (\varphi_{\alpha}^V)^{-1} : U_{\alpha} \bigcap U_{\beta} \times V \to U_{\alpha} \bigcap U_{\beta} \times V \\ 
+  &  \varphi_{\beta}^V (\varphi_{\alpha}^V)^{-1}: (x,v) \mapsto (x,\rho(g_{\beta \alpha}) v)
+\end{aligned}
+\]
+So for our vector bundle $P\times_{\rho}V$, we have smooth, invertible ``transition'' maps $\varphi_{\beta}^V (\varphi_{\alpha}^V)^{-1}$ defined as immediately above.  
+
+Thus
+
+\begin{proposition}
+  Given principle $G$-bundle $\pi: P \to M$, Lie group $G$, representation $\rho$, $\rho:G \to GL(V)$, then $\exists \, $ (an associated) vector bundle $P\times_{\rho}V := P\times V/\sim$ where $(p,v) \sim (pg^{-1},\rho(g)v)$ \, $\forall \, g \in G$ s.t. for this vector bundle $P\times_{\rho}V$, we have local trivialization $\varphi^V$, $P\times_{\rho}V \xrightarrow{ \varphi^V} U\times V$, defined as such:
+
+For principal $G$-bundle $\pi : P \to M$, 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P \\ 
+M \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture}
+ \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\supset \left. P \right|_{\pi^{-1}(U)} & U\times G & G \\ 
+\supset U \ni x & & \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\varphi$} (m-1-2)
+          edge [bend left=30] node [auto] {$\psi$} (m-1-3)
+  (m-1-2) edge node [auto] {$$} (m-1-3)
+          edge node [auto] {$$} (m-2-1) 
+  (m-2-1) edge node [auto] {$\pi^{-1}$} (m-1-1)    
+  ;
+\end{tikzpicture} define 
+\[
+\begin{aligned}
+  & \varphi^V : P\times_{\rho} V \to U\times V \\ 
+  & [(p,v)] =(p,v) \mapsto (\pi(p),\rho(\psi(p))v)
+\end{aligned}
+\]
+and 
+\[
+\begin{aligned}
+  & (\varphi^V)^{-1} : U\times V \to P\times_{\rho}V \\ 
+  & (x,v) \mapsto [(\varphi^{-1}(x,1),v) ]
+\end{aligned}
+\]
+and define the transition functions for our (associated) vector bundle $P\times_{\rho}V$ as such: for principal bundle isomorphisms $\begin{aligned} & \quad \\
+  & \varphi_{\alpha} : \left. P \right|_{\pi^{-1}(U_{\alpha})} \to U_{\alpha} \times G \\
+  & \varphi_{\beta} : \left. P \right|_{\pi^{-1}(U_{\beta})} \to U_{\beta} \times G \\
+\end{aligned}$, then resulting principal bundle transition functions are such: $\begin{aligned} & \quad \\
+  & \varphi_{\beta} \varphi_{\alpha}^{-1} : U_{\alpha} \bigcap U_{\beta} \times G \to U_{\alpha} \bigcap U_{\beta} \times G \\
+  & \varphi_{\beta} \varphi_{\alpha}^{-1} : (x,g) \mapsto (x,g_{\beta \alpha} g) \end{aligned}$, and so we have transition functions for our (associated) vector bundle 
+
+\[
+\begin{aligned}
+  & \left. \varphi_{\alpha}^V :( P \times_{\rho} V ) \right|_{\pi^{-1}(U_{\alpha})} \to U_{\alpha} \times V \\ 
+  & \left. \varphi_{\beta}^V :( P \times_{\rho} V ) \right|_{\pi^{-1}(U_{\beta})} \to U_{\beta} \times V 
+\end{aligned}
+ \Longrightarrow 
+\begin{aligned} 
+  & \varphi_{\beta}^V (\varphi_{\alpha}^V)^{-1} : U_{\alpha} \bigcap U_{\beta} \times V \to U_{\alpha} \bigcap U_{\beta} \times V \\ 
+  &  \varphi_{\beta}^V (\varphi_{\alpha}^V)^{-1}: (x,v) \mapsto (x,\rho(g_{\beta \alpha}) v)
+\end{aligned}
+\]
+
+\end{proposition}
+
+
+\begin{claim}
+  If smooth map $\sigma^P:P \to V$ s.t. $\sigma^P(pg^{-1}) = \rho(g)\sigma^P(p)$, $\exists \, $ section $\sigma \in \Gamma(P\times_{\rho}V)$, defined as 
+\[
+\sigma(x) = [(p,\sigma^P(p))] \text{ s.t. } \pi(p) = x \, x \in M
+\]
+  If given section $\sigma \in \Gamma(P\times_{\rho}V)$, $\exists \, $ smooth map $\sigma^P:P\to V$ s.t. $\sigma^P(pg^{-1}) = \rho(g)\sigma^P(p)$
+\end{claim}
+cf. Taubes (2001), Subsec. 11.4.1 Part 1
+
+\begin{proof}
+  If given $\sigma^P: P \to V$ s.t. $\sigma^P(pg^{-1}) = \rho(g)\sigma^P(p)$, let 
+\[
+\sigma(x) = [(p,\sigma^P(p))] \text{ s.t. } \pi(p) = x
+\]
+Indeed, checking well-definedness for $(p,\sigma^P(p)) \sim (pg^{-1}, \rho(g)\sigma^P(p))$, 
+\[
+(pg^{-1}, \rho(g)\sigma^P(p)) = (pg^{-1}, \sigma^P(pg^{-1})) = \sigma(x)
+\]
+since $\pi(pg^{-1})=x$.  Since $\pi(pg^{-1})=x$ \, $\forall \, g\in G$, then indeed this section $\sigma \in \Gamma(P\times_{\rho}V)$ is well-defined.  
+  
+\end{proof}
+
+\begin{proposition}[cf. Taubes (2001) Subsection 11.4.3 \cite{CTaubes2011}]
+$\forall \, $ principal $G$-bundle $\pi:P \to M$, $\exists \, $ short exact sequence of vector bundle homomorphims
+\begin{equation}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=2.2em]
+  {
+0 & \text{ker}{ (\pi_* )}  & TP & \pi^*TM & 0 \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$$} (m-1-2)
+  (m-1-2) edge node [auto] {$$} (m-1-3)
+  (m-1-3) edge node [auto] {$$} (m-1-4)    
+  (m-1-4) edge node [auto] {$$} (m-1-5)    
+  ;
+\end{tikzpicture} 
+\end{equation}
+s.t. 
+
+$\pi_* : TP \to TM$ and so \\
+$\text{ker}\pi_* \subset TP$
+
+and so with arrows meaning, as follows:
+
+$\text{ker}{\pi_*} \xrightarrow{ \mathbf{i}} TP$, inclusion $\mathbf{i}$, 
+
+$\begin{aligned} & TP \to \pi^*TM \\
+  & v\in TP \mapsto (\pi(p), \pi_*v) \in \pi^*TM \subset P \times TM \end{aligned}$
+
+
+
+\end{proposition}
+
+Recall (smooth, right) action of $G$ on $P$, $\begin{aligned} & \quad \\
+   m(g) \equiv m_g & : P \to P \\
+  m_g & : p\mapsto pg^{-1} \end{aligned}$ \quad \, $\forall \, g \in G$.  Then $\begin{aligned} & \quad \\
+  & (m_g)_* : TP \to TP \\
+  & (m_g)_*:v_p \mapsto v_{pg^{-1}}\end{aligned}$.  
+
+If $v\in TP$, $v\in \text{ker}\pi_*$, $(m_g)_*v \in \text{ker}\pi_*$ since $\pi_*((m_g)_*v) = (\pi \circ m_g)_*v = (\pi_*)v = 0$ \\
+(for $\pi\circ m_g(p) = \pi(pg^{-1}) = \pi(p)$, so $\pi \circ m_g = \pi$)
+
+
+There are many parts of this sequence to parse out and understand.  
+
+Begin with 
+\[
+\pi_* : TP \to TM
+\]
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=2.2em]
+  {
+    P & \ni p      & T_pP        & \ni v_p \equiv v(p) \\
+    M & \ni \pi(p) & T_{\pi(p)}P & \ni \pi_*v_p \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\pi$} (m-2-1)
+  (m-1-2) edge node [auto] {$$} (m-1-3)
+  (m-1-3) edge node [auto] {$\pi_*$} (m-2-3)    
+  (m-2-2) edge node [auto] {$$} (m-2-3)    
+  ;
+  \path[|->]
+  (m-1-2) edge node [auto] {$\pi$} (m-2-2)
+  (m-1-4) edge node [auto] {$\pi_*$} (m-2-4)
+;
+\end{tikzpicture} 
+
+$\text{ker}{\pi_*}$ \emph{is} the so-called vertical bundle of $\pi_* : TP \to TM$ \footnote{``Vertical bundle'', \emph{Wikipedia} \url{https://en.wikipedia.org/wiki/Vertical_bundle}}.
+
 \section{Gauge Theory}
 
 The story of Gauge Theory in Physics is a beautiful story - it is the triumph of geometry in physical theories of matter.  
+
+
+
 
 \section{Chern-Simons Theory}
 
@@ -1604,6 +2240,12 @@ Andrew Baker, ``Representations of Finite Groups'', 07112011
 
 \bibitem{YKosmann-Schwarzbach2010}
 Yvette Kosmann-Schwarzbach, \textbf{Groups and Symmetries: From Finite Groups to Lie Groups}, Springer, 2010. e-ISBN 978-0-387-78866-1 \url{http://www.caam.rice.edu/~yad1/miscellaneous/References/Math/Groups/Groups\%20and\%20Symmetries.pdf}
+
+\bibitem{CTaubes2011}
+Clifford Henry Taubes, \textbf{Differential Geometry: Bundles, Connections, Metrics and Curvature} (Oxford Graduate Texts in Mathematics, Vol. 23) Oxford University Press; 1 edition (December 1, 2011). ISBN-13: 978-0199605873
+
+\bibitem{JLee2009}
+Jeffrey M. Lee. \textbf{Manifolds and Differential Geometry}, \emph{Graduate Studies in Mathematics} Volume: 107, American Mathematical Society, 2009. ISBN-13: 978-0-8218-4815-9
 
 \end{thebibliography}
 There is a Third Edition of T. Frankel's \textbf{The Geometry of Physics} \cite{TFrankel2004}, but I don't have the funds to purchase the book (about \$ 71 US dollars, with sales tax). It would be nice to have the hardcopy text to see new updates and to use for research, as the second edition allowed me to formulate fluid mechanics and elasticity in a covariant manner.  Please help me out and donate at \url{ernestyalumni.tilt.com}.  
