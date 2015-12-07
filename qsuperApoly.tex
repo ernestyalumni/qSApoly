@@ -1531,6 +1531,154 @@ since this is true, $\forall \, x \in E$, $\forall \, \xi \in E^*$, $\pi^*(gh) =
 dual $\pi^*$ of $\pi$ is a representation.  
 
 
+\part{Bundles}
+
+\cite{CTaubes2011}
+
+
+\section{Vector bundles}
+
+Ballmann has a lucid and straightforward and useful exposition on vector bundles and connections \cite{WBallmann1999} \footnote{Werner Ballmann. ``Vector bundles and connections'', \url{http://people.mpim-bonn.mpg.de/hwbllmnn/archiv/conncurv1999.pdf}}.  
+
+  $\mathbb{K} \in \lbrace \mathbb{R},\mathbb{C} \rbrace$
+\begin{definition}
+$\mathbb{K}$-vector bundle over $M$ of rank $k$ is bundle $\pi:E \to M$, fibers $E_p := \pi^{-1}(p)$ are $\mathbb{K}$-vector spaces, s.t. \\
+$\forall \, p \in M$, $\exists \, $ open $U \subseteq M$, $U \ni p$, $\exists \, $ diffeomorphism (called local trivialization) $\Phi: \left. E \right|_{\pi^{-1}(U) } \to U\times \mathbb{K}^k$ s.t. \\
+\phantom{ \quad \, } $\pi \circ \Phi^{-1} = \pi_1$ \quad \, $\pi_1 : U \times \mathbb{R}^k \to U$ is canonical projection \\
+
+\phantom{ \quad \, } $\forall \, q \in U$, $\begin{aligned} & \quad \\
+  & \Phi_q^{-1}: \mathbb{K}^k \to E_q \\
+  & \Phi_q^{-1}(v) := \Phi^{-1}(q,v) \end{aligned}$ is a $\mathbb{K}$-linear isomorphism.
+\end{definition}
+
+
+
+
+
+
+
+
+\begin{definition}\label{Prop:frametrivializequiv}
+  \textbf{frame} of $E$ over $U$ is $k$-triple $(s_1 \dots s_k)$, $s_i \in \Gamma(\left. E \right|_{\pi^{-1}(U)} )$, $\sigma_i$ smooth section of $E$ over $U$ s.t. 
+\[
+\sigma_1(p) \dots \sigma_k(p)
+\]
+basis of $E_p$ \, $\forall \, p \in U$
+\end{definition}
+
+By Prop. \ref{Prop:frametrivializequiv}, frames and local trivializations are ``equivalent''.  
+
+
+
+
+\begin{proposition}
+
+
+
+
+
+conversely, if $ \Phi : \left. E \right|_{\pi^{-1}(U)} \to U \times \mathbb{K}^k$ trivialization of $\left. E \right|_{\pi^{-1}(U)}$ and $e_1 \dots e_k$ standard basis of $\mathbb{K}^k$, then $k$-tuple $\sigma_i = \Phi^{-1}(\cdot, e_i)$, $1 \leq i \leq k$ is a frame of $E$ over $U$. 
+\end{proposition}
+
+
+
+
+\begin{definition}
+Let $\Phi^{-1} = (s_1,\dots, s^k)$ local trivialization/frame. \\
+Consider arbitrary $s \in \Gamma( \left. E \right|_{\pi^{-1}(U) })$  \\
+Then $\exists \, \sigma = \sigma_{\Phi^{-1} }: U \to \mathbb{K}^k$ s.t.
+\[
+s(p) = \Phi^{-1}(p,\sigma(p)) \quad \, \forall \, p \in U \text{ i.e. } s = \sigma^i s_i \, , \,  \sigma = (\sigma^1 \dots \sigma^k)
+\] 
+$\sigma$ \emph{principal part of $s$ with respect to $\Phi$}.
+\end{definition}
+
+Let $\Psi^{-1} = (t_1 \dots t_k)$ another local trivialization of $E$ over open $V \subseteq M$.  \\
+\phantom{Let } $\forall \, p \in U \bigcap V$, isomorphisms $\begin{aligned} & \quad \\
+  & \Phi_p^{-1} : \mathbb{K}^k \to E_k \\
+  & \Psi_p^{-1} : \mathbb{K}^k \to E_k  \end{aligned}$ , \quad \, $\begin{aligned} & \quad \\
+  & \Phi^{-1} = (s_1 \dots s_k) \\
+  & \Psi^{-1} = (t_1 \dots t_k) \end{aligned}$, then 
+
+\[
+s_j = g^i_{ \,\, j} t_i 
+\]
+with smooth $g^i_{ \,\, j} : U \bigcap V \to \mathbb{K}$, $\forall \, p \in U \bigcap V$, $g^i_{ \,\, j}(p) = a^i_{ \, \, j}(p) \in \text{Mat}(k,k)$, ($k\times k$ matrix).  \\
+\phantom{ with } $g^i_{ \,\, j}$ invertible so smooth $g:U\bigcap V \to Gl(k,\mathbb{K})$.
+
+Let $s\in \Gamma(E)$ over $U\bigcap V$, $\sigma_{\Phi}$, $\sigma_{\Psi}$ principal part of $s$ with respect to $\Phi$,$\Psi$.  Then
+\[
+\sigma^i_{\Psi} = g^i_{ \,\, j} \sigma^j_{\Phi} \text{ i.e. } \sigma_{\Psi} = g\cdot \sigma_{\Phi}
+\]
+
+Indeed, $\forall \, s \in \Gamma(E)$,
+\[
+s = \sigma^j_{\Phi} s_j = \sigma^j_{\Phi} g^i_{ \,\, j} t_i = g^i_{ \,\, j} \sigma^j_{ \Phi } t_i = \sigma^i_{\Psi } t_i
+\]
+
+
+
+
+
+\[
+\begin{gathered}
+  \nabla_X s = (X(\sigma^i_{\Phi})+\sigma^j_{\Phi}(\omega_{\Phi})^i_{ \,\, j}(X) ) s_i = (X(\sigma^i_{\Psi}) + \sigma^j_{\Psi} (\omega_{\Psi})^i_{ \, \, j}(X) )t_i = (X(g^i_{ \,\, k} \sigma^k_{\Psi} ) + g^j_{ \,\,k} \sigma_{\Phi}^k (\omega_{\Psi})^i_{ \,\, j}(X))t_i = \\
+  = X(\sigma^k_{\Phi})s_k + t_i X(g^i_{ \,\, k} ) \sigma^k_{\Phi} + t_i (\omega_{\Psi})^i_{ \,\, j}(X) g^j_{ \,\, k} \sigma^k_{\Phi} 
+\end{gathered}
+\]
+$X(\sigma^j_{\Phi})s_i$ cancels from both sides and so
+\[
+\begin{gathered}
+  \Longrightarrow s_i \sigma^j_{\Phi} (\omega_{\Phi})^i_{ \,\, j}(X) = s_i (\omega_{\Phi})^i_{ \,\, j}(X) (g^{-1})^j_{ \,\, k} (\sigma_{\Psi})^k = t_l g^l_{\,\, i} (\omega_{\Phi})^i_{ \,\, j}(X) (g^{-1})^j_{\,\,k} \sigma^k_{\Psi} = \\
+  = t_l X(g^l_{ \,\, k})(g^{-1})^k_{ \,\, i} \sigma^i_{\Psi} + t_l (\omega_{\Psi})^l_{ \,\, j}(X) \sigma^j_{\Psi}  \\
+  \Longrightarrow \omega_{\Psi}(X) = g\omega_{\Phi}(X)g^{-1} - X(g)(g^{-1})
+\end{gathered}
+\]
+
+In summary, \\
+for connection $\begin{aligned} & \quad \\
+  & \nabla : \mathfrak{X}(M) \times \Gamma(E) \to \Gamma(E) \\
+  & \nabla(X,s) = \nabla_Xs = (\nabla s)(X) \in \Gamma(E) \end{aligned}$
+
+For frames $\begin{aligned} & \quad \\
+  & \Phi^{-1} = (s_1 \dots s_k) \text{ of $E$ over open $U$ } \\
+  & \Psi^{-1} = (t_1 \dots t_k) \text{ of $E$ over open $V$ } 
+\end{aligned}$, \, $U\cap V \neq \emptyset$, $\exists \, $ smooth $g = (g^i_{ \,\, j} ):U \cap V \to \text{Gl}(k;\mathbb{K})$ s.t. 
+
+\[
+s_j = t_i g^i_{ \,\, j} \text{ or } \Phi^{-1} = \Psi^{-1}g 
+\]
+Then $\forall \, s \in \Gamma(E_{\pi^{-1}(U\cap V) })$, $s = \sigma^j_{\Phi}s_j = \sigma^j_{\Psi} t_j$, so 
+\[
+\sigma^i_{\Psi} = g^i_{  \, \, j} \sigma^j_{\Phi} \text{ or } \sigma_{\Psi} = g\sigma_{\Phi}
+\]
+then
+\[
+\nabla_X s = s_i(X(\sigma^i) + \omega^i_{ \,\, j}(X)\sigma^j) 
+\]
+so that 
+\[
+\omega_{\Psi}(X) = g\omega_{\Phi}(X)g^{-1} - X(g)(g^{-1}) \text{ or } (\omega_{\Psi})^i_{\, \, j}(X) = g^i_{ \,\, k} (\omega_{\Phi})^k_{ \,\, l }(X) (g^{-1})^l_{ \,\, j} - X(g^i_{ \,\, k})(g^{-1})^k_{ \,\, j}
+\]
+
+
+
+
+
+define covariant derivative $d\mathbf{v} = (x,\left. d\mathbf{v}\right|_x)$
+
+$\forall \, \sigma \in \Gamma(E)$, section $\sigma$ of $E$. define
+\[
+\nabla \sigma = \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*(d(\varphi_U \circ \left. \sigma \right|_U ) )
+\]
+
+\[
+\begin{gathered}
+  \nabla (f\sigma) = \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*(d(\varphi_U \circ f \left. \sigma \right|_U ) )  = \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*((d\varphi_U) (d (f \left. \sigma \right|_U ) ) ) = \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*((d\varphi_U) ( \left. \sigma \right|_U df + f \left. d\sigma \right|_U ) = \\
+=  \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*(d\varphi_U) \left. \sigma \right|_U \otimes df + \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*(d\varphi_U)(f \left. d\sigma  \right|_U ) = \sum_{U \in \mathcal{U}} \chi_U f \varphi_U^* d ( \varphi_U \circ \left. d\sigma  \right|_U ) +  \sum_{U \in \mathcal{U}} \chi_U \varphi_U^*(d\varphi_U) \left. \sigma \right|_U \otimes df = \\
+= f\nabla \sigma + \sigma \otimes df
+\end{gathered}
+\]
 
 \section{Principal bundles}
 
@@ -2162,9 +2310,184 @@ Begin with
 
 $\text{ker}{\pi_*}$ \emph{is} the so-called vertical bundle of $\pi_* : TP \to TM$ \footnote{``Vertical bundle'', \emph{Wikipedia} \url{https://en.wikipedia.org/wiki/Vertical_bundle}}.
 
-\section{Gauge Theory}
+\begin{claim}
+This sequence
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=2.2em]
+  {
+0 & \text{ker}{ (\pi_* )}  & TP & \pi^*TM & 0 \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$$} (m-1-2)
+  (m-1-2) edge node [auto] {$i$} (m-1-3)
+  (m-1-3) edge node [auto] {$p$} (m-1-4)    
+  (m-1-4) edge node [auto] {$$} (m-1-5)    
+  ;
+\end{tikzpicture} 
+is a short exact sequence.
+\end{claim}
+
+\begin{proof}
+  Consider $i : \text{ker}(\pi_*) \to TP$ (inclusion) \\
+$i(a) = i(a')$, $a, a' \in \text{ker}\pi_*$.  Then $a=a'$.  Inclusion $i$ is injective.  So $0 \to \text{ker}(\pi_*) \to TP$ exact.  (this is shown mathematically in Rotman, or my notes on Rotman, or in your favorite abstract algebra book or notes) 
+
+EY : 20151017 weblinks roundup:
+
+This showed that vector fields are isomorphic to derivations, and explicitly gives the construction of the isomorphism: 1300Y Geometry and Topology \url{http://www.math.toronto.edu/mgualt/MAT1300/week9.pdf}
+
+This clarifies Taubes, 11.4.4 Part 3-4 \url{http://xwww.uni-math.gwdg.de/upmeier/notes/connections.pdf}
+
+Since the Snake Lemma and 5-lemma are needed to show, in a civilized manner, the splitting lemma, could we use the Snake Lemma and 5-lemma for connections on a principal-G bundle? \url{http://www.mathematik.uni-kl.de/~gathmann/class/commalg-2013/chapter-4.pdf}
+
+\end{proof}
+
+\part{Gauge Theory}
 
 The story of Gauge Theory in Physics is a beautiful story - it is the triumph of geometry in physical theories of matter.  
+
+\section{Electromagnetism}
+
+\begin{description}
+\item Electromagnetism
+\item Maxwell's Equations
+\end{description}
+
+From ``Rewriting Maxwell's Equations'' of Baez and Muniain (1994) \cite{JBaezJMuniain1994}:  
+
+
+\[
+\begin{aligned}
+  & *F_+ = \frac{1}{2} \left[ i F_+ -iF_- + i(F_+ + F_-) \right] = iF_+ \text{ i.e. self dual }
+  & *F_- = \frac{1}{2} \left[ i F_+ -iF_- - iF_+ -i F_-  \right] = -iF_- \text{ i.e. anti-self dual }
+\end{aligned}
+\]
+
+
+So if $F \in \Omega^p(M)$ ($F$ self dual or anti self dual), if $dF=0$, $d*F =0$, since $d*F = \begin{cases} d( \pm F) = \pm dF = 0 \\
+  d(\pm iF) = \pm i dF = 0\end{cases}$
+
+Consider $\begin{aligned} & \quad \\
+  & \Delta : \Omega^p(M) \to \Omega^p(M) \\
+  & \Delta = (\delta +d)^2 = \delta d + d\delta \end{aligned}$
+
+\[
+\Delta F = \delta dF + d\delta F = 0 + d (-*d*) F = -dJ 
+\]
+\[
+\begin{aligned}
+   J & = j - \rho dt \\ 
+   dJ & = \frac{ \partial j_j}{ \partial x^{\mu} } dx^{\mu} \wedge dx^j - \frac{ \partial \rho}{ \partial x^i} dx^i \wedge dt
+\end{aligned}
+\]
+
+
+Note that for $d^2 =0$, $\delta^2=0$ (as seen with this example of Maxwell's equations, for $F$), $\delta = (-1)^{n(p+1)+1} *d* = -*d*$ (especially if $n$ even), 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+    \Omega^2(M) & \Omega^{n-2}(M) \\
+    \Omega^1(M) & \Omega^{n-1}(M)   \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$*$} (m-1-2)
+          edge node [above] {$\delta$} (m-2-1)
+  (m-1-2) edge node [auto]  {$d$} (m-2-2)
+  (m-2-1) edge node [auto]  {$-*(s)$} (m-2-2)
+  ;
+\end{tikzpicture} \quad \quad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+    F & *F \\
+    \delta F & d*F = (s)*J \\
+};
+  \path[|->]
+  (m-1-1) edge node [above] {$*$} (m-1-2)
+          edge node [above] {$\delta$} (m-2-1)
+  (m-1-2) edge node [auto]  {$d$} (m-2-2)
+  (m-2-1) edge node [auto]  {$-*(s)$} (m-2-2)
+  ;
+\end{tikzpicture}
+
+
+\[
+\begin{aligned}
+  & F \in \Omega^2(M) \\ 
+  & F = \frac{1}{2} F_{\mu \nu} dx^{\mu} \wedge dx^{\nu}
+\end{aligned} \quad \quad \, 
+\begin{aligned}
+  & *F \in \Omega^{n-2}(M) \\ 
+  & *F = \frac{\sqrt{g}}{ (n-2)!} \frac{1}{2} F_{\mu \nu} g^{\mu \mu'} g^{\nu \nu'} \epsilon_{\mu' \nu' \rho \sigma } dx^{\rho} \wedge dx^{\nu} 
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+  F & = B + E \wedge dt = \frac{B_{ij}}{2} dx^i \wedge dx^j + E_i dx^i \wedge dt \\ 
+*F & = \frac{ \sqrt{g}}{(n-2)!} \frac{B_{ij}}{2} g^{i \mu } g^{j \nu} \epsilon_{\mu \nu \rho \sigma } dx^{\rho} \wedge dx^{\sigma} +   \frac{ \sqrt{g}}{ (n-2)!} E_i g^{i\mu} g^{0\nu} \epsilon_{\mu \nu \rho \sigma} dx^{\rho} \wedge dx^{\sigma}
+\end{aligned}
+\]
+
+If $M = \mathbb{R}\times N$, 
+\[
+\begin{gathered}
+  B_{ij} g^{il}g^{jm} \epsilon_{lm\rho \sigma} dx^{\rho} \wedge dx^{\sigma} = B_{ij} g^{il}g^{jn} (\epsilon_{lmn\sigma} dx^n \wedge dx^{\sigma} + \epsilon_{lm0\sigma} dx^0 \wedge dx^{\sigma} ) = \\
+  = B_{ij} g^{il} g^{jm} (\epsilon_{lmn0} dx^n \wedge dt + \epsilon_{lmn} dx^n \wedge dt) = 2B_{ij} g^{il} g^{jm} \epsilon_{lmn} dx^n \wedge dt
+\end{gathered}
+\]
+
+Noting that 
+\[
+\epsilon_{lmn} B_{ij} g^{il} g^{jm} = \epsilon_{lmn} \epsilon_{ijk} B^k g^{il} g^{jm} = 2B^n
+\]
+
+
+If $g= \left( \begin{matrix} -1  & & & \\
+  & 1 & & \\
+  &  & 1 & \\
+  & & & 1 \end{matrix} \right)$ and $M = \mathbb{R} \times N$, 
+\[
+\begin{aligned}
+  *F & = \frac{1}{ (n-2)!} \left[ \frac{B_{ij}}{2} g^{il }g^{jm} \epsilon_{lmn0} dx^n \wedge dt + -E_i g^{il} \epsilon_{l0mn} dx^m \wedge dx^n \right] = \frac{1}{(n-2)!} \left[ -\epsilon_{lmn} g^{li} E_i dx^m \wedge dx^n + (-\epsilon_{lmn})B_{ij} g^{il} g^{jm} dx^n \wedge dt \right] = \\
+  & = \frac{1}{(n-2)!} \left[ -E_i g^{il} \epsilon_{lmn} dx^m \wedge dx^n + (-B_{ij}) g^{il} g^{jm} \epsilon_{lmn} dx^n \wedge dt \right] = \vec{*} E - \vec{*}B \wedge dt
+\end{aligned}
+\]
+
+Indeed, in general, for $M = \mathbb{R}\times N$, 
+\[
+\begin{gathered}
+  *F = \frac{ \sqrt{g}}{ (n-2)!} B_{ij} g^{il}g^{jm} \epsilon_{lmn0} dx^n \wedge dt + \frac{\sqrt{g}}{(n-2)!} E_i g^{il} (-1) \epsilon_{l0mn} dx^m \wedge dx^n = \\
+  =  \frac{\sqrt{g}}{ (n-2)!}(-1)E_i g^{il} (-\epsilon_{0lmn}) dx^m \wedge dx^n + \frac{\sqrt{g}}{(n-2)!} \epsilon_{ijk} B^k g^{il} g^{jm} (-\epsilon_{lmn})dx^n \wedge dt
+\end{gathered}
+\]
+If $g^{il}= \delta^{il}$, then applying $\epsilon_{jmn}\epsilon^{imn} = 2\delta^i_j$, and $n=4$
+\[
+*F = \vec{*}E + \vec{*}B \wedge dt
+\]
+
+$*F = iF$ (self-dual) if 
+\[
+\begin{aligned}
+  & \vec{*} E= iB \\ 
+  & \vec{*} B= -i E
+\end{aligned}
+\]
+
+And so 
+\[
+\begin{gathered}
+  E = E_i dx^i \\ 
+  \vec{*} E = \frac{ \sqrt{g}}{ (d-1)!} E_i g^{il} \epsilon_{lmn} dx^m \wedge dx^n \Longrightarrow -i \vec{*} E = \frac{-i\sqrt{g}}{ (d-1)!} E_i g^{il} \epsilon_{lmn} dx^m \wedge dx^n \\ 
+  B = \frac{1}{2} B_{mn} dx^m \wedge dx^n = \frac{1}{2} \epsilon_{mnl} B^l dx^m \wedge dx^n 
+\end{gathered} \Longrightarrow \frac{1}{2} B^l = \frac{-i \sqrt{g}}{ (d-1)!} E_i g^{il} \text{ or } B^k = -i \sqrt{g} E_i g^{ik}
+\]
+
+
+Assume $F$ self-dual ($*F = iF$) and $E(x) = E_i e^{ikx} dx^i$, $k \in (\mathbb{R}^4)^*$, $x\in \mathbb{R}^4 = M$, $k$ fixed covector called \textbf{energy-momentum}, s.t. 
+\[
+k_{\mu} x^{\mu} = kx
+\]
+$B= -i \vec{*} E$
 
 
 
@@ -2243,6 +2566,9 @@ Yvette Kosmann-Schwarzbach, \textbf{Groups and Symmetries: From Finite Groups to
 
 \bibitem{CTaubes2011}
 Clifford Henry Taubes, \textbf{Differential Geometry: Bundles, Connections, Metrics and Curvature} (Oxford Graduate Texts in Mathematics, Vol. 23) Oxford University Press; 1 edition (December 1, 2011). ISBN-13: 978-0199605873
+
+\bibitem{WBallmann1999}
+Werner Ballmann. ``Vector bundles and connections'', \url{http://people.mpim-bonn.mpg.de/hwbllmnn/archiv/conncurv1999.pdf}
 
 \bibitem{JLee2009}
 Jeffrey M. Lee. \textbf{Manifolds and Differential Geometry}, \emph{Graduate Studies in Mathematics} Volume: 107, American Mathematical Society, 2009. ISBN-13: 978-0-8218-4815-9
