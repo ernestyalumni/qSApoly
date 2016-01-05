@@ -2504,10 +2504,80 @@ From Baez and Muniain (1994) \cite{JBaezJMuniain1994}:
 
 Wilf and Zeilberger (1992) has a good introduction to hypergeometric polynomials and its significance \cite{HWilfDZeilberger1992}.  In the immediate sections, I will recap, summarize, and copy (or state) some definitions and results from  Wilf and Zeilberger (1992), and show (some of its) direct implementations in Sage Math and sympy.    
 
+Starting from pp. 586 of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992},  \\
+Consider 
+\[
+(c)_n := (1-c)(1-cq) \dots (1-cq^{n-1})
+\]
+Let $c=q$.  Then
+\[
+(q)_n = (1-q)(1-q^2)\dots (1-q^n)
+\]
+Define $f(n):= (c)_n$.  Notice that 
+\[
+\frac{f(n+1)}{f(n)} = 1 - cq^n
+\]
+This is the simplest nonzero rational function in $q^n$.  
 
+Let $f(x):=(x)_{\infty}$.  $\frac{f(qx)}{f(x)} = \frac{(qx)_{\infty} }{(x)_{\infty}} = \frac{1}{1-x}$.  
 
+Note that 
+\[
+\begin{gathered}
+  \frac{1}{1-x} = \sum_{j=0}^{\infty}x^j \\ 
+  \begin{aligned}
+    & (x)_{\infty} = (1-x)(1-xq) \dots (1-xq^{n-1}) \dots \\ 
+    & (qx)_{\infty} = (1-qx)(1-q^2x)\dots (1-xq^n) \dots
+\end{aligned}
+\end{gathered}
+\]
+Also note that 
+\[
+(q)_k  =\frac{ (q)_{\infty} }{ (q^{k+1})_{\infty}} = \frac{(1-q)(1-q^2) \dots (1-q^n) }{ (1-q^{k+1})(1-q^{k+2})\dots }
+\]
+Introduce dilation operator $\forall \, x \in \mathbb{F}$, $Q_xf(x,\mathbf{y}) := f(qx,\mathbf{y})$
 
+$q$-derivative $D_x^{(q)}$
+\[
+D_x^{(q)}f(x,\mathbf{y}) = \frac{f(qx,\mathbf{y}) - f(x,\mathbf{y}) }{(q-1)x} = \frac{(Q_x -1)f(x,\mathbf{y})}{(x(q-1) ) }
+\]
 
+\begin{definition}
+  $q$-hypergeometric,
+\[
+F(k_1 \dots k_r, y_1 \dots y_s) \equiv F(\mathbf{k},\mathbf{y})
+\]
+$k_1 \dots k_r \in \mathbb{Z}$ (discrete), $y_1 \dots y_s$ cont. ($y_1 \dots y_s \in \mathbb{F} \in \lbrace \mathbb{R}, \mathbb{C} \rbrace$) \emph{$q$-hypergeometric} \\
+
+if $\begin{aligned} & \quad \\ 
+  & \forall \,  \text{ (discrete) } \, k_i \, , \, (E_{k_i}F)/F \\ 
+  & \forall \, \text{ (cont.) } \, y_j \, , \, (Q_{y_j}F)/F \end{aligned}$ rational functions of $(q^{k_1} \dots q^{k_r}, y_1 \dots y_s)$ and possible other constnat parameters, including $q$.  
+\end{definition}
+
+\subsubsection{Examples}
+\begin{enumerate}
+\item  Polynomials $P(q^{k_1} \dots q^{k_r}, y_1 \dots y_n)$.  Indeed, 
+\[
+\begin{gathered}
+  (E_{k_i}P)/P = \frac{ P(q^{k_1} \dots q^{k_i +1} \dots q^{k_r}, \mathbf{y}) }{ P(q^{k_1} \dots q^{k_r}, \mathbf{y}) } \\
+  (Q_{y_j}P)/P = \frac{ P(q^{k_1} \dots q^{k_r}, y_1 \dots qy_j \dots y_n ) }{ P(q^{k_1} \dots q^{k_r},y_1 \dots y_n ) } \end{gathered}
+\]
+\item \[
+(cy_1^{\alpha_1} \dots y_s^{\alpha_s}, q^{\beta_1 k_1} \dots q^{\beta_r k_r})^{\gamma}_{\infty}
+\]cf. (qPH-II) of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992} EY : 20160105 I don't understand the upper and lower exponent notation of $()^{\gamma}_{\infty}$, i.e. what is $\gamma$ and $\infty$ in this case?
+\item $q^{\sum_{i,j} a_{i,j} k_i k_j + \sum_i b_i k_i }$ \quad \, $a_{i,j},b_i \in \mathbb{Z}$ or $\lbrace \pm \frac{1}{2}, \frac{\pm} \frac{3}{2} , \dots \rbrace$.  Indeed
+\[
+\xrightarrow{ E_{k_i} } q^{\sum_{i,j} q_{i,j} k_i k_j + \sum_i b_i k_i } q^{\sum_{i,j}a_{i,j}k_j + b_i}
+\]
+\item $z_1^{k_1} \dots z_r^{k_r}$.  Indeed,
+\[
+\xrightarrow{E_{k_i}} z_1^{k_1} \dots z_r^{k_r} \cdot z_i
+\]
+\end{enumerate}
+
+\begin{definition}
+$F(k_1\dots k_r,y_1 \dots y_s)$, (discrete) $k_1 \dots k_r \in \mathbb{Z}$, (cont.) $y_1 \dots y_r \in \mathbb{F} \in \lbrace \mathbb{R}, \mathbb{C} \rbrace$.  
+\end{definition}
 
 
 
@@ -2558,7 +2628,7 @@ Jeffrey M. Lee. \textbf{Manifolds and Differential Geometry}, \emph{Graduate Stu
 H.S. Wilf and D. Zeilberger, \emph{An algorithmic proof theory for hypergeometric (ordinary and “q”) multisum/integral identities}, Invent. Math., \textbf{108} (1992), 575–633.  \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.443.4980&rep=rep1&type=pdf}
 
 \end{thebibliography}
-There is a Third Edition of T. Frankel's \textbf{The Geometry of Physics} \cite{TFrankel2004}, but I don't have the funds to purchase the book (about \$ 71 US dollars, with sales tax). It would be nice to have the hardcopy text to see new updates and to use for research, as the second edition allowed me to formulate fluid mechanics and elasticity in a covariant manner.  Please help me out and donate at \url{ernestyalumni.tilt.com}.  
+% There is a Third Edition of T. Frankel's \textbf{The Geometry of Physics} \cite{TFrankel2004}, but I don't have the funds to purchase the book (about \$ 71 US dollars, with sales tax). It would be nice to have the hardcopy text to see new updates and to use for research, as the second edition allowed me to formulate fluid mechanics and elasticity in a covariant manner.  Please help me out and donate at \url{ernestyalumni.tilt.com}.  
 
 
 
