@@ -2502,6 +2502,19 @@ From Baez and Muniain (1994) \cite{JBaezJMuniain1994}:
 
 \part{Polynomials}
 
+\section{(Software) Packages}
+
+This link \href{http://www.mat.univie.ac.at/~slc/divers/software.html}{Combinatorial Software and Databases} has a list of (possibly) useful implementations of the Gosper-Zeilberger Algorithm.  There is 
+\begin{itemize}
+\item \href{http://www.math.rutgers.edu/~zeilberg/tokhniot/EKHAD}{EKHAD}: written in Maple by Doron Zeilberger, is an implementation of the Gosper-Zeilberger algorithm.
+\item \href{http://www.math.rutgers.edu/~zeilberg/tokhniot/qEKHAD}: written in Maple by Doron Zeilberger, is an implementation of the q-Zeilberger algorithm.  Also at \href{http://www.math.rutgers.edu/~zeilberg/programsAB.html}{Rutgers, Packages Accompanying or Related to A=B}
+\item \href{http://www.risc.uni-linz.ac.at/research/combinat/risc/software/Zeilberger/}{Zeilberger}:written in Maxima by Fabrizio Caruso, is an implementation of the Gosper-Zeilberger algorithm.
+\end{itemize}
+
+Tom Koornwinder had a paper \href{https://staff.fnwi.uva.nl/t.h.koornwinder/art/1993/zeilbalgo.pdf}{On Zeilberger’s algorithm and its $q$-analogue: a rigorous description} that explicitly and very lucidly reviews Zeilberger's algorithm, but I cannot find his accompanying Maple software (links don't work).  
+
+I will focus on looking at Caruso's package because the source code is available and I had emailed Paule and the source code for Mathematica implementations are not available, understandably from their particular policies on distribution.
+
 Wilf and Zeilberger (1992) has a good introduction to hypergeometric polynomials and its significance \cite{HWilfDZeilberger1992}.  In the immediate sections, I will recap, summarize, and copy (or state) some definitions and results from  Wilf and Zeilberger (1992), and show (some of its) direct implementations in Sage Math and sympy.    
 
 Starting from pp. 586 of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992},  \\
@@ -2542,6 +2555,11 @@ $q$-derivative $D_x^{(q)}$
 D_x^{(q)}f(x,\mathbf{y}) = \frac{f(qx,\mathbf{y}) - f(x,\mathbf{y}) }{(q-1)x} = \frac{(Q_x -1)f(x,\mathbf{y})}{(x(q-1) ) }
 \]
 
+Notice that 
+\[
+\lim_{q\to 1} D^{(q)}_xf(x,\mathbf{y}) = D_x f
+\]
+
 \begin{definition}
   $q$-hypergeometric,
 \[
@@ -2565,7 +2583,7 @@ if $\begin{aligned} & \quad \\
 \item \[
 (cy_1^{\alpha_1} \dots y_s^{\alpha_s}, q^{\beta_1 k_1} \dots q^{\beta_r k_r})^{\gamma}_{\infty}
 \]cf. (qPH-II) of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992} EY : 20160105 I don't understand the upper and lower exponent notation of $()^{\gamma}_{\infty}$, i.e. what is $\gamma$ and $\infty$ in this case?
-\item $q^{\sum_{i,j} a_{i,j} k_i k_j + \sum_i b_i k_i }$ \quad \, $a_{i,j},b_i \in \mathbb{Z}$ or $\lbrace \pm \frac{1}{2}, \frac{\pm} \frac{3}{2} , \dots \rbrace$.  Indeed
+\item $q^{\sum_{i,j} a_{i,j} k_i k_j + \sum_i b_i k_i }$ \quad \, $a_{i,j},b_i \in \mathbb{Z}$ or $\lbrace \pm \frac{1}{2}, \pm \frac{3}{2} , \dots \rbrace$.  Indeed
 \[
 \xrightarrow{ E_{k_i} } q^{\sum_{i,j} q_{i,j} k_i k_j + \sum_i b_i k_i } q^{\sum_{i,j}a_{i,j}k_j + b_i}
 \]
@@ -2576,8 +2594,305 @@ if $\begin{aligned} & \quad \\
 \end{enumerate}
 
 \begin{definition}
-$F(k_1\dots k_r,y_1 \dots y_s)$, (discrete) $k_1 \dots k_r \in \mathbb{Z}$, (cont.) $y_1 \dots y_r \in \mathbb{F} \in \lbrace \mathbb{R}, \mathbb{C} \rbrace$.  
+$F(k_1\dots k_r,y_1 \dots y_s)$, (discrete) $k_1 \dots k_r \in \mathbb{Z}$, (cont.) $y_1 \dots y_r \in \mathbb{F} \in \lbrace \mathbb{R}, \mathbb{C} \rbrace$, \emph{$q$-proper-hypergeometric} \\
+if $F$ has form $F = P(q^{k_1} \dots q^{k_r}, y_1 \dots y_s) \cdot q^{ \sum_{i,j} a-{i,j}k_ik_j + \sum_i b_i k_i } \cdot z_1^{k_1} \dots z_r^{k_r} \cdot \text{ finite number of } (cy_1^{\alpha_1} \dots y_s^{\alpha_s} q^{\beta_1 k_1} \dots q^{\beta_r k_r } )_{\infty}^{\gamma}$
 \end{definition}
+
+\begin{lemma}[$q$-fundamental lemma]
+$\forall \, $ $q$-proper-hypergeometric $F(x_1\dots x_n,a_1 \dots a_m)$ and $\forall \, $ cont. $x_i$, $\forall \, $ (discrete) $a_j$, $\exists \, $ nonzero linear recurrence-$q$-differential operators
+
+\[
+P_i(x_i; Q_{x_1} \dots Q_{x_n}; E_{a_1} \dots E_{a_m} ) \text{ and respectively } C_j(q^{a_j}; Q_{x_1} \dots Q_{x_n} ; E_{a_1} \dots E_{a_m} )
+\]
+annihilating $F$, i.e. $\begin{aligned} & \quad \\
+  & P_iF = 0  \\
+  & C_jF =0 \end{aligned}$
+\end{lemma}
+
+Let $x=q^k$
+\[
+\begin{aligned}
+  & (cq^k)_{\infty} = \frac{(c)_{\infty}}{(c)_k} = \frac{(1-c)(1-cq) \dots }{ (1-c)(1-cq) \dots (1-cq^{k-1} )} = (1-cq^k)(1-cq^{k+1}) \dots \\ 
+  & (cx)_{\infty} = \frac{(c)_{\infty}}{(c)_k} = (1-cq)(1-cxq) \dots 
+\end{aligned}
+\]
+Consider these transformations or mappings:
+\[
+\begin{gathered}
+  F(x_1 \dots x_n, a_1 \dots a_m) \xrightarrow{ x=q^k} F(q^{k_1} \dots q^{k_n}, a_1 \dots a_m) \\ 
+  Q_{x_i} F = F(x_1 \dots qx_i \dots x_n, \mathbf{a}) = F(q^{k_1} \dots q^{(1+k_i)} \dots q^{k_n}, \mathbf{a}) = E_{k_i}F
+\end{gathered}
+\]
+$E_kq^k = qq^k E_k$ is ``isomorphic'' to $Q_xx = qxQ_x$
+
+Now for $\frac{(c)_{\infty}}{(cx)_{\infty}} $ substitute $(c)_k$.  
+\[
+\frac{(c)_{\infty}}{(cx)_{\infty}} = \frac{(1-c)(1-cq) \dots }{ (1-cx)(1-cxq) \dots } \xrightarrow{ x=q^k} (1-c)(1-cq) \dots (1-cq^{k-1})
+\]
+
+\subsection{The fundamental theorem of hypergeometric summation/integration}
+
+cf. Sec. 2. ``The fundamental theorem of hypergeometric summation/integration'' of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992}.  
+
+\begin{definition}
+  $F(k_1 \dots k_r, y_1 \dots y_s) \equiv F(\mathbf{k}, \mathbf{y})$ vanishes at infinity if $\forall \, k_i, y_j$,
+\[
+\begin{gathered}
+  \lim_{|k_i|\to \infty} F(\mathbf{k},\mathbf{y}) =0 \\
+  \lim_{|y_j|\to \infty} F(\mathbf{k},\mathbf{y}) = 0 
+\end{gathered}
+\]
+\end{definition}
+
+\begin{definition}
+  integral-sum
+\[
+\begin{gathered}
+  g(n,x) := \sum_k \int_y F(n,k,x,y) dy \qquad \text{ (general-integral-sum) }
+\end{gathered}
+\]
+is pointwise trivially evaluable, if $\forall \, $ given $\mathbf{n}, \mathbf{x}$, $\exists \, $ algorithm to evaluate it.  
+
+e.g. for pure sums that are terminating, 
+\[
+g(\mathbf{n}) := \sum_{\mathbf{k}} F(n,\mathbf{k}) \qquad \text{ (general-sum) }
+\]
+sum is finite $\forall \, \mathbf{n}$ since $F(\mathbf{n},\cdot)$ has finite support.  
+\end{definition}
+
+\subsubsection{The fundamental Theorem of hypergeometric summation-integration}
+
+\begin{theorem}[The fundamental theorem]
+  Let $\Delta_{k_i} \equiv \text{ forward difference operator in $k_i$ }$; \, $\Delta_{k_i} := (K_i -1)$.  
+
+Let $\begin{aligned} & \quad \\
+  & F(n,k_1 \dots k_r, y_1 \dots y_s) \\ 
+  & F(x,k_1 \dots k_r, y_1 \dots y_s) 
+\end{aligned}$ be hypergeometric (holonomic) (both hold if proper-hypergeometric) in $\begin{aligned} & \quad \\
+  & (\mathbf{k},\mathbf{y}) \text{ and } n \\
+  & (\mathbf{k}, \mathbf{y}) \text{ and } x \end{aligned}$
+
+where $\begin{aligned} & \quad \\
+  & \text{ discrete } n, \mathbf{k} \\
+  & \text{ cont. } x, \mathbf{y} \end{aligned}$
+
+Then $\begin{aligned} & \quad  \\
+  & \exists \, \text{ linear ordinary recurrence operator } \\
+  & \exists \, \text{ linear differential operator } \end{aligned}$ with polynomial coefficients $\begin{aligned} & \quad \\
+  & P(N,n) \\
+  & P(D_x,x) \end{aligned}$
+
+and rational functions $R_1 \dots R_r, S_1 \dots S_s$ s.t. 
+
+\begin{equation}
+\begin{aligned}
+  & P(N,n)F = \sum_{i=1}^r \Delta_{k_i}(R_i, F) + \sum_{j=1}^s D_{y_j} (S_jF) \\ 
+  & P(D_x,x)F = \sum_{i=1}^r \Delta_{k_i}(R_i, F) + \sum_{j=1}^s D_{y_j} (S_jF) 
+\end{aligned}
+\end{equation}
+
+If $F$ proper-hypergeometric, it's possible to find bounds for order of $P(N,n), P(D_x,x)$, and denominators $R_i,S_j$
+
+
+\end{theorem}
+
+Recall ``the fundamental lemma'', due to Bernstein, reproduced on pp. 585 of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992}, 
+\begin{lemma}[The fundamental lemma]\label{lemma:fundamentallemma}
+$\forall \, $ holonomic function $F(x_1 \dots x_n, a_1 \dots a_m)$, $\forall \, $ cont. $x_i$, $\forall \, $ discrete $a_j$, $\exists \, $ non-zero linear recurrence differential operators
+\[
+\begin{aligned}
+  & P_i(x_i;D_{x_1} \dots D_{x_n}; E_{a_1} \dots E_{a_m}) \\ 
+  &  C_j(x_i;D_{x_1} \dots D_{x_n}; E_{a_1} \dots E_{a_m}) \qquad \text{ respectively }
+\end{aligned}
+\]
+that \emph{annihilates} $F$, i.e. $PF=0$
+\end{lemma}
+e.g. $(D_x^2 + I)\cos{x} = 0$
+
+\begin{proof}
+  By fundamental lemma \ref{lemma:fundamentallemma}, $\exists \, $ operator(s) 
+\[
+\begin{aligned} 
+  & A(n,E_n,E_{k_1} \dots E_{k_r}; D_{y_1} \dots D_{y_n} ) \\ 
+    & A(x;E_n,E_{k_1} \dots E_{k_r}; D_{y_1} \dots D_{y_n} ) \qquad \text{ respectively }
+\end{aligned}
+\]
+s.t. $AF=0$
+
+It's possible to rewrite $A$ as 
+\[
+\begin{aligned}
+& \begin{gathered}
+  A(n;E_n,E_{k_1} \dots E_{k_r} ; D_{y_1} \dots D_{y_n} ) = P(n,E_n) - \sum_{i=1}^r (E_{k_i}-1)B_i(n;E_n,E_{k_1} \dots E_{k_r}, D_y \dots D_{y_n}) - \\
+  - \sum_{j=1}^s D_{y_j} \overline{B}_j(n;E_n,E_{k_1} \dots E_{k_r}; D_{y_1} \dots D_{y_n}) 
+\end{gathered} \\ 
+  & \begin{gathered}  
+      A(x;E_{k_1} \dots E_{k_r} ; D_x, D_{y_1} \dots D_{y_n} ) = P(x,D_x) - \sum_{i=1}^r (E_{k_i}-1)B_i(x;E_{k_1} \dots E_{k_r}, D_x,D_y \dots D_{y_n}) - \\
+      - \sum_{j=1}^s D_{y_j} \overline{B}_j(x;E_{k_1} \dots E_{k_r}; D_x,D_{y_1} \dots D_{y_n}) \\ 
+\end{gathered}
+\end{aligned}
+\]
+\[
+\begin{aligned}
+  & 0 = P(n,E_n)F - \sum_{i=1}^r (E_{k_i}-1)B_i(n,E_n,E_{k_1}\dots E_{k_r};D_{y_1} \dots D_{y_n})F - \sum_{j=1}^s D_{y_j}\overline{B}_j(n,E_n,E_{k_1} \dots E_{k_i}; D_{y_1} \dots D_{y_n})F \\
+  & 0 = P(x,D_x)F - \sum_{i=1}^r (E_{k_i}-1)B_iF - \sum_{j=1}^sD_{y_j}\overline{B}_jF
+\end{aligned}
+\]
+\end{proof}
+$F$ hypergeometric, s.t. $\frac{E_kF}{F}$, $\frac{D_{y_j}F}{F}$ rational functions.  By induction, $\forall \, $ ``operator monomial''
+\[
+\text{Mon}:= E_n^{\alpha_0} \coprod_{i=1}^r E_{k_i}^{\alpha_i} \coprod_{j=1}^s D_{y_j}^{\beta_j} \qquad \text{ (Op-Mon) }
+\]
+\[
+\text{Mon} := D_x^{\beta_0} \coprod_{i=1}^r E_{k_i}^{\alpha_i} \coprod_{j=1}^s D_{y_j}^{\beta_j}
+\]
+$\frac{\text{Mon}F}{F}$ rational function. 
+
+$\forall \, $ operator $\begin{aligned} & \quad \\
+  & T(n,k_1 \dots k_r; y_1 \dots y_s; E_n, E_{k_1} \dots E_{k_r}; D_{y_1} \dots D_{y_s} ) \\ 
+  & T(k_1 \dots k_r; y_1 \dots y_s; E_{k_1} \dots E_{k_r}; D_x, D_{y_1} \dots D_{y_s} ) \end{aligned}$
+
+$\frac{TF}{F}$ rational function, since $T$ linear combination with coefficients that are polynomials in all variables, of operator monomials.  
+
+In a sense, one could say $T$ belongs to 
+\[
+\begin{aligned}
+  & k[n,k_1 \dots k_r;y_1 \dots y_s] \lbrace \text{ Mon } \rbrace \to \lbrace \text{ Mon } \rbrace, \qquad & k[n,k_1 \dots k_r; y_1 \dots y_s]-\text{module } \\ 
+  & k[k_1 \dots k_r;x,y_1 \dots y_s] \lbrace \text{ Mon } \rbrace \to \lbrace \text{ Mon } \rbrace, \qquad & k[k_1 \dots k_r; x,y_1 \dots y_s]-\text{module } 
+\end{aligned}
+\]
+
+In particular, \[
+\begin{aligned}
+  & B_i(F) = R_iF \\ 
+  & \overline{B}_j(F) = S_jF
+\end{aligned}
+\]
+\[
+\Longrightarrow \begin{aligned}
+  & 0 = P(n,E_n)F - \sum_{i=1}^r (E_{k_i}-1)R_iF - \sum_{j=1}^s D_{y_j}S_jF \\ 
+  & 0 = P(x,D_x)F - \sum_{i=1}^r(E_{k_i}-1)R_iF - \sum_{j=1}^s D_{y_j}S_jF
+\end{aligned}
+\]
+
+$R_i,S_j$ are certificates.  Note Gert Almkinst observed $B_i,B_j$ not necessary to be independent of $(k_1 \dots k_i; y_1 \dots y_s)$
+
+
+
+\begin{corollary}[Fundamental corollary]
+If $\begin{aligned} & \quad \\
+  & F(n,\mathbf{k}, \mathbf{y}) & \text{ hypergeometric functions } \\ 
+  & F(x,\mathbf{k}, \mathbf{y}) & \text{ holonomic functions }
+\end{aligned}$, and vanishes at infinity, $\begin{aligned} & \quad \\
+  & \forall \, \text{ fixed } n \\ 
+  & \forall \, \text{ fixed} x \end{aligned}$, then
+\[
+\begin{aligned}
+  & f(n):=\sum_k \int F(n,\mathbf{k},\mathbf{y}) d\mathbf{y} \\ 
+  & f(x):=\sum_k \int F(x,\mathbf{k},\mathbf{y}) d\mathbf{y}
+\end{aligned}
+\]
+satisfies $\begin{aligned} & \quad \\ 
+  & \text{ linear recurrence equation } \\ 
+  & \text{ differential equation } \end{aligned}$ with polynomial coefficients $\begin{aligned} & \quad \\
+  & P(N,n)f(n) =0  \\
+  & P(D_x,x)f(x) = 0\end{aligned}$
+\end{corollary}
+
+\begin{proof}
+  \[
+\begin{aligned}
+  & \sum_{\mathbf{k}} \int d\mathbf{y} (E_{k_i} - 1) R_iF = 0 & \text{ since } \lim_{ |k_i|\to \infty} F(\mathbf{k},\mathbf{y})=0 \\ 
+  & \sum_{\mathbf{k}} \int d\mathbf{y} D_{y_j}S_jF = 0 & \text{ since } \lim_{ |y_j|\to \infty} F(\mathbf{k},\mathbf{y})=0 
+\end{aligned}
+\]
+Again, $R_i,S_j$ are called \emph{certificates}.
+\end{proof}
+
+\subsubsection{How to find $P(N,n)$ and the certificates}
+
+cf. 2.2. How to find $P(N,n)$ and the certificates of Wilf and Zeilberger (1992) \cite{HWilfDZeilberger1992}.  
+
+Guess the order of $P(N,n)$, say $L$ \\
+\phantom{Guess } in practice, try $L =0$.  Then $L=1, \dots $
+\[
+P(N,n) = \sum_{i=0}^L b_i(n)N^i
+\]
+guess $R_i,S_j$
+\[
+P(N,n) = \sum_{i=1}^r \Delta_{k_i}(R_i,F)  + \sum_{j=1}^s D_{y_j}(S_jF)
+\]
+
+Reading Riese (2003) \cite{ARiese2003},
+
+Let \\
+$\mathbf{K} = \mathbb{C}(q,\tau_1 \dots \tau_m)$ denote transcendental extension of complex numbers $\mathbb{C}$ by indeterminates $q,\tau_1 \dots \tau_m$ (transcendental extension, roughly speaking, includes elements that aren't roots of polynomials over $\mathbb{C}$), \\
+$\mathbf{k} \equiv (k_1 \dots k_r) \in \otimes_{i=1}^r\mathbb{Z}$ \\
+polynomial in $q^n$, $q^{\mathbf{k}}$ over $\mathbf{K}$, $P(n,\mathbf{k}) \in \mathbf{K}[q^n,q^{\mathbf{k}}]$ if $\exists \, P^* \in \mathbf{K}[x_0,x_1\dots x_r]$ s.t. $P(n,\mathbf{K}) = P^*(q^n,q^{k_1} \dots q^{k_r})$ \\
+$R(n,\mathbf{k})$ is a rational function in $q^n, q^{\mathbf{k}}$ over $\mathbf{K}$, $R(n,\mathbf{k}) \in \mathbf{K}(q^n,q^{\mathbf{k}})$, if $\exists \, $ rational function $R^* \in \mathbf{K}(x_0,x_1 \dots x_r)$ s.t. 
+\[
+R(n,\mathbf{k}) = R^*(q^n,q^{k_1} \dots q^{k_r})
+\]
+\begin{definition}
+  $q$-hypergeometric function $F(n,\mathbf{k})$ in $n,\mathbf{k}$ over $\mathbf{K}$ if 
+\[
+\frac{F(n+1,\mathbf{k})}{F(n,\mathbf{k})} , \frac{F(n,k_1 \dots k_i+1 \dots k_r)}{F(n,\mathbf{k})} \in \mathbf{K}(q^n,q^{\mathbf{k}})
+\]
+\end{definition}
+\begin{definition}
+  $\mathbf{k}$-free recurrence, if $\exists \,$ finite set $S$, $S = \lbrace s | s \in \otimes{i=1}^{r+1} \mathbb{Z} \rbrace$, if $\exists \, \sigma_{i,\mathbf{j}}(n) \in \mathbf{K}[q^n]$ s.t.
+\[
+\sum_{(i,\mathbf{j}) \in S} \sigma_{i,\mathbf{j}}(n)F(n-i,\mathbf{k}-\mathbf{j})=0 \quad \, \forall \, (n,\mathbf{k})
+\]
+s.t. $F(n-i,\mathbf{k}-\mathbf{j}) , \, \forall \, (i,\mathbf{j}) \in S$ well-defined.
+
+$S$ is called a structure set.  
+\end{definition}
+
+Thus
+\begin{align}
+& \sum_{(i,\mathbf{j}) \in S} \sigma_{i,\mathbf{j}}(n)F(n-i,\mathbf{k}-\mathbf{j}) = 0 =\\
+& \left( \sum_{(i,\mathbf{j}) \in S}\sigma_{i,\mathbf{j}}(n) N^{-i}\mathbf{K}^{-\mathbf{j}} \right)F(n,\mathbf{k}) = 0 \xrightarrow{ 1/F} \\
+  & \sum_{(i,\mathbf{j})\in S}\sigma_{i,\mathbf{j}}(n)R_{F,i,\mathbf{j}}(n,\mathbf{k}) = 0 
+\end{align}
+Multiplying by denominators on both sides, 
+\begin{equation}
+\sum_{(i,\mathbb{j})\in S}\sigma_{i,\mathbb{j}}(n) P_{F,i,\mathbb{j}}(n,\mathbb{k})=0
+\end{equation}
+
+\begin{definition}
+Let $F(n,\mathbf{k})$ be $q$-proper hypergeometric, $S$ structure set.  
+
+for fixed $s$, $(I,\mathbf{J}) \in S$ is numerator boundary pt. $\equiv (I_s^{\text{num}}, \mathbf{J}_s^{\text{num}})$ if $Ia_s + \mathbf{J} \mathbf{b}_s \geq ia_s + \mathbf{j} \mathbf{b}_s$ \quad \, $\forall \, (i,\mathbf{j}) \in S$
+\end{definition}
+
+cf. pp. 3 Eq. (1.2.15) of Gasper and Rahman (2004) \cite{GGasperMRahman2004} and pp. 4 of Riese (2003) \cite{ARiese2003}:
+\begin{definition}[$q$-shifted factorial or $q$-Pochhammer symbol]
+  \begin{equation}
+    (a;q)_k = \begin{cases} 1 & \text{ if } k = 0 \\
+      (1-a)(1-aq)\dots (1-aq^{k-1}) & \text{ if } k > 0 \\
+      \frac{1}{(1-aq^{-1})(1-aq^{-2})\dots (1-aq^{-k}) } = \frac{1}{(aq^{-k}; q)_k } = \frac{ (-q/a)^kq^{\binom{k}{2}} }{ (q/a;q)_k } & \text{ if } k <0 \end{cases}
+  \end{equation}
+and define
+\begin{equation}
+  (a;q)_{\infty} = \coprod_{k=0}^{\infty}(1-aq^k)
+\end{equation}
+Notice that 
+\begin{equation}
+  \frac{ (a;q)_{\infty} }{ (q^ka;q)_{\infty} } = (a;q)_k
+\end{equation}
+\end{definition}
+
+From Exercise 1.2 on pp. 24 of Gasper and Rahman (2004) \cite{GGasperMRahman2004} and pp. 4 of Riese (2003) \cite{ARiese2003}, 
+\begin{definition}[$q$-binomial coefficient or Gaussian polynomials]
+\begin{equation}
+  {n \brack k}_q := \begin{cases} \frac{ (q;q)_n }{ (q;q)_k (q;q)_{n-k} } & \text{ if } 0 \leq k \leq n \\
+    0 & \text{ otherwise } \end{cases} 
+\end{equation}
+\end{definition} Notice that this definition is exactly the same as the one given by \href{https://en.wikipedia.org/wiki/Gaussian_binomial_coefficient}{Wikipedia}, which is the definition used by \href{http://doc.sagemath.org/html/en/reference/combinat/sage/combinat/q_analogues.html}{Sage Math}, and there, a different notation is used, $\binom{n}{k}_q$ i.e. $\binom{n}{k}_q \equiv {n \brack k}_q$:
+\[
+\binom{n}{k}_q = \frac{(1-q^n)(1-q^{n-1})\dots (1-q^{n-k+1}) }{ (1-q)(1-q^2 ) \dots (1-q^k) } = \frac{(q;q)_n}{(q;q)_{n-k} } \frac{1}{(q;q)_k}
+\]
 
 
 
@@ -2626,6 +2941,13 @@ Jeffrey M. Lee. \textbf{Manifolds and Differential Geometry}, \emph{Graduate Stu
 
 \bibitem{HWilfDZeilberger1992}
 H.S. Wilf and D. Zeilberger, \emph{An algorithmic proof theory for hypergeometric (ordinary and “q”) multisum/integral identities}, Invent. Math., \textbf{108} (1992), 575–633.  \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.443.4980&rep=rep1&type=pdf}
+
+\bibitem{ARiese2003}
+Axel Riese.  \verb|qMultiSum| — A Package for Proving q-Hypergeometric Multiple Summation Identities. \textbf{Journal of Symbolic Computation}. Volume 35, Issue 3, March 2003, Pages 349–376.  \url{http://www.risc.jku.at/publications/download/risc_427/qmultisum.pdf}
+
+\bibitem{GGasperMRahman2004}
+George Gasper, Mizan Rahman.  \textbf{Basic Hypergeometric Series} (Encyclopedia of Mathematics and its Applications).  Cambridge University Press; 2 edition (October 4, 2004). ISBN-13: 978-0521833578
+ 
 
 \end{thebibliography}
 % There is a Third Edition of T. Frankel's \textbf{The Geometry of Physics} \cite{TFrankel2004}, but I don't have the funds to purchase the book (about \$ 71 US dollars, with sales tax). It would be nice to have the hardcopy text to see new updates and to use for research, as the second edition allowed me to formulate fluid mechanics and elasticity in a covariant manner.  Please help me out and donate at \url{ernestyalumni.tilt.com}.  
