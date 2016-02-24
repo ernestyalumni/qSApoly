@@ -1,7 +1,7 @@
 # JonesPoly_and_KH
 ## The Jones Polynomial and Khovanov Homology
 
-Remember that detailed and verbose instructions and descriptions are in `qsuperApoly.pdf` (`qsuperApoly.tex` is the TeX file) in the `LateX_and_pdf` directory of this `qSApoly` repository.  Otherwise, the *gist* is this:
+Remember that detailed and verbose instructions and descriptions are in `qsuperApoly.pdf` (`qsuperApoly.tex` is the LaTeX file) and in [JonesPoly_and_KH.pdf](https://github.com/ernestyalumni/qSApoly/blob/master/LaTex_and_pdf/JonesPoly_and_KH.pdf), with corresponding LaTeX file,in the `LateX_and_pdf` directory of this `qSApoly` repository.  Otherwise, the *gist* is this:
 
 * Be sure to have `knotkit` installed and `SnaPy` installed in `Sage Math`.  
 * If you want to *confirm for yourself* (i.e. recreate the "categorified" Jones polynomial, computed from Khovanov Homology), start with files
