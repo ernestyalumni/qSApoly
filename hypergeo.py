@@ -106,3 +106,4 @@ for alphvar in range(5):
 (JacobiF.subs(n,n+1)/JacobiF).simplify() # (x + 1)*(alpha + n + 1)*(beta + n + 1)/(2*(k - n - 1)*(-beta + k - n - 1))
 (JacobiF.subs(k,k+1)/JacobiF).simplify() # (k - n)*(x - 1)*(-beta + k - n)/((k + 1)*(x + 1)*(alpha + k + 1))
 
+

@@ -2333,6 +2333,239 @@ Since the Snake Lemma and 5-lemma are needed to show, in a civilized manner, the
 
 \end{proof}
 
+\section{Connections to classes}
+
+Tsui \cite{LTsui} uses Baez and Muniain (1994) \cite{JBaezJMuniain1994} as a reference for Chern-Simons Theory, but in my opinion, Jost (2011) \cite{JJost2011}, is a better (from a mathematically clear viewpoint) reference to begin with, and to set notation with.  I follow his development and warn that I'll liberally copy from Jost (2011) \cite{JJost2011} as necessary.  
+
+Let smooth curve $\begin{aligned} & c: \mathbb{R} \to \text{ open } U \subset M \\ & \dot{c} = X \end{aligned}$.
+\[
+D_X s = e_k(X(s^k) + \Gamma^k_{ \; \; ij} s^i X^j ) = e_k (\dot{s}^k + \Gamma^k_{ \; \; ij} s^i \dot{c}^j )
+\]  
+$D_Xs =0$ represents a linear system of $n$ 1st-order ODEs, with initial values $s(0) \in E_{c(0)}$, so $\exists \, !$ solution $s$.  
+
+\begin{definition}
+  solution $s = s(t) $ of $D_{\dot{c}}s =0$ is the \textbf{parallel transport } of $s(0) \in E$ along curve $c:I \to M$.  
+\end{definition}
+
+
+
+
+
+
+
+ 
+\begin{equation}
+  \begin{gathered}
+    A \equiv \Sigma^k_{ \, \, i} \equiv \omega^k_{ \, \, i} \in \Omega^1(M;\mathfrak{gl}(n,\mathbb{R})) = \Gamma(\mathfrak{gl}(n,\mathbb{R}) \otimes T^* \left. M \right|_U ) \\ 
+\begin{aligned}
+&    D: \Gamma(E) \to \Gamma(E) \otimes \Gamma(T^*M) \\
+&    D \equiv d + A \\
+&    D\mu = D(\mu^i e_i) = e_k(d\mu^k + \mu^i \Gamma^k_{ \; \; i}) \equiv (d+A) \mu  
+\end{aligned}
+\end{gathered}
+\end{equation}
+
+
+
+There can appear to be some confusion (at least I become confused many times) with the matrix multiplication on the \emph{values} of a vector vs. matrix multiplication on the ``abstract'' choice of basis for a vector space $V$, $\text{dim}V = n$.  I want to clarify this here.
+
+For a given $x \in V$, and given bases $\lbrace e_j \rbrace_j$, $\lbrace f_i \rbrace_i$, $x$ can be expressed differently (taking different ``values'' that you'd fill in a so-called ``column'' vector) in each of these bases, but $x$ is equal to $x$:
+\[
+x = x^j e_j = y^i f_i \qquad \, i,j = 1 \dots n 
+\]
+For
+\[
+e_j = f_i g^i_{ \; \; j }
+\]
+Then
+\[
+x^j e_j = x^j f_i g^i_{ \; \; j} = (g^i_{ \; \; j}x^j )f_i = y^i f_i
+\]
+Thus
+\[
+gx = y \qquad \, (\text{matrix multiplication on ``values'' on a specified basis; i.e. matrix $\cdot$ column vector $=$ column vector})
+\]
+is the ``usual'' ``linear algebra'' matrix multiplication on column vectors containing the ``values'' of $x$ expressed in terms of a particular choice of basis, into the vector $x$'s values into another choice of bases.  
+\[
+e_j = f_i g^i_{ \; \; j}
+\]
+is how this automorphism $g$ transforms these abstract basis vectors into the other abstract basis vectors. Notice how $g$ is acting from the right of $f_i$'s.    
+
+Following pp. 137 Eq. (4.1.17) of Jost (2011) \cite{JJost2011} and pp. 15 Eq. (2.1.5) Ballmann \cite{WBallmann2002}:
+
+So for open cover $\lbrace U_{\alpha} \rbrace_{\alpha \in \mathcal{A}}$, s.t. $\exists \, $ local trivializations of $E$ on each $U_{\alpha}$, $\Phi_{\alpha} : \left. E \right|_{\pi^{-1}(U_{\alpha})} = U_{\alpha} \times V$ (local trivialization is an isomorphism, hence the $=$ sign).  
+
+Considering any 2 overlapping $U_{\alpha}, U_{\beta} \subset M$, $U_{\alpha} \cap U_{\beta} \neq \emptyset$, then for $\begin{aligned} & \quad \\
+  & \Phi_{\alpha} : \left. E \right|_{\pi^{-1}(U_{\alpha}) } = U_{\alpha} \times V \\ 
+  & \Phi_{\beta} : \left. E \right|_{\pi^{-1}(U_{\beta}) } = U_{\beta} \times V 
+\end{aligned}$
+and so the choice of basis for $V$, for each of these trivializations $\Phi_{\alpha}$, $\Phi_{\beta}$ is different, in general.  
+
+Supposing local trivialization/frame $\begin{aligned} & \quad \\ 
+  & \Phi_{\alpha}^{-1}  & = (e_1 \dots e_n) \text{ of $E$ over open $U_{\alpha} \subset M$ } \\ 
+  & \Phi_{\beta}^{-1}   & = (f_1 \dots f_n) \text{ of $E$ over open $U_{\beta} \subset M$ } \\ 
+\end{aligned}$ s.t. $U_{\alpha} \cap U_{\beta} \neq \emptyset$
+
+$\exists \, $ smooth $g_{\beta \alpha} : U_{\alpha} \cap U_{\beta} \to Gl(n;\mathbb{R})$, in that $g_{\beta \alpha}(p) : V \to V$, s.t.
+\[
+e_j = f_i g^i_{\; \; j} \text{ or } \Phi_{\alpha}^{-1} = \Psi^{-1} g
+\]
+Let $s \in \Gamma(E)$
+\[
+s = \sigma^j_{\alpha} e_j = \sigma^j_{\alpha} f_k g^k_{\; \; j} = g^k_{ \; \; j} \sigma^j_{\alpha} f_k = \sigma^k_{\beta} f_k \Longrightarrow \sigma^k_{\beta} = g^k_{ \; \; j} \sigma^j_{ \alpha }
+\]
+$s(p) = \Phi^{-1}(p,\sigma(p))$ (keep in mind this form of the section $s\in \Gamma(E)$).
+
+For 
+\[
+\begin{gathered}
+  Ds = e_k ( d\sigma^k + \sigma^i \Gamma^k_{ \; \; i} ) \equiv e_k (d\sigma^k + \sigma^i A^k_{ \; \; i }) \equiv e_k ( d\sigma^k + \sigma^i \omega^k_{ \; \; i } ) \\
+  Ds = f_l g^l_{ \; \; k} (d ((g^{-1})^k_{ \; \; m} \sigma^m_{\beta} ) + (g^{-1})^i_{ \; \; j} \sigma_{\beta}^j (A_{\alpha})^k_{ \; \; i} ) = f_l ( d\sigma^l_{ \beta} + g^l_{ \; \; k} d(g^{-1})^k_{ \; \; m} \sigma^m_{ \beta } + g^l_{ \; \; k} (A_{\alpha})^k_{ \; \; i } (g^{-1})^i_{ \; \; j} \sigma^j_{ \beta } ) = \\
+  = f_l ( d\sigma^l_{\beta} + \sigma^j_{\beta} (A_{\beta})^l_{ \; \; m } ) \\ 
+  \Longrightarrow (A_{\beta})^l_{ \; \; m} = g^l_{ \; \; k} d(g^{-1})^k_{ \; \; m} + g^l_{ \; \; k} (A_{\alpha})^k_{ \; \; i } (g^{-1})^i_{ \; \; m } \text{ or } A_{\beta} = g d(g^{-1}) + g A_{\alpha} g^{-1}
+\end{gathered}
+\]
+with $g \equiv g_{\beta \alpha} : V_{\alpha} \to V_{\beta}$ (so to speak).  
+
+Consider dual (vector) bundle $E^* \to M$.  
+
+cf. Jost (2011) \cite{JJost2011}, Def. 4.1.3,
+\begin{definition}
+Let connection $D^*$ dual to $D$ on dual bundle $E^*$ defined by 
+\[
+d(s,t^*) = (Ds,t^*) + (s,D^*t^*) \qquad \, \forall \, s \in \Gamma(E), \, t^* \in \Gamma(E^*)
+\]
+\end{definition}
+For $\omega \in \Gamma(E^*)$, 
+\[
+\begin{gathered}
+  D^*_X \omega = X^j D^*_{\frac{ \partial }{ \partial x^j} } \omega = X^j D^*_{\frac{ \partial }{ \partial x^j} } \omega_i e^i = X^j \left( \frac{ \partial \omega_i}{ \partial x^j} e^i  - \omega_k \Gamma^k_{ \; \; ij} e^i \right) = X^j \left( \frac{ \partial \omega_i }{ \partial x^j} - \omega_k \Gamma^k_{ \; \; ij} \right) e^i  \\ 
+  D^* \omega = e^i( d\omega_i + - \omega_k \Gamma^k_{ \; \; i } )
+\end{gathered}
+\]
+Thus, for the orthonormal frame and dual frame, so that $(e_i , e^j) = \delta_i^{ \; \; j}$ (and remember, it equals a number; derivatives of numbers are always $0$), 
+\[
+\begin{gathered}
+  d(e_i, e^j) = d(\delta_i^{ \; \; j} = 0 = (De_i, e^j ) + (e_i, D^* e^j) = (A^k_{ \; \; i} e_k ,e^j) + (e_i, (A^*)_k^{ \; \; j} e^k ) = A^j_{ \; \; i} + (A^*)_i^{ \; \; j} \\
+  (A^*)_i^{ \; \; j} = -A^j_{ \; \; i} \Longrightarrow A^* = -A^T
+\end{gathered}
+\]
+
+cf. Def. 4.1.4 of Jost (2011) \cite{JJost2011}, pp. 138,
+\begin{definition}
+  Let $E_1, E_2$ vector bundles over $M$ with respective connections $D_1,D_2$.  \\
+Then \textbf{induced connection} $D$ on $E:= E_1 \otimes E_2$, defined by 
+\[
+D(s_1 \otimes s_2) = D_1s_1 \otimes s_2 + s_1 \otimes D_2 s_2 \qquad \, \forall \, s_i \in \Gamma(E_i) , \qquad \, i = 1,2
+\]
+\end{definition}
+Considering the case of $\text{End}(E) = E\otimes E^*$,
+\[
+D:\Gamma(\text{End}(E)) \to \Gamma(\text{End}(E)) \otimes \Gamma(T^*M)
+\]
+
+Let $\sigma = \sigma^i_{ \; \; j} e_i \otimes e^j \in \Gamma(\text{End}(E))$
+\[
+\begin{gathered}
+  D\sigma = D(\sigma^i_{ \; \; j}e_i) \otimes e^j + \sigma^i_{ \; \; j} e_i \otimes D^* e^j = (d\sigma^k_{ \; \; j} + \sigma^i_{ \; \; j} A^k_{ \; \; i}) e_k \otimes e^j + \sigma^i_{ \; \; j} e_i \otimes (A^*)_k^{ \; \; j} e^k = \\
+  = (d\sigma^k_{ \; \; j} + \sigma^i_{ \; \; j} A^k_{ \; \; i} )e_k \otimes e^j + \sigma^k_{ \; \; i} e_k \otimes -A^i_{ \; \; j} e^k = (d\sigma^k_{ \; \; j} + [A, \sigma]^k_{ \; \; j } ) e_k \otimes e^j
+\end{gathered}
+\]
+
+
+
+
+Let vector bundle $E \to M$, with bundle metric $\langle \cdot , \cdot \rangle$.  
+
+\begin{definition}
+\emph{Metric connection} $D$ on $E$ if 
+\[
+d\langle \mu, \nu \rangle = \langle D\mu, \nu \rangle + \langle \mu, D\nu \rangle \qquad \, \forall \, \mu , \nu \in \Gamma(E)
+\]
+\end{definition}
+
+cf. Lemma 4.2.1. of Jost (2011) \cite{JJost2011}
+\begin{lemma}
+  For parallel transport on vector bundle induced by metric connection, preserves bundle metric, in that parallel transport constitutes an isometry of corresponding fibers, i.e. for $s=s(\tau), t=t(\tau) \in \Gamma(E)$ s.t. they get parallely transported, i.e. $D_{\dot{c}}s = D_{\dot{c}}t =0$ for curve $c:I\to M$ \emph{in} $M$, $\frac{d}{d\tau} \langle s(\tau), t(\tau) \rangle =0$.  
+\end{lemma}
+
+\begin{proof}
+  Let smooth curve $\begin{aligned} & \quad \\
+    & c:I \to M \\
+    & \dot{c} = X\end{aligned}$
+
+in general, let $X \in T_xM$, then $X\langle \mu, \nu \rangle = d\langle \mu, \nu \rangle(X) = \langle D_X \mu , \nu \rangle + \langle \mu, D_X \nu \rangle$
+\[
+\xrightarrow{ X = \dot{c}} \langle D_{\dot{c}} \mu, \nu \rangle + \langle \mu, D_{\dot{c}} \nu \rangle 
+\]
+$D_{\dot{c}}\mu = D_{\dot{c}}\nu = 0$, i.e. $\mu,\nu$ parallel along $c$.  
+
+\[
+\Longrightarrow \frac{d}{dt} \langle \mu(t), \nu(t) \rangle = 0 
+\]
+\end{proof}
+
+cf. Lemma 4.2.2. of Jost (2011) \cite{JJost2011}
+\begin{lemma}
+  Let metric connection $D$ on vector bundle $E$ with bundle metric $\langle \cdot , \cdot \rangle$.   \\
+Assume that with respect to metric bundle chart (cf. Def. 2.1.12, Thm. 2.1.3 of Jost (2011) \cite{JJost2011}.  
+\[
+D = d+A
+\]
+Then, $\forall \, X \in TM$, $\begin{aligned} & \quad \\
+  & A(X) \in \mathfrak{o}(n) \qquad \, & (= \text{Lie algebra of $O(n)$}) \qquad & (n=\text{ rank of $E$}) \\ 
+  & A(X) \in \mathfrak{u}(n) \qquad \, & (= \text{Lie algebra of $U(n)$}) \qquad & (n=\text{ rank of $E$}) 
+\end{aligned}$
+\end{lemma}
+
+\begin{proof}
+  Thm. 2.1.3: metric bundle chart $(f,U)$ generates sections $e_1 \dots e_n $ on $U$ s.t. $e_1 \dots e_n$ form orthonormal basis on fiber $E_x$, \, $\forall \, x \in U$ i.e. $\langle e_i(x), e_j(x) \rangle = \delta_{ij}$.  
+
+Moreover, since $e_i$ constant in bundle chart $(f,U)$, define exterior derivative $d$.  
+\[
+d\mu_i \equiv 0 \qquad \, (i=1\dots n)
+\]
+Let $X\in T_xM$, $x\in U$.  
+\[
+0 = X\langle e_k,e_l\rangle = \langle D_X e_k,e_l \rangle + \langle e_k , D_Xe_l\rangle = \langle X^j \Gamma^m_{ \; \; kj } e_m, e_l \rangle + \langle e_k , x^j \Gamma^m_{ \; \; lj } e_m \rangle
+\]
+For $\mathbb{K} = \mathbb{R}$, 
+\[
+\Longrightarrow A^l_{ \; \; k} + A^k_{ \; \; l} = 0 \text{ so } A = -A^T \text{ skew symmetric } 
+\]
+
+\end{proof}
+
+For the case/issue of field $\mathbb{K} = \mathbb{C}$ (complex numbers) and dealing with the so-called \emph{Hermitian} metric on a vector bundle with complex numbers involved, then I took a look at the articles on \href{http://mathworld.wolfram.com/HermitianInnerProduct.html}{Hermitian Inner Product}, and \href{https://en.wikipedia.org/wiki/Hermitian_manifold}{Hermitian metric}:
+
+
+\[
+\begin{gathered}
+\text{ Hermitian Inner Product: } \\
+\begin{aligned}
+  \langle u+v , w \rangle & = \langle u,w \rangle + \langle v,w \rangle \\ 
+  \langle u , v+w \rangle & = \langle u,v \rangle + \langle u,w \rangle \\ 
+  \langle \alpha u , v \rangle & = \alpha \langle u,v \rangle   \\ 
+  \langle u , \alpha v \rangle & = \overline{\alpha} \langle u,v \rangle \\
+  \langle u ,  v \rangle & = \overline{  \langle v,u \rangle } \\
+\langle u, u \rangle & \geq 0 \qquad \langle u,u \rangle =0 \iff u =0 
+\end{aligned} \end{gathered} \qquad \text{ vs. } \qquad  \begin{gathered}
+  \text{ Hermitian manifold or ``Hermitian bundle metric on a vector bundle'' } \\ 
+  \langle \cdot , \cdot \rangle \equiv h \in \Gamma(E\otimes E^*)^* \text{ s.t. } \\ 
+  h_p( \eta, \overline{\xi} )  = \overline{h_p(\eta, \overline{\xi} )} \qquad \, \forall \, \xi, \eta \in E_p \\ 
+  h_p(\xi, \overline{\xi} ) > 0 \qquad \, \forall \, \xi \in E_p, \, \xi \neq 0 
+\end{gathered}
+\] 
+
+Then, using the Hermitian inner product rule,
+\[
+\begin{gathered}
+  d\langle e_i, e_j\rangle = \langle De_i , e_j \rangle + \langle e_i , De_j \rangle = \langle (d+A)e_i, e_j\rangle + \langle e_i, (d+A)e_j \rangle = \\
+  = \langle 0 + A^k_{ \; \; i} e_k, e_j \rangle + \langle e_i, 0 + A^k_{ \; \; j} e_k \rangle = \langle A^k_{ \; \; i} e_k , e_j \rangle + \langle e_i , A^k_{ \; \; j} e_k \rangle = \\
+    = A^j_{ \; \; i} + (A^i_{ \; \; j} )^* = 0 \Longrightarrow A^j_{ \; \; i} = - (A^i_{ \; \; j})^* \text{ so } A= -A^{\dag}
+\end{gathered}
+\]
+
 \part{Gauge Theory}
 
 The story of Gauge Theory in Physics is a beautiful story - it is the triumph of geometry in physical theories of matter.  
@@ -3514,7 +3747,13 @@ Yvette Kosmann-Schwarzbach, \textbf{Groups and Symmetries: From Finite Groups to
 \bibitem{CTaubes2011}
 Clifford Henry Taubes, \textbf{Differential Geometry: Bundles, Connections, Metrics and Curvature} (Oxford Graduate Texts in Mathematics, Vol. 23) Oxford University Press; 1 edition (December 1, 2011). ISBN-13: 978-0199605873
 
-\bibitem{WBallmann1999}
+\bibitem{JJost2011}
+J\"{u}rgen Jost. \textbf{Riemannian Geometry and Geometric Analysis (Universitext)}. 6th ed. 2011 Edition.  Springer; 6th ed. 2011 edition (August 9, 2011).  ISBN-13: 978-3642212970
+
+\bibitem{LTsui}
+Lokman Tsui.  ``Applications of Chern-Simons Theory in knot theory.'' \url{http://ms.mcmaster.ca/~boden/students/Tsui-MSc.pdf}
+
+\bibitem{WBallmann2002}
 Werner Ballmann. ``Vector bundles and connections'', \url{http://people.mpim-bonn.mpg.de/hwbllmnn/archiv/conncurv1999.pdf}
 
 \bibitem{JLee2009}
@@ -3531,9 +3770,6 @@ George Gasper, Mizan Rahman.  \textbf{Basic Hypergeometric Series} (Encyclopedia
  
 \bibitem{FCaruso1999}
 F. Caruso, \textbf{A Macsyma Implementation of Zeilberger's Fast Algorithm}, RISC-Linz Report Series n. \textbf{99-21}, J. Kepler University, Linz, 1999.
-
-\bibitem{MCullerNDunfieldJWeeks}
-M. Culler, N. M. Dunfield, and J. R. Weeks, SnapPy, a computer program for studying the geometry and topology of 3-manifolds, \url{http://snappy.computop.org}
 
 \bibitem{DBar-Natan2002}
 Dror Bar-Natan. ``On Khovanov’s categorification of the Jones polynomial.'' \textbf{Algebraic \& Geometric Topology}.  Volume 2 (2002) 337–370.  \href{http://arxiv.org/abs/math/0201043}{arXiv:math/0201043v3 [math.QA]}
