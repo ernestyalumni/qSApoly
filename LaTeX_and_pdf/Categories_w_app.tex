@@ -1,0 +1,1775 @@
+% file: Categories_w_app.tex
+% Categories with applications
+% 
+% Typeset with LaTeX format
+% cf. Math Into Latex Third Edition pp. 290
+% This file has my modifications
+%
+% github        : ernestyalumni
+% gmail         : ernestyalumni 
+% linkedin      : ernestyalumni 
+% twitter       : ernestyalumni 
+% wordpress.com : ernestyalumni
+%
+% 
+% This code is open-source, governed by the Creative Common license.  Use of this code is governed by the Caltech Honor Code: ``No member of the Caltech community shall take unfair advantage of any other member of the Caltech community.'' 
+% 
+
+
+\documentclass[twoside,landscape,10pt]{amsart}
+
+%\setcounter{tocdepth}{1} % to get subsubsections in toc 
+% cf. http://www.latex-community.org/forum/viewtopic.php?f=47&p=44760
+
+
+\usepackage{amsmath,amssymb,latexsym}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue}
+
+\usetikzlibrary{matrix,arrows}
+
+%\usepackage[parfill]{parskip}
+
+\usepackage{multicol}
+
+%\usepackage{fontspec}
+%\setmainfont{Times New Roman} % this sets the real Times New Roman via modern TeX engines
+
+%\usepackage{mathptmx}
+
+%\hoffset-
+
+\oddsidemargin=15pt
+\evensidemargin=5pt
+\hoffset-40pt
+\voffset-55pt
+\topmargin=-4pt
+\headsep=5pt
+\textwidth=1120pt
+\textheight=620pt
+\paperwidth=1200pt
+\paperheight=700pt
+
+\marginparwidth=12pt
+
+\parindent0.0em
+
+%\linespread{1.2}
+
+%plain makes sure that we have page numbers
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+%\newtheorem*{main}{Main Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{notation}{Notation}
+
+%\numberwithin{equation}{section}
+
+%This defines a new command \questionhead which takes one argument and
+%prints out Question #. with some space.
+\newcommand{\questionhead}[1]
+  {\bigskip\bigskip
+   \noindent{\small\bf Question #1.}
+   \bigskip}
+
+\newcommand{\problemhead}[1]
+  {
+   \noindent{\small\bf Problem #1.}
+   }
+
+\newcommand{\exercisehead}[1]
+  { \smallskip
+   \noindent{\small\bf Exercise #1.}
+  }
+
+\newcommand{\solutionhead}[1]
+  {
+   \noindent{\small\bf Solution #1.}
+   }
+
+
+
+%-----------------------------------
+\begin{document}
+%-----------------------------------
+\title[Categories]{Categories}
+\author{Ernest Yeung}
+\address{}
+\email{ernestyalumni@gmail.com}
+\urladdr{http://ernestyalumni.wordpress.com}
+\thanks{linkedin : ernestyalumni }
+
+%I am on linkedin: ernestyalumni. 
+
+\keywords{Category Theory, Categories, Database}
+\subjclass[Categories]{Category Theory}
+\date{11 juillet 2015}
+\begin{abstract}
+Everything about Categories, Category Theory, with applications to (relational) databases and other applications.
+\end{abstract}
+
+\maketitle
+
+
+
+\tableofcontents
+
+
+\begin{multicols*}{2}
+
+
+From the section on ``Terminology'' of the Preface of Barr and Wells (1998) \cite{BW1998}:
+
+\begin{quote}
+``In most scientific disciplines, notation and terminology are standardized, of- ten by an international nomenclature committee. (Would you recognize Ein- stein’s equation if it said $p = HU^2$?) We must warn the nonmathematician reader that such is not the case in mathematics. There is no standardization body and terminology and notation are individual and often idiosyncratic.''
+\end{quote}
+
+To try to bridge the difference choice of notation and through comparison, suggest the ``best'' notation that's easy to remember and easy to use, I'll present all the different types of notation that I come across as much as I can.  
+
+\subsection{Classes}
+
+From Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}:
+
+\begin{enumerate}
+  \item members of each class are sets
+  \item $\forall \, $ ``property'' $P$ can form class of all sets with property $P$ 
+
+e.g. \textbf{universe} - class of all sets $\mathcal{U}$
+\item if $X_1,X_2, \dots X_n$ classes, $(X_1, X_2 \dots X_n)$ is a class
+  \item $\forall \, $ set is a class (equivalently, every member of a set is a set)
+  
+    \textbf{ proper classes } - classes that aren't sets \\
+    $\Longrightarrow $ proper classes cannot be members of any class
+
+proper classes examples: 
+\begin{itemize}
+  \item universe $\mathcal{U}$  
+  \item class of all vector spaces
+  \item class of all topological spaces
+  \item class of all automata are proper classes
+\end{itemize}
+ (4) $\Longrightarrow$ \emph{Axiom of Replacement}  
+\item $\nexists $ surjection from set to proper class
+\end{enumerate}
+
+\section{Categories}
+
+\begin{definition}[Category] Using the notation of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}: 
+
+  \textbf{category} $\mathbf{C}$ is quadruple $\mathbf{C} = (\text{Ob}, \text{hom},1,\circ)$ consisting of 
+
+class $\text{Ob}$, $\text{Ob}$ collection, whose members are objects, $A,B,C \in \text{Ob}$, \\
+$\forall \, (A,B)$, $A,B \in \text{Ob}$, $\text{hom}(A,B)$ collection of morphisms/arrows \\
+$\forall \, f \in \text{hom}(A,B)$, $f:A\to B$ \\
+$\forall \, A \in \text{Ob}$, $\exists \, $ identity morphism/arrow, $1_A : A \to A$ s.t.
+
+\begin{enumerate}
+  \item[(a)] \emph{composition} : $\forall \, A,B,C \in \text{Ob}$, $\begin{aligned} & \quad \\
+    & f:A \to B \\
+    & g:B \to C \end{aligned}$, then $g\circ f: A \to C$
+  \item[(b)] associativity \quad \, $\begin{aligned}  & \quad \\
+    & f:A \to B \\
+    & g:B \to C \\
+    & h:C \to D \end{aligned}$ \quad \, then $h\circ (g\circ f) = (h\circ g) \circ f$
+\item[(c)] if $f:A \to B$, $1_B \circ f = f=  f\circ 1_A$
+\end{enumerate}
+
+In my notation,
+
+category $\mathbf{A}$ is quadruple $\mathbf{A} = (\text{Obj}(\mathbf{A}), \text{Mor}\mathbf{A}, 1,\circ)$ s.t.
+\begin{enumerate}
+  \item $A \in \text{Obj}(\mathbf{A})$ is called an \emph{object}
+  \item $\text{Mor}\mathbf{A} = \bigcup_{ \text{Hom}(A,B) \in \mathbf{A}} \text{Hom}(A,B)$, $f: A \to B \in \text{Hom}(A,B)$ is a \emph{morphism}
+  \item $\forall \, A \in \text{Obj}(\mathbf{A})$, $\exists \, 1_A : A \to A$
+  \item $\forall \, \begin{aligned} & \quad \\
+    & f: A \to B \in \text{Hom}(A,B) \\
+    & g:B\to C \in \text{Hom}(B,C) \end{aligned}$, \qquad \, $g\circ f : A \to C \in \text{Hom}(A,C)$ s.t. 
+\begin{enumerate}
+  \item \emph{associativity} $\forall \, \begin{aligned} & \quad \\
+    & f: A \to B \\
+    & g: B \to C \\
+    & h: C \to D \end{aligned}$, $h\circ (g\circ f) = (h\circ g) \circ f $ 
+\item $\forall \, f:A \to B \in \text{Hom}(A,B)$, $1_B \circ f = f $ and $f\circ 1_A = f$ 
+\item $\text{Hom}(A,B) \in \text{Mor}\mathbf{A}$ pairwise disjoint (i.e. $\text{Hom}(A,B) \bigcap \text{Hom}(C,D) \neq \emptyset$ if $C\neq A$ or $D\neq B$)
+\end{enumerate}
+\end{enumerate}
+
+
+\end{definition}
+
+
+\subsection{Examples}
+
+\begin{itemize}
+  \item $\mathbf{\text{Set}} = (\text{Ob}_{\mathbf{\text{Set}}}, \text{hom}_{\mathbf{\text{Set}}},1,\circ)$ where \\
+$\text{Ob}_{\mathbf{\text{Set}}}$ is the class of all sets \\
+$\text{hom}_{\mathbf{\text{Set}}}$ is the class of all functions on a set to another set
+\item $\text{Vec}$
+
+\[
+\begin{aligned}
+  & \text{Obj}\text{Vec} & \equiv \text{ all real vector spaces } \\ 
+  & \text{Mor}\text{Vec} & \equiv \text{ all linear transformations between them (between real vector spaces) }
+\end{aligned}
+\]
+
+\item \textbf{Monoid}.  Consider a monoid as a triple $(M, \cdot, e)$.  \\
+Every semigroup $(M,\cdot)$ (recall that a \emph{semigroup} is a set $S$ with binary operation $\cdot $, i.e. s.t.
+
+ \quad \,  $\begin{aligned} & \quad \\
+ & S\times S \xrightarrow{\cdot } S \\ 
+  & \forall \, a,b ,c \in S, \, (a\cdot b)\cdot c = a\cdot (b\cdot c) \quad \, \text{ (associativity) } \end{aligned}$ 
+
+\quad \, (but no inverse, necessarily!)) that also has a unit $e$ can be made into a category $\mathbf{C}$ 
+
+$\Longrightarrow \mathbf{C}(M,\cdot ,e) = (\text{Ob}, \text{hom}, 1, \circ)$, a category $\mathbf{C}$ with only 1 object, i.e. $\text{Ob} = \lbrace M \rbrace$, so that \\
+$\text{Ob} = \lbrace M \rbrace$ \\
+$\text{hom}(M,M) = M$ \\
+$1_M = e$ \\
+$y \circ x = y \cdot x$
+\end{itemize}
+
+\section{Duality}
+
+Given a category $\mathbf{A} = ( \text{Ob}, \text{hom}_{\mathbf{A}}, 1, \circ)$, 
+\begin{definition}[dual opposite category]
+\textbf{dual} or \textbf{opposite} category of $\mathbf{A}$, denoted $\mathbf{A}^{\text{op}}$, is   
+\begin{equation}
+\mathbf{A}^{\text{op}}  = (\text{Ob}, \text{hom}_{\mathbf{A}^{\text{op}}} , 1 , \circ^{\text{op}})
+\end{equation}
+s.t.
+\[
+\begin{aligned}
+  & \text{hom}_{\mathbf{A}^{\text{op}}}(A,B) = \text{hom}_{\mathbf{A}}(B,A) \\ 
+  & f\circ^{\text{op}} g = g \circ f
+\end{aligned}
+\]
+\end{definition}
+
+i.e. 
+
+$\forall \, $ category $\mathbb{A} = (\text{Obj}(\mathbf{A}), \text{Mor}\mathbf{A}, 1, \circ)$, \\
+\textbf{dual} (or opposite) category of $A$ is $\mathbf{A}^{\text{op}} = (\text{Obj}(\mathbf{A}), \text{Mor}\mathbf{A}^{\text{op}}, 1, \circ^{\text{op}})$ where $\forall \, \text{Hom}_{\mathbf{A}^{\text{op}}}(A,B) \in \text{Mor}\mathbf{A}^{\text{op}}$, $\text{Hom}_{\mathbf{A}^{\text{op}}}(A,B) = \text{Hom}_{\mathbf{A}}(B,A)$ and 
+\[
+f\circ^{\text{op}}g = g\circ f
+\]
+e.g. if $\mathbf{A} = (M,\cdot, e)$ monoid, then $\mathbf{A}^{\text{op}} = (M, \widehat{\cdot},e)$ where $a\widehat{\cdot} b = b\cdot a$
+
+
+\subsubsection{Example}
+
+\begin{itemize}
+  \item $\text{Vec}^{\text{op}}$
+\[
+\text{Vec}^{\text{op}} = (\text{Obj}(\text{Vec}), \text{Hom}_{\text{Vec}^{\text{op}}}, 1, \circ^{\text{op}})
+\]
+s.t.
+\[
+\text{Hom}_{\text{Vec}^{\text{op}} }(W,V) = \text{Hom}_{\text{Vec}}(V,W)
+\]
+
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+U & V & W \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  edge[bend right=45] node [below] {$g\circ f$} (m-1-3)
+  (m-1-2) edge node [above] {$g$} (m-1-3);
+\end{tikzpicture} \qquad \, \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+U & V & W \\
+};
+  \path[->]
+  (m-1-3) edge node [above] {$g$} (m-1-2)
+  edge[bend left=45] node [below] {$f\circ^{\text{op}} g$} (m-1-1)
+  (m-1-2) edge node [above] {$f$} (m-1-1);
+\end{tikzpicture}
+
+
+\end{itemize}
+
+
+\section{Functors}
+
+\begin{definition}[Functors]
+\textbf{(covariant) functor} 
+\[
+F : \mathbf{C} \to \mathbf{D}
+\]
+if $\forall \, C \in \text{Ob}_{\mathbf{C}}$, then $F(C) \in \text{Ob}_{\mathbf{D}}$
+
+s.t. $\forall \, f \in \text{hom}_{\mathbf{C}}$, say $f\in \text{hom}_{\mathbf{C}}(B,C)$ \\
+\phantom{s.t. } $F(f) \in \text{hom}_{\mathbf{D}}(F(B),F(C))$
+
+and s.t. 
+
+$F(1_{\mathbf{C}}) = 1_{F(C)}$
+
+$A,B,C \in \text{Ob}_{\mathbf{C}}$, $\begin{aligned} & \quad \\
+  & f:A \to C \\
+  & g:B\to C \end{aligned}$, so $g\circ f : A \to C$
+
+then $F(g\circ f) = F(g) \circ F(f)$
+\end{definition}
+i.e.
+
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+\mathbf{C} & \mathbf{D} \\
+};
+%  \path[-stealth]
+  \path[->]
+  (m-1-1) edge node [above] {$F$} (m-1-2);
+\end{tikzpicture}
+
+if
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.4em, column sep=1.8em, minimum width=1.2em]
+  {
+C & F(C) \\
+\mathbf{C} & \mathbf{D} \\
+};
+\path[|->]
+(m-1-1) edge node [above] {$F$} (m-1-2);
+  \path[->]
+  (m-2-1) edge node [above] {$F$} (m-2-2);
+\end{tikzpicture}
+
+s.t. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+B & C \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2);
+\end{tikzpicture} $\Longrightarrow $
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+F(B) & F(C) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F(f)$} (m-1-2);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+A & B & C \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  edge[bend right=45] node [below] {$g\circ f$} (m-1-3)
+  (m-1-2) edge node [above] {$g$} (m-1-3)
+;
+\end{tikzpicture} 
+$\Longrightarrow$ \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+F(A) & F(B) & F(C) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F(f)$} (m-1-2)
+  edge[bend right=45] node [below] {$F(g\circ f)$} (m-1-3)
+  (m-1-2) edge node [above] {$F(g)$} (m-1-3)
+;
+\end{tikzpicture} 
+
+i.e.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+B & C \\
+F(B) & F(C) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+          edge node [auto]  {$F$} (m-2-1)
+  (m-1-2) edge node [auto]  {$F$} (m-2-2)
+  (m-2-1) edge node [above] {$F(f)$} (m-2-2)        
+  ;
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+A & B & C \\
+F(A) & F(B) & F(C) \\ 
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  edge[bend left=45] node [above] {$g\circ f$} (m-1-3)
+  edge node [auto] {$F$} (m-2-1)
+  (m-1-2) edge node [above] {$g$} (m-1-3)
+  edge node [auto] {$F$} (m-2-2)
+  (m-1-3) edge node [auto] {$F$} (m-2-3)
+  (m-2-1) edge node [above] {$F(f)$} (m-2-2)
+  edge[bend right=45] node [below] {$F(g\circ f) = F(g) \circ F(f)$} (m-2-3)
+  (m-2-2) edge node [above] {$F(g)$} (m-2-3)  
+;
+\end{tikzpicture} 
+
+\begin{definition}
+  \emph{(contravariant)} functor $F$ is s.t. 
+\begin{equation}
+  \mathbf{C}^{\text{op}} \xrightarrow{F} \mathbf{D}
+\end{equation}
+so that 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+B & C \\
+F(B) & F(C) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+          edge node [auto]  {$F$} (m-2-1)
+  (m-1-2) edge node [auto]  {$F$} (m-2-2)
+  (m-2-2) edge node [above] {$F(f)$} (m-2-1)        
+  ;
+\end{tikzpicture}
+
+
+\end{definition}
+
+
+\begin{definition}[covariant hom-functor]
+$\forall \, $ \emph{locally small category} $\mathbf{C}$ (i.e. $\text{hom}_{\mathbf{C}}$ is actually a set and not a proper class), $\forall \, A \in \text{Ob}_{\mathbf{C}}$, $\exists \, $ \text{covariant hom-functor} $\text{hom}(A, - ) : \mathbf{C} \to \mathbf{\text{Set}}$ s.t. $\forall \, B \xrightarrow{f} C$, 
+\[
+\text{hom}(A,-)(f) = \text{hom}(A,B) \xrightarrow{ \text{hom}(A,f)} \text{hom}(A,C)
+\]
+where $\text{hom}(A,f)(g) = f\circ g$
+\end{definition}
+
+i.e. $\forall \, X,Y \in \text{Ob}_{\mathbf{C}}$, $\forall \, X \xrightarrow{f} Y$,  \\
+
+then 
+\[
+\text{hom}(A,-)(f) = \text{hom}(A,f)
+\]
+and
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\text{hom}(A,X) & \text{hom}(A,Y) \\
+g & f\circ g \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\text{hom}(A,f)$} (m-1-2);
+  \path[|->]
+  (m-2-1) edge node [above] {$$} (m-2-2)
+;
+\end{tikzpicture} 
+with $g\in \text{hom}(A,X)$
+
+
+$M$-set is a covariant hom-functor on a monoid $\mathbf{C}(M,\cdot,e) \equiv \mathbf{C}(M)$, $M$ a monoid, i.e. the category that is the domain that the covariant hom-functor maps from is a monoid (category).  
+
+\begin{definition}[forgetful functor]
+$\forall \, $ constructs (i.e. categories)
+\begin{itemize}
+  \item $\text{Vec}$
+  \item $\text{Grp}$
+  \item $\text{Top}$
+  \item $\text{Rel}$
+\end{itemize}
+
+$\exists \, U : \mathbf{A} \to \text{Set}$ s.t. 
+
+\[
+\begin{aligned}
+  & U(A) \qquad \, & \text{ is underlying set } \\ 
+    & U(f) =f \qquad \, & \text{ is underlying function } 
+\end{aligned}
+\]
+
+
+\end{definition}
+
+
+\begin{definition}
+  given functor $F: \mathbf{A} \to \mathbf{B}$, \\
+\textbf{dual functor} or \textbf{opposite functor} $F^{\text{op}} : \mathbf{A}^{\text{op}} \to \mathbf{B}^{\text{op}}$ is given by  \\
+$\forall \, f : A \to A'$, $f\in \text{Hom}(A,A')$, 
+\[
+F^{\text{op}}f = Ff 
+\]
+$Ff : FA \to FA'$, $Ff \in \text{Hom}(FA,FA')$
+\end{definition}
+
+
+
+\subsubsection{Examples}
+
+\begin{itemize}
+  \item \textbf{duality functor for vector spaces } $(*) : \text{Vec}^{\text{op}} \to \text{Vec}$ \\
+associates $\forall \, $ vector space $V$ its dual $V^*$ (i.e. vector space $\text{Hom}(V,\mathbb{R})$ with operations defined pointwise), \\
+associates $\forall \, V\xrightarrow{f}W$, $f\in \text{Mor}\text{Vec}^{\text{op}}$, \\
+i.e. $\forall \, $ linear map $W \xrightarrow{f} V$, \\
+morphism $f^*:V^* \to W^*$ defined by \\
+\phantom{morphism} $f^*(g) = g\circ f$ i.e. 
+
+
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.4em, column sep=1.8em, minimum width=1.2em]
+  {
+\text{Vec}^{\text{op}} & \text{Vec} \\
+V & V^* \\
+};
+\path[->]
+(m-1-1) edge node [above] {$(*)$} (m-1-2);
+  \path[|->]
+  (m-2-1) edge node [above] {$(*)$} (m-2-2);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+W & V \\
+W^* & V^* \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+          edge node [auto]  {$(*)$} (m-2-1)
+  (m-1-2) edge node [auto]  {$(*)$} (m-2-2)
+  (m-2-2) edge node [above] {$f^*$} (m-2-1)        
+  ;
+\end{tikzpicture}
+
+
+\end{itemize}
+
+\subsection{Functor properties}
+
+\begin{definition}
+  Let $F: \mathbf{A} \to \mathbf{B}$ be a functor.  
+
+\begin{enumerate}
+  \item $F$ \textbf{embedding } if $F$ is injective on morphisms ($\forall \, \begin{aligned} & \quad \\
+    & f \in \text{Mor}\mathbf{A} \\
+    & g \in \text{Mor}\mathbf{B} \end{aligned}$, if $F(f) = F(g)$, then $f=g$) 
+\item $F$ \textbf{faithful } if $\forall \,$ hom-set restrictions, 
+\[
+F: \text{Hom}_{\mathbf{A}}(A,A') \to \text{Hom}_{\mathbf{B}}(FA,FA')
+\]
+are injective
+\item $F$ \textbf{full} if all hom-set restrictions are surjective 
+\item $F$ \textbf{amnestic} if $Ff=1_{\mathbf{B}}$, then $\mathbf{A}$-ismorphism $f=1_{\mathbf{A}}$
+\end{enumerate}
+So
+\begin{enumerate}
+\item $F$ an embedding iff $F$ faithful and injective on objects
+\item $F$ isomorphism iff $F$ full, faithful, and bijective on objects
+\end{enumerate}
+
+\end{definition}
+
+
+
+
+\subsection{Natural Transformation}
+
+\begin{definition}[Natural transformation]
+  Let functors $F,G : \mathbf{A} \to \mathbf{B}$.  \\
+\textbf{natural transformation} $\tau$ from $F$ to $G$ $\equiv \tau : F\to G$ or $F\xrightarrow{ \tau} G$ is function that assigns $\forall \, A \in \text{Obj}\mathbf{A}$, $\tau_A:FA \to GA$, $\tau_A \in \text{Mor}\mathbf{B}$, s.t. \textbf{naturality condition} holds:
+
+$\forall \, A \xrightarrow{f} A'$, $f\in \text{Mor}\mathbf{A}$
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=6em, column sep=6em, minimum width=4em]
+  {
+FA & GA \\
+FA' & GA' \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\tau_A$} (m-1-2)
+  edge node [auto] {$Ff$} (m-2-1)
+  (m-1-2) edge node [auto] {$Gf$} (m-2-2)
+  (m-2-1) edge node [auto] {$\tau_{A'}$} (m-2-2);
+\end{tikzpicture}
+
+\end{definition}
+
+
+\subsubsection{Examples}
+
+\begin{itemize}
+  \item Let $(**):\text{Vec}\to \text{Vec}$ be \textbf{ second-dual functor for vector spaces } defined by 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=6em, column sep=6em, minimum width=4em]
+  {
+\text{Vec} & \text{Vec} = (\text{Vec}^{\text{op}})^{\text{op}} & \text{Vec}^{\text{op}} & \text{Vec} \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$(**)$} (m-1-2)
+  (m-1-2) edge node [auto] {$(*)^{\text{op}}$} (m-1-3)
+  (m-1-3) edge node [auto] {$(*)$} (m-1-4);
+\end{tikzpicture}
+
+where $(*)^{\text{op}}$ is the dual of the duality functor for vector spaces.  
+
+Then linear transformations 
+\[
+\begin{aligned}
+  & \tau_V: V \to V^{**} \\ 
+  & (\tau_V(x))(f) = f(x)
+\end{aligned}
+\]
+yield a natural transformation $1_{\text{Vec}} \xrightarrow{ \tau } (**)$
+
+Indeed, looking at the definition of the natural transformation, for
+\[
+\begin{aligned}
+  &  \text{Vec} \xrightarrow{ 1_{\text{Vec}} } \text{Vec} \\ 
+  &  \text{Vec} \xrightarrow{ (**) } \text{Vec}
+\end{aligned}
+\]
+
+$\forall \, V \in \text{Obj}(\text{Vec})$, $\tau_V:1_{\text{VeC}}V = V \to (**)V \equiv V^{**}$, $\tau_V \in \text{Mor}\text{Vec}$, and 
+
+$\forall \, f: V\to W$, $f\in \text{Mor}\text{Vec}$,
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=6em, column sep=6em, minimum width=4em]
+  {
+V & V^{**} \\
+W & W^{**} \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\tau_V$} (m-1-2)
+  edge node [auto] {$f$} (m-2-1)
+  (m-1-2) edge node [auto] {$f^{**}$} (m-2-2)
+  (m-2-1) edge node [auto] {$\tau_W$} (m-2-2);
+\end{tikzpicture}
+
+\item assignment of Hurewicz homomorphism $\pi_n(X) \to H_n(X)$ to each topological space $X$ is a \\
+natural transformation from $n$th homotopy functor $\pi_n : \text{Top} \to \text{Grp}$ to $n$th homology functor $H_n:\text{Top} \to \text{Grp}$
+\[
+\pi_n \xrightarrow{ \tau} H_n
+\]
+Indeed, $\forall \, X \in \text{Obj}(\text{Top})$, $\tau_X : \pi_n(X) \to H_n(X)$, $\tau_X \in \text{Mor}\text{Grp}$,
+
+$\forall \, X \xrightarrow{ \varphi } Y$, $\varphi \in \text{Mor}\text{Top}$,
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=6em, column sep=6em, minimum width=4em]
+  {
+\pi_n(X) & H_n(X) \\
+\pi_n(Y) & H_n(Y) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\tau_X$} (m-1-2)
+  edge node [auto] {$\pi_n \circ \varphi$} (m-2-1)
+  (m-1-2) edge node [auto] {$H_n \circ \varphi $} (m-2-2)
+  (m-2-1) edge node [auto] {$\tau_Y$} (m-2-2);
+\end{tikzpicture}
+
+
+\end{itemize}
+
+
+
+
+\begin{definition}[Grothendieck construction] Let category $\mathbf{C}$, a category of small categories $CAT$, \\
+Let functor $F: \mathbf{C} \to CAT$
+
+Then category $\Gamma(C)$ (also denoted $C\int (F)$) is $\Gamma(C) = (\text{Ob}_{\Gamma(F)} , \text{hom}_{\Gamma(F)}, 1, \circ )$ s.t.
+
+\[
+(C,X) \in \text{Ob}_{\Gamma(F)} , \quad \, \begin{aligned} & \quad \\
+  & C \in \text{Ob}_{\mathbf{C}} \\
+  & X \in \text{Ob}_{F(C)} \end{aligned}
+\]
+  
+and 
+
+$\text{hom}_{\Gamma(F)}((C_1, X_1),(C_2,X_2)) \ni (f,x)$ s.t. 
+\[
+\begin{aligned}
+  & f:C_1 \to C_2 \in \text{mor}_{\mathbf{C}} := \text{hom}_{\mathbf{C}} \\ 
+  & x: F(f)(X_1) \to X_2 \in \text{mor}_{F(C_2)} := \text{hom}_{F(C_2)}
+\end{aligned}
+\]
+EY : 20150714, to clarify, $f \in \text{hom}_{\mathbf{C}}$, and $x \in \text{hom}_{F(C_2)}$, 
+
+and
+
+\[
+(f,x) \circ (f',x') = (ff',x\circ F(f)(x'))
+\]
+
+\end{definition}
+i.e.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+C_1 & C_2 \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2);
+\end{tikzpicture} $\Longrightarrow $
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+F(C_1) & F(C_2) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F(f)$} (m-1-2);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+(C_1,X_1) & (C_2,X_2) & (C_3,X_3) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$(f',x')$} (m-1-2)
+  edge[bend right=45] node [below] {$(f\circ f', x\circ F(f)(x')$} (m-1-3)
+  (m-1-2) edge node [above] {$(f,x)$} (m-1-3)
+;
+\end{tikzpicture} 
+
+
+\section{Limits}
+
+%I will follow Chapter 5 of Leinster (2014) \cite{Lein2014} now.
+
+\subsubsection{Sources}
+
+It appears Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004} defines \emph{sources} to simply give a name and formalize a tuple.  
+
+\begin{definition}[source]
+  \textbf{source} is a tuple: $(a, (f_i)_{i\in I})$, $f_i:A\to A_i$
+\end{definition}
+
+
+
+\subsection{Products}
+
+\begin{definition}[Products]
+
+(in Turi's notation \cite{Turi2001})
+
+Given objects $C_1,C_2$ of category $\mathbb{C}$, \textbf{product} (if exists) consists of object $C_1 \times C_2$ of $\mathbb{C}$ and $\begin{aligned} & \quad \\
+  & \pi_1 : C_1 \times C_2 \to C_1 \\
+  & \pi_2: C_1 \times C_2 \to C_2 \end{aligned}$ s.t. \\
+$\forall \, $ object $A$ of $\mathbb{C}$, \, $\forall \, \begin{aligned} & \quad \\
+  & f : A \to C_1 \\
+  & g : A \to C_2 \end{aligned}$ \quad \, $\exists \, ! \quad \, \langle f,g \rangle : A \to C_1 \times C_2$ s.t. $\begin{aligned} & \quad \\
+  & f = \pi_1 \circ \langle f,g \rangle \\
+  & g = \pi_2 \circ \langle f,g \rangle \end{aligned}$, i.e. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A & \\ 
+C_1  & C_1 \times C_2  &  C_2  \\
+};
+  \path[->]
+  (m-1-2) edge node [above] {$f$} (m-2-1)
+          edge node [above] {$g$} (m-2-3)
+  (m-2-2) edge node [below] {$\pi_1$} (m-2-1)
+          edge node [below] {$\pi_2$} (m-2-3)
+;
+  \path[dashed] 
+  (m-1-2) edge node [right] {$\langle f,g\rangle$} (m-2-2)
+;
+\end{tikzpicture} 
+
+(compare with Leinster (2014) \cite{Lein2014})
+
+Let category $\mathcal{A}$, $X,Y \in \mathcal{A}$, \textbf{product} of $X,Y$ consists of object $P$ and maps
+
+(compare this definition with Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004} and their notation)
+
+\textbf{product} consisting of 
+\[
+\begin{aligned}
+  C_1 \times C_2 \times \dots \times C_{\mathcal{N}} \in \text{Obj}\mathbf{C} \\
+  \pi_1 : C_1 \times C_2 \times \dots \times C_{\mathcal{N}} \to C_1 \\ 
+  \pi_2 : C_1 \times C_2 \times \dots \times C_{\mathcal{N}} \to C_2 \\ 
+\vdots \\
+  \pi_{\mathcal{N}} : C_1 \times C_2 \times \dots \times C_{\mathcal{N}} \to C_{\mathcal{N}} \\ 
+\end{aligned}
+\]
+
+is s.t. 
+
+$\forall \, \begin{aligned}  \quad \\ 
+  A \in \text{Obj}\mathbf{C} \\
+  f_1 : A \to C_1 \\
+  f_2 : A \to C_2 \\
+  \vdots \\
+  f_{\mathcal{N}} : A \to C_{\mathcal{N}} \end{aligned}$, 
+
+$\exists \, ! \langle f_1 ,f_2 , \dots , f_{\mathcal{N}} \rangle : A \to C_1 \times C_2 \times \dots \times C_{\mathcal{N}}$ s.t.
+\[
+\begin{aligned}
+  f_1 = \pi_1 \circ \langle f_1 , f_2 , \dots f_{\mathcal{N}} \rangle \\ 
+  f_2 = \pi_2 \circ \langle f_1 , f_2 , \dots f_{\mathcal{N}} \rangle \\ 
+\vdots  \\ 
+  f_{\mathcal{N}} = \pi_{\mathcal{N}} \circ \langle f_1 , f_2 , \dots f_{\mathcal{N}} \rangle 
+\end{aligned}
+\]
+
+\end{definition}
+
+
+
+\subsubsection{Example: Set always has products}
+
+$\forall \, $ sets $X,Y \in \text{Obj}(\text{Set})$, $\exists \, $ product $X\times Y \in \text{Obj}(\text{Set})$.  
+
+Let $A \in \text{Obj}(\text{Set})$, $\begin{aligned} & \quad \\
+  & f_1 : A \to X \\
+  & f_2 : A \to Y \end{aligned}$ \qquad \, Define $\begin{aligned} & \langle f_1, f_2 \rangle : A \to X \times Y  \\
+  & \langle f_1 ,f_2 \rangle (a) = (f_1(a), f_2(a)) \end{aligned}$
+
+Then $\begin{aligned} & \quad \\
+  & \pi_1 \circ \langle f_1 , f_2 \rangle (a) = f_1(a) \\
+  & \pi_2 \circ \langle f_1, f_2 \rangle (a) = f_2(a) \end{aligned}$ \qquad \, $\Longrightarrow \begin{aligned}  & \quad \\
+  & \pi_1 \circ \langle f_1 , f_2 \rangle = f_1 \\
+  & \pi_2 \circ \langle f_1,f_2 \rangle = f_2 \end{aligned}$
+
+Suppose $f': A \to X\times Y$ s.t. $\begin{aligned} & \quad \\
+  & \pi_1 \circ f' = f_1 \\
+  & \pi_2 \circ f' = f_2 \end{aligned}$
+
+Write $f'(a) = (x,y)$
+\[
+\begin{aligned}
+  & f_1(a) = \pi_1 \circ f'(a) = \pi_1(x,y) =x \\ 
+  & f_2(a) = \pi_2 \circ f'(a) = \pi_2(x,y) =y \\ 
+\end{aligned} \qquad \, \Longrightarrow f'(a) = (f_1(a), f_2(a)) = \langle f_1, f_2 \rangle (a)
+\]
+$\langle f_1, f_2 \rangle $ unique.  
+
+\begin{proposition}
+  If product $(A_1 \times \dots \times A_{\mathcal{N}} \xrightarrow{ \pi_i } A_i )_{i\in I}$, if $\exists \,  i_0 \in I$ s.t. $\text{Hom}(A_{i_0}, A_i) \neq \emptyset$, \, $\forall \, i \in I$, \\
+then $\pi_{i_0}$ \emph{retraction }
+\end{proposition}
+
+\begin{proof}
+  $\forall \, i \in I$, choose $f_i \in \text{Hom}(A_{i_0}, A_i)$ with $f_{i_0} = 1_{A_{i_0}}$.  
+
+Then $\langle f_i \rangle : A_{i_0} \to A_1 \times \dots \times A_{\mathcal{N}}$ is a morphism s.t. 
+\[
+\pi_{i_0} \circ \langle f_i \rangle = f_{i_0} = 1_{A_{i_0}}
+\]
+\end{proof}
+
+
+Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004} and their notation) calls a \textbf{sink} what Leinster (2014) \cite{Lein2014} calls a \textbf{cocone}.  
+\begin{definition}
+\textbf{sink} $((f_i)_{i\in I}, A) \equiv (f_i , A)_I \equiv (A_i \xrightarrow{ f_i } A)_I$, object $A$, family of morphisms $f_i : A_i \to A$
+\end{definition}
+
+
+
+For the \emph{coproduct}, consider this enlightening comparision:
+\[
+\begin{aligned}
+\begin{gathered}
+  \text{ product } ( \prod_{i\in I } A_i, \pi_j )_{j \in I} \\ 
+  \text{ projection } \pi_j : \prod_{i\in I} A_i \to A_j  \\
+  \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A  \\ 
+A_j  & \prod_{i\in I} A_i   \\
+};
+  \path[->]
+  (m-1-2) edge node [above] {$f_j$} (m-2-1)
+          edge node [right] {$\langle f_i \rangle$} (m-2-2)
+  (m-2-2) edge node [below] {$\pi_j$} (m-2-1)
+;
+\end{tikzpicture}  \\
+C\xrightarrow{ \langle f, g \rangle } A\times B \\
+\prod_{i \in I } f_i  \, , \text{ or if } i = \lbrace 1,2 \rbrace, \, f\times g
+\end{gathered} & \qquad \, 
+\begin{gathered}
+  \text{ coproduct } ( \mu_j, \coprod_{i\in I } A_i  )_{j \in I} \\ 
+  \text{ injection } \mu_j : A_j \to \coprod_{i\in I} A_i  \\
+  \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A  \\ 
+A_j  & \prod_{i\in I} A_i   \\
+};
+  \path[->]
+  (m-2-1) edge node [above] {$f_j$} (m-1-2)
+          edge node [above] {$\mu_j$} (m-2-2)
+  (m-2-2) edge node [right] {$[f_i]$} (m-1-2)
+;
+\end{tikzpicture}  \\
+C\xleftarrow{ [ f, g ] } A +  B \\
+\coprod_{i \in I } f_i  \, , \text{ or if } i = \lbrace 1,2 \rbrace, \, f +  g
+\end{gathered}
+\end{aligned}
+\]
+
+\subsubsection{ Examples (of coproducts)} 
+
+\begin{itemize}
+  \item if $(A_i)_I$ pairwise-disjoint family of sets, then $(\mu_j, \bigcup_{i\in I} A_i)_{j\in I}$ is coproduct in $\text{Set}$.  \\
+If $(A_i)_I$ arbitrary set-indexed family of sets, then it can be ``made disjoint'' by pairing each $A_i$ with index $i$, i.e. by working with $A_i \times \lbrace i \rbrace$ rather than $A_i$.  
+
+So $\bigcup_{i\in I } (A_i \times \lbrace i \rbrace)$ disjoint.  Consider 
+\[
+\begin{aligned}
+  &  \mu_j : A_j \to \bigcup_{i \in I} A_i \times \lbrace i \rbrace \\ 
+  &  \mu_i(a) = (a,j)
+\end{aligned}
+\]
+$(\mu_j, \bigcup_{i\in I} A_i \times \lbrace i \rbrace )_{j\in I}$ is a coproduct in $\text{Set}$.  
+
+Indeed, given $\begin{aligned} & \quad \\
+  & f_j:A_j \to A \\
+  & f_j(a) \in A \end{aligned}$, 
+\[
+\begin{aligned}
+  & [f_i] : \coprod_{i\in I} A_i \times \lbrace i \rbrace \to A \\ 
+  & [f_i]\circ \mu_j = f_j 
+\end{aligned}
+\]
+where
+\[
+f_j(a) = [f_i]\circ \mu_j(a) = [f_i](a,j) = f_j(a)
+\]
+  \item  $\text{Top}$ coproducts are ``topological sums''; they're ``concrete'' coproducts (Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004})
+\item $\text{Vec}$ (nonconcrete) coproducts called \emph{direct sums}
+
+direct sum $\bigoplus_{i\in I} A_i$ of vector spaces $A_i$ is subspace of direct product $\prod_{i\in I} A_i$ \\
+consisting of all elements $(a_i)_{i\in I}$ with finite carrier (i.e. $\lbrace i \in I | a_i \neq 0 \rbrace$ is finite), \\
+\qquad injections \[
+\begin{aligned} & \quad \\
+  & \mu_j : A_j \to \bigoplus_{i\in I } A_i  \\
+  & \mu_j(a) = (a_i)_{i\in I} \text { with } a_i = \begin{cases} a & \text{ if } i = j  \\ 0 & \text{ if } i \neq j \end{cases}
+\end{aligned}
+\]
+
+\item $\text{Grp}$ has nonconcrete coproducts, ``free products''
+\end{itemize}
+
+Let \emph{diagram} (functor) $D: \mathbf{I} \to \mathbf{A}$.  (diagram is, technically, exactly the same as a functor (Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004})).  
+
+\begin{definition}
+  $\mathbf{A}$-source $(A\xrightarrow{f_i}D_i)_{i\in \text{Obj}\mathbf{I}}$ \textbf{natural} for $D$ if $\forall \, i\xrightarrow{ d } j $, $d\in \text{Mor}\mathbf{I}$, then 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  \\ 
+D_i  &  D_j   \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$D_i$} (m-2-1)
+          edge node [right] {$f_j$} (m-2-2)
+  (m-2-1) edge node [below] {$Dd$} (m-2-2)
+;
+\end{tikzpicture} 
+\end{definition}
+
+\begin{definition}
+ \textbf{ limit } of $D$ is a natural source $(L \xrightarrow{l_i} D_i )_{i\in \text{Obj}\mathbf{I}}$ for $D$ with \\
+(universal) property that $\forall \, $ natural source $(A\xrightarrow{f_i} D_i)_{i \in \text{Obj}\mathbf{I}}$ for $D$ uniquely factors through it, i.e. \\
+$\forall \, $ natural source $(A\xrightarrow{f_i} D_i)_{i \in \text{Obj}\mathbf{I}}$, $\exists \, !$ morphism $f:A \to L$ s.t. $f_i = l_i \circ f$ \qquad \, $\forall \, i \in \text{Obj}(\mathbf{I})$.  
+\end{definition}
+
+It may pay to read and compare with other books because I didn't understand limits the first time reading through Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}.  So compare with Leinster (2014) \cite{Lein2014}.  
+
+\emph{cone} from Leinster (2014) \cite{Lein2014} is the same as \emph{source} in Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}:
+
+\begin{definition}
+  \textbf{cone} on $D$ (or natural source for $D$), $A \in \text{Obj}\mathbf{A}$ (vertex of the cone) (i.e. $\mathbf{A}$-source), $(A\xrightarrow{ A_I} D(I))_{I \in \text{Obj}\mathbf{I}}$ s.t. if $\forall \, I \xrightarrow{u} J$, $u\in \text{Mor}\mathbf{I}$, then 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  \\ 
+D(I)  &  D(J)   \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$f_I$} (m-2-1)
+          edge node [right] {$f_J$} (m-2-2)
+  (m-2-1) edge node [below] {$Du$} (m-2-2)
+;
+\end{tikzpicture} 
+\end{definition}
+
+\begin{definition}
+  \textbf{limit} of $D$ is natural source (or cone) $(L\xrightarrow{ \pi_I} D(I))_{I \in \text{Obj}\mathbf{I}}$ s.t. $\forall \, $ natural source (or cone) on $D$, $(A\xrightarrow{ f_I}D(I))_{I \in \text{Obj}\mathbf{I}}$, \\
+$\exists \, !$ morphism $f: A \to L$ s.t. $f_I = \pi_I \circ f$ \quad \, $\forall \, I \in \text{Obj}\mathbf{I}$. $\pi_I$ \text{projections} of limit.  
+
+i.e. this commutes:
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ L & A \\ 
+  &  D(I)   \\
+};
+  \path[->]
+  (m-1-2) edge node [auto] {$f$} (m-1-1)
+          edge node [right] {$f_I$} (m-2-2)
+  (m-1-1) edge node [below] {$\pi_I$} (m-2-2)
+;
+\end{tikzpicture} 
+\end{definition}
+
+\begin{definition}
+Let diagram (functor) $D: \mathbf{I} \to \mathbf{A}$.  \\
+Consider functor $D^{\text{op}} : \mathbf{I}^{\text{op}} \to \mathbf{A}^{\text{op}}$.  
+
+natural sink $(D(I) \xrightarrow{ f_I} A )_{I \in \text{Obj}\mathbf{I}}$ for $D$ s.t. $\forall \, I \xrightarrow{d} J$, $d\in \text{Mor}\mathbf{I}$, then 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  \\ 
+D(I)  &  D(J)   \\
+};
+  \path[->]
+  (m-2-1) edge node [left] {$f_I$} (m-1-1)
+          edge node [below] {$Dd$} (m-2-2)
+  (m-2-2) edge node [below] {$f_J$} (m-1-1)
+;
+\end{tikzpicture} 
+
+Natural sink of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004} is the same as the ``cocone'' of Leinster (2014) \cite{Lein2014}.  
+
+\end{definition}
+
+\begin{definition}
+  \textbf{colimit} of $D$ is natural sink $(D(I) \xrightarrow{ c_I} K)_{I \in \text{Obj}\mathbf{I}}$ for $D$ with \\
+(universal) property that \\
+$\forall \, $ natural sink for $D$, $(D(I) \xrightarrow{ f_I} A)_{I\in \text{Obj}\mathbf{I}}$, $\exists \, !$ morphism $f:K \to A$ s.t. $f\circ c_I = f_I$ \quad \,  $\forall \, I \in \text{Obj}\mathbf{I}$, i.e.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=2em]
+  {
+ K & A \\ 
+  &  D(I)   \\
+};
+  \path[->]
+  (m-2-2) edge node [left] {$c_I$} (m-1-1)
+          edge node [right] {$f_I$} (m-1-2)
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+;
+\end{tikzpicture} 
+\end{definition}
+
+\subsection{Pullback}
+
+\begin{definition}
+  For some category $\mathbf{A}$, and for 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+ & Y \\
+X & Z \\
+};
+  \path[->]
+  (m-1-2) edge node [right] {$t$} (m-2-2)
+  (m-2-1) edge node [below] {$s$} (m-2-2);
+\end{tikzpicture}
+
+$X,Y,Z \in \text{Obj}\mathbf{A}$.  
+
+$\begin{aligned} & \quad \\
+  & s : X \to Z \\
+  & t: Y \to Z \end{aligned}$ ; \qquad \, $s,t \in \text{Mor}\mathbf{A}$
+
+Then the \textbf{pullback} or ``pullback square'' consists of $P \in \text{Obj}\mathbf{A}$, $\begin{aligned} & \quad \\
+  & \pi_1 : P \to X \\
+  & \pi_2: P \to Y \end{aligned}$ s.t. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+P & Y \\
+X & Z \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\pi_2$} (m-1-2)
+  edge node [auto] {$\pi_1$} (m-2-1)
+  (m-1-2) edge node [auto] {$t$} (m-2-2)
+  (m-2-1) edge node [auto] {$s$} (m-2-2);
+\end{tikzpicture}
+
+commutes and s.t. $\forall \, $ commutative square in $\mathbf{A}$ 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+A & Y \\
+X & Z \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f_2$} (m-1-2)
+  edge node [auto] {$f_1$} (m-2-1)
+  (m-1-2) edge node [auto] {$t$} (m-2-2)
+  (m-2-1) edge node [auto] {$s$} (m-2-2);
+\end{tikzpicture}
+
+then $\exists \, ! \, f: A \to P$ s.t. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+A &   & \\ 
+  & P & Y \\
+  & X & Z \\
+};
+  \path[->]
+  (m-2-2) edge node [above] {$\pi_2$} (m-2-3)
+  edge node [auto] {$\pi_1$} (m-3-2)
+  (m-2-3) edge node [auto] {$t$} (m-3-3)
+  (m-3-2) edge node [auto] {$s$} (m-3-3)
+  (m-1-1) edge node [above] {$f_2$} (m-2-3)
+  edge node [above] {$f$} (m-2-2)
+  edge node [below] {$f_1$} (m-3-2);
+\end{tikzpicture}
+
+
+\end{definition}
+
+
+\section{Adjoint}
+
+From the section on ``Objects and Morphisms with Respect to a Factor'' of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004},
+
+\begin{definition}
+  Let functor $G:\mathbf{A} \to \mathbf{B}$, $B \in \text{Obj}\mathbf{B}$.  \\
+$G$-\textbf{structured arrow with domain } $B$ is pair $(f,A)$, $A\in \text{Obj}\mathbf{A}$, $f:B \to GA$, $f\in \text{Mor}\mathbf{B}$.  
+
+$G$-structured arrow $(f,A)$ with domain $B$ is called
+\begin{enumerate}
+  \item \textbf{generating} provided $\forall \, $ pair of $\mathbf{A}$-morphism $\begin{aligned} & \quad \\
+    & r : A \to A' \\ 
+    & s:A \to A'\end{aligned}$, \qquad \, $Gr\circ f = Gs\circ f$ implies $r=s$
+  \item \textbf{extremally generating} provided it's generating and \\
+if $A' \xrightarrow{m} A$ is an $\mathbf{A}$-monomorphism, $(g,A')$ $G$-structured arrow, s.t. $f=G(m)\circ g$, \\
+\phantom{ if } then $m$ is $\mathbf{A}$-isomorphism
+  \item \textbf{ $G$-universal for $B$ } if $\forall \, G$-structured arrow $(f',A')$ with domain $B$, \\
+    $\exists \, ! $ $\mathbf{A}$-morphism $A \xrightarrow{ \widehat{f}} A'$, $f'=G(\widehat{f})\circ f$ i.e. s.t. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ B & GA \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$f$} (m-1-2)
+          edge node [left] {$f'$} (m-2-2)
+  (m-1-2) edge node [right] {$G\widehat{f}$} (m-2-2)
+;
+\end{tikzpicture} 
+
+commutes. 
+\end{enumerate}
+
+\end{definition}
+
+If you're reading Turi \cite{Turi2001}, then Turi calls $G$-universal for $B$, ``\textbf{universal arrow}'' from an object $A$ of $\mathbf{C}$: inspection of his diagram immediately confirms that they're talking about the exact same thing (I know, it seems as different mathematicians have different names and notation for the exact same thing):
+
+\[
+\begin{gathered}
+  U:\mathbf{D} \to \mathbf{C} \\
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A & U(F_A) \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta_A$} (m-1-2)
+          edge node [left] {$h$} (m-2-2)
+  (m-1-2) edge node [right] {$Uh^{\sharp}$} (m-2-2)
+;
+\end{tikzpicture} 
+ \qquad \,   
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ F_A &  \\ 
+  Y &     \\
+};
+  \path[dashed,->]
+  (m-1-1) edge node [auto] {$h^{\sharp}$} (m-2-1)
+;
+\end{tikzpicture} 
+\end{gathered}
+\]
+for $F_A \in \text{Obj}\mathbf{D}$
+
+\begin{definition}
+  Let functor $G:\mathbf{A} \to \mathbf{B}$; let $B\in \text{Obj}\mathbf{B}$.  
+
+\begin{enumerate}
+\item \textbf{ $G$-costructured arrow } with codomain $B$ is pair $(A,f)$, $A \in \text{Obj}\mathbf{A}$, $GA\xrightarrow{ f } B$, $f\in \text{Mor}\mathbf{B}$.  
+\item $G$-costructured arrow $(A,f)$ with codomain $B$ is called \textbf{ $G$-couniversal } for $B$ if \\
+$\forall \, G$-costructured arrow $(A',f')$ with codomain $B$, \\
+\qquad \, $\exists \, !  \, A' \xrightarrow{\widehat{f}} A$, $\widehat{f} \in \text{Mor}\mathbf{A}$, s.t. $f'=f \circ G(\widehat{f})$ i.e. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ B & GA \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-2-2) edge node [below] {$f'$} (m-1-1)
+          edge node [right] {$G(\widehat{f})$} (m-1-2)
+  (m-1-2) edge node [auto] {$f$} (m-1-1)
+;
+\end{tikzpicture} 
+
+
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[adjoint]
+  functor $G : \mathbf{A} \to \mathbf{B}$ \textbf{adjoint} if $\forall \, B \in \text{Obj}\mathbf{B}$, $\exists \, $ $G$-universal arrow with domain $B$, i.e. \\
+$\forall \, B\in \text{Obj}\mathbf{B}$, $\exists \, (f,A)$ with domain $B$ s.t. $\forall \, (f',A')$ with domain $B$, $\exists \, ! \, \widehat{f}' \in \text{Mor}\mathbf{A}$ s.t.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ B & GA \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$f$} (m-1-2)
+          edge node [left] {$f'$} (m-2-2)
+  (m-1-2) edge node [right] {$G\widehat{f}'$} (m-2-2)
+;
+\end{tikzpicture} 
+
+
+\end{definition}
+
+\begin{definition}[co-adjoint]
+functor $G: \mathbf{A} \to \mathbf{B}$  \textbf{co-adjoint} if $\forall \, B \in \text{Obj}\mathbf{B}$, $\exists \, $ $G$-co-universal arrow with codomain $B$, i.e. \\
+$\forall \, B\in \text{Obj}\mathbf{B}$, $\exists \, (A,f)$ with codomain $B$ s.t. $\forall \, (A',f')$ with codomain $B$, $\exists \, ! \, \widehat{f}' \in \text{Mor}\mathbf{A}$ s.t.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ B & GA \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-2-2) edge node [below] {$f'$} (m-1-1)
+          edge node [right] {$G(\widehat{f}')$} (m-1-2)
+  (m-1-2) edge node [auto] {$f$} (m-1-1)
+;
+\end{tikzpicture} 
+
+\end{definition}
+
+In section 19 Adjoint situations of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}, their Theorem 19.1 is the same as Exercise 3.1 and Theorem 3.1 on pp. 11 of Turi \cite{Turi2001}, which Turi says is ``Important!''
+
+\begin{theorem}
+  Let adjoint functor $G: \mathbf{A} \to \mathbf{B}$, so (by def. of adjoint), $\forall \, B \in \text{Obj}\mathbf{B}$, let $\eta_B:B \to GA_B$ be the universal arrow.  \\
+Then $\exists \, !$ functor $F:\mathbf{B} \to \mathbf{A}$ s.t. $F(B) = A_B$.  $\forall \, B \in \text{Obj}\mathbf{B}$, and $1_{\mathbf{B}} \xrightarrow{ \eta = (\eta_B)} G\circ F$ natural transformation.  
+
+Moreover, $\exists \, !$ natural transformation $F\circ G \xrightarrow{ \epsilon } 1_{\mathbf{A}}$ s.t.
+
+\begin{enumerate}
+  \item \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ G & GFG & G = G & G \\ 
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta G$} (m-1-2)
+  (m-1-2) edge node [auto] {$G\epsilon $} (m-1-3)
+  (m-1-3) edge node [auto] {$1_G$} (m-1-4)
+;
+\end{tikzpicture} 
+
+  \item \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ F & FGF & F = F & F \\ 
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$F\eta $} (m-1-2)
+  (m-1-2) edge node [auto] {$\epsilon F$} (m-1-3)
+  (m-1-3) edge node [auto] {$1_F$} (m-1-4)
+;
+\end{tikzpicture} 
+
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Given an adjoint functor $G: \mathbf{A} \to \mathbf{B}$.  By definition, this means that 
+
+$\forall \, B \in \text{Obj}\mathbf{B}$, $\exists \, $ $G$-universal arrow with domain $B$, $(f,A)$, s.t. $\forall \, (f',A')$ (i.e. every other $G$-structured arrow $(f',A')$), 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ B & GA \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$f$} (m-1-2)
+          edge node [left] {$f'$} (m-2-2)
+  (m-1-2) edge node [right] {$G\widehat{f}'$} (m-2-2)
+;
+\end{tikzpicture} 
+ \qquad \,   
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  \\ 
+  A' &     \\
+};
+  \path[dashed,->]
+  (m-1-1) edge node [auto] {$\widehat{f}'$} (m-2-1)
+;
+\end{tikzpicture} 
+
+We want to define a function $F$:
+\[
+\begin{aligned}
+  & F:\text{Obj}\mathbf{B} \to \text{Obj}\mathbf{A} \\
+  & F(B) := A_B
+\end{aligned}
+\]
+and make a functor out of it.  We know it exists from the definition of an adjoint, so that $\exists $ \emph{a} $G$-universal arrow $(f,A_B)$, $\forall \, B$.  Is it well defined?
+
+Suppose another $\begin{aligned} & \quad \\
+  & F' : \text{Obj}\mathbf{B} \to \text{Obj}\mathbf{A} \\
+  & F'(B) =A'\end{aligned}$.
+
+Using universal arrow definition, then again we have
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ B & GA \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$f$} (m-1-2)
+          edge node [left] {$GF'$} (m-2-2)
+  (m-1-2) edge node [right] {$G\widehat{f}'$} (m-2-2)
+;
+\end{tikzpicture} 
+ \qquad \,   
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  B \\ 
+  A' &     \\
+};
+  \path[dashed,->]
+  (m-1-1) edge node [auto] {$\widehat{f}'$} (m-2-1)  
+;
+  \path[->]
+  (m-1-2) edge node [auto] {$F$} (m-1-1) 
+  edge node [auto] {$F'$} (m-2-1)
+;
+\end{tikzpicture} 
+
+\[
+\Longrightarrow F'(B) = A' = \widehat{f}'(A) = \widehat{f}' \circ F(B) \Longrightarrow F' = \widehat{f}'\circ F
+\]
+So $F$ unique up to a unique morphism, due to universal arrow definition (or property).  
+
+Consider how $F$ can act on morphisms.  
+
+Take $b \in \text{Mor}\mathbf{B}$.  The commutative diagram
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+B & F(B)=A_B \\
+B' & F(B')=A_{B'} \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F$} (m-1-2)
+  edge node [auto] {$b$} (m-2-1)
+  (m-1-2) edge node [auto] {$F(b)$} (m-2-2)
+  (m-2-1) edge node [auto] {$F$} (m-2-2);
+\end{tikzpicture}
+
+tells us immediately what $F(b) \in \text{Mor}\mathbf{A}$ is (composition $F\circ b$).  
+
+A functor has to preserve identity and compositions.  The following commutative diagrams show this:
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+B & F(B) = A_B \\
+B & F(B) = A_B \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F$} (m-1-2)
+  edge node [left] {$1_{\mathbf{B}}$} (m-2-1)
+  (m-1-2) edge node [right] {$F\circ 1_{\mathbf{B}} \equiv 1_{F\mathbf{B}}$} (m-2-2)
+  (m-2-1) edge node [auto] {$F$} (m-2-2);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+B & F(B) = A_B \\
+B' & F(B')=A_{B'} \\
+B'' & F(B'') = A_{B''} \\ 
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F$} (m-1-2)
+  edge node [auto] {$b$} (m-2-1)
+  edge[bend right=55] node [left] {$b'\circ b$} (m-3-1)
+  (m-1-2) edge node [auto] {$F(b)$} (m-2-2)
+  edge[bend left=55] node [auto] {$F(b')\circ F(b)$} (m-3-2)
+  (m-2-1) edge node [auto] {$F$} (m-2-2)
+          edge node [left] {$b'$} (m-3-1)
+  (m-3-1) edge node [auto] {$F$} (m-3-2)
+  (m-2-2) edge node [auto] {$F(b')$} (m-3-2)
+;
+\end{tikzpicture}
+
+Thus,
+\[
+\boxed{ \text{  $F : \mathbf{B} \to \mathbf{A}$ is a unique functor and it exists, and is defined s.t. $F(B) = A_B$, any time you have an adjoint functor $G:\mathbf{A} \to \mathbf{B}$.    } }
+\]
+
+Given $G$-universal arrow $\eta_B:B \to G(A_B)$, which exists by adjoint functor def. of $G$, $\forall \, B \in \text{Obj}\mathbf{B}$.  Then
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+B & GA_B \\
+B' & GA_{B'} \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\eta_B$} (m-1-2)
+  (m-2-1) edge node [auto] {$\eta_{B'}$} (m-2-2)
+;
+\end{tikzpicture}
+
+So $\forall \, f \in \text{Mor}\mathbf{B}$, $f:B\to B'$, 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+B &  GA_B \\
+B' & GA_{B'} \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\eta_B$} (m-1-2)
+  edge node [left] {$f$} (m-2-1)
+  (m-2-1) edge node [auto] {$\eta_{B'}$} (m-2-2)
+;
+\end{tikzpicture}
+
+Use unique functor $F$, $\begin{aligned} & \quad \\
+  & F(B) = A_B \\
+  & F(B') = A_{B'} \end{aligned}$, 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+B & GA_B = GF(B) \\
+B' & GA_{B'} = GF(B') \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\eta_B$} (m-1-2)
+  edge node [left] {$f$} (m-2-1)
+  (m-1-2) edge node [right] {$GF(f)$} (m-2-2)
+  (m-2-1) edge node [auto] {$\eta_{B'}$} (m-2-2)
+;
+\end{tikzpicture}
+
+where $GF(f):GF(B)\to GF(B')$, by functor property of $G,F$, so this holds $\forall \, f \in \text{Mor}\mathbf{B}$.  
+
+Thus, $\eta : 1_{\mathbf{B}} \to G\circ F$ is a natural transformation for $1_{\mathbf{B}}, G\circ F : \mathbf{B}\to \mathbf{B}$ (endofunctors, functors that map a category to itself), s.t.  \\
+$ \forall \, B \in \text{Obj}\mathbf{B}, \, \eta_B : 1_{\mathbf{B}}B = B \to GFB , \quad \, \eta_B \in \text{Mor}\mathbf{B}$.  
+
+Consider $B=GA$, and corresponding universal arrow $\eta_B=\eta_{GA}$, through the unique functor $F$ so that $F(GA)= A_{GA}$.  
+\[
+GA \xrightarrow{ \eta_{GA}} GA_{GA} = GFGA
+\]
+
+Consider morphism $1_{GA} : GA \to GA$, then
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ GA & GFGA \\ 
+  &  GA   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta_{GA}$} (m-1-2)
+          edge node [left] {$1_{GA}$} (m-2-2)
+  (m-1-2) edge node [right] {$G\epsilon_A$} (m-2-2)
+;
+\end{tikzpicture} 
+ \qquad \,   
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ F(GA) = A_{GA} &  \\ 
+  A &     \\
+};
+  \path[dashed,->]
+  (m-1-1) edge node [auto] {$\epsilon_A$} (m-2-1)
+;
+\end{tikzpicture} 
+
+by definition of an adjoint functor.  
+
+Now 
+\begin{equation}\label{Eq:adjointfunctorcounitproof}
+\begin{gathered}
+  G(f\circ \epsilon_A) \circ \eta_{GA} = Gf\circ G\epsilon_A \circ \eta_{GA} = Gf = G\epsilon_{A'} \circ \eta_{GA'} \circ Gf = G\epsilon_{A'} \circ GFGf \circ \eta_{GA} = G(\epsilon_{A'} \circ FGf) \circ \eta_{GA} \\
+  \Longrightarrow f\circ \epsilon_A = \epsilon_{A'} \circ FGf
+\end{gathered}
+\end{equation}
+since for the first equality in Eq. \ref{Eq:adjointfunctorcounitproof}, associativity of functor $G$ was used, i.e.
+\[
+G(f\circ \epsilon_A) = Gf\circ G\epsilon_A
+\]
+and for the second equality, universal arrow definition was used, i.e.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ GA & GFGA \\ 
+  &  GA   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta_{GA}$} (m-1-2)
+          edge node [left] {$1_{GA}$} (m-2-2)
+  (m-1-2) edge node [right] {$G\epsilon_A$} (m-2-2)
+;
+\end{tikzpicture} 
+
+or i.e. $G\epsilon_A \circ \eta_{GA} = 1_{GA}$, and for the third equality, universal arrow definition was used again, i.e.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ GA' & GFGA' \\ 
+  &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$\eta_{GA'}$} (m-1-2)
+          edge node [left] {$1_{GA'}$} (m-2-2)
+  (m-1-2) edge node [right] {$G\epsilon_{A'}$} (m-2-2)
+;
+\end{tikzpicture} 
+
+or i.e. $G\epsilon_{A'} \circ \eta_{GA'} = 1_{GA'}$, and for the fourth equality, the natural transformation definition for $\eta$ and its universal arrow definition was used together, i.e.
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+A  & GA & GFGA \\ 
+A' & GA' & GFGA' \\ 
+   &      &  GA'   \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$G$} (m-1-2)
+          edge node [left] {$f$} (m-2-1)
+  (m-1-2) edge node [right] {$Gf$} (m-2-2)
+          edge node [auto] {$\eta_{GA}$} (m-1-3)
+  (m-1-3) edge node [right] {$GFGf$} (m-2-3)
+  (m-2-1) edge node [auto] {$G$} (m-2-2)
+  (m-2-2) edge node [auto] {$\eta_{GA'}$} (m-2-3)
+          edge node [left] {$1_{GA'}$} (m-3-3)
+  (m-2-3) edge node [right] {$G\epsilon_{A'}$} (m-3-3)
+;
+\end{tikzpicture} 
+
+and for the fifth equality, associativity of functor $G$ was used again, i.e. $G\epsilon_{A'} \circ GFGf = G(\epsilon_{A'} \circ FGf)$.  
+
+Thus, $\epsilon$ is a natural transformation, $\epsilon :FG \to 1_{\mathbf{A}}$, for 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+FGA & A \\
+FGA' & A' \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$\epsilon_A$} (m-1-2)
+  edge node [auto] {$FGA'$} (m-2-1)
+  (m-1-2) edge node [auto] {$f$} (m-2-2)
+  (m-2-1) edge node [auto] {$\epsilon_{A'}$} (m-2-2)
+;
+\end{tikzpicture}
+
+commutes.
+
+
+
+\end{proof}
+
+
+\section{Monad}
+
+\begin{definition}[monad]
+  \textbf{monad} on category $\mathbf{X}$ is triple $\mathbf{T} = (T,\eta, \mu)$, consisting of  functor $T: \mathbf{X} \to \mathbf{X}$ (an endofunctor, maps a category to itself), and \\
+natural transformations
+\[
+\begin{gathered}
+  \eta : 1_{\mathbf{X}} \to T \text{ and } \\
+  \mu : T \circ T \equiv T^2 \to T \text{ s.t. } 
+\end{gathered}
+\]
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+T\circ T \circ T \equiv T^3  & T\circ T \equiv T^2   \\
+T\circ T \equiv T^2    &    T    \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$T \mu$} (m-1-2)
+          edge node [auto]  {$\mu T$} (m-2-1)
+  (m-1-2) edge node [auto]  {$\mu$} (m-2-2)
+  (m-2-1) edge node [above] {$\mu$} (m-2-2)        
+  ;
+\end{tikzpicture}  \qquad and \qquad \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ T & T\circ T & T  \\ 
+  &  T &    \\
+};
+  \path[->]
+  (m-1-1) edge node [below] {$1$} (m-2-2)
+          edge node [above] {$T\eta$} (m-1-2)
+  (m-1-2) edge node [right] {$\mu$} (m-2-2)
+  (m-1-3) edge node [auto] {$\eta T$} (m-1-2)
+          edge node [below] {$1$} (m-2-2)
+;
+\end{tikzpicture} 
+
+commute.  
+
+
+
+\end{definition}
+
+
+\section{Applications}
+
+\subsection{Databases}
+
+Let category $\text{db} = (\text{Ob}_{\text{db}}, \text{hom}_{\text{db}}, 1,\circ)$ be a \textbf{database schema.}  \\
+$\text{Ob}_{\text{db}}$ is \emph{a} collection of tables $\tau$, $\tau \in \text{Ob}_{\text{db}}$ \\
+$c\in \text{hom}_{\text{db}}$ where $c$ is a column (i.e. attribute) \\
+primary key column $c!$ is a primary morphism (or arrow) \\
+Declaring constraints is declaring a composition law, i.e. for tables $\rho, \sigma, \tau \in \text{Ob}_{\text{db}}$, 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
+  {
+\rho & \sigma & \tau \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$c_1$} (m-1-2)
+  edge[bend right=45] node [below] {$c_2\circ c_1$} (m-1-3)
+  (m-1-2) edge node [above] {$c_2$} (m-1-3)
+;
+\end{tikzpicture} 
+
+EY: 20150716 I think it should be emphasized that $\text{Ob}_{\text{db}}$ is \emph{a} collection of tables associated with this particular database $\text{db}$, not \emph{the} collection of \emph{all} possible tables.  
+
+Let \textbf{data functor} be a functor $F: \text{db} \to \mathbf{\text{Set}}$. 
+
+So for tables $\rho, \sigma, \tau \in \text{Ob}_{\text{db}}$, columns $c,c_1,c_2 \in \text{hom}_{\text{db}}(\sigma,\tau)$
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\sigma & \tau \\
+F(\sigma) & F(\tau) \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$c$} (m-1-2)
+          edge node [auto]  {$F$} (m-2-1)
+  (m-1-2) edge node [auto]  {$F$} (m-2-2)
+  (m-2-1) edge node [above] {$F(c)$} (m-2-2)        
+  ;
+\end{tikzpicture} \quad \quad \quad \,  \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\rho & \sigma & \tau \\
+F(\rho) & F(\sigma) & F(\tau) \\ 
+};
+  \path[->]
+  (m-1-1) edge node [above] {$c_1$} (m-1-2)
+  edge[bend left=45] node [above] {$c_2\circ c_1$} (m-1-3)
+  edge node [auto] {$F$} (m-2-1)
+  (m-1-2) edge node [above] {$c_2$} (m-1-3)
+  edge node [auto] {$F$} (m-2-2)
+  (m-1-3) edge node [auto] {$F$} (m-2-3)
+  (m-2-1) edge node [above] {$F(c_1)$} (m-2-2)
+  edge[bend right=45] node [below] {$F(c_2\circ c_1) = F(c_2) \circ F(c_1)$} (m-2-3)
+  (m-2-2) edge node [above] {$F(c_2)$} (m-2-3)  
+;
+\end{tikzpicture} 
+
+Now note that $F(\rho), F(\sigma), F(\tau) \in \text{Ob}_{\mathbf{\text{Set}}}$ means that $F(\rho),F(\sigma),F(\tau)$ are sets.  They fill the tables with its data set; the data set of rows.  
+
+
+
+\end{multicols*}
+
+
+
+\begin{thebibliography}{9}
+
+\bibitem{wikipedia}
+``Category Theory'', ``Functors'' \emph{Wikipedia}, wikipedia.org, \url{https://en.wikipedia.org/wiki/Category_theory}
+
+\bibitem{BW1998}
+Michael Barr, Charles Wells.  \textbf{Category Theory for Computing Science}.  \url{http://www.tac.mta.ca/tac/reprints/articles/22/tr22.pdf}, \url{http://www.math.mcgill.ca/triples/Barr-Wells-ctcs.pdf}
+
+\bibitem{Lein2014}
+Tom Leinster.  \textbf{Basic Category Theory} (Cambridge Studies in Advanced Mathematics) 1st Edition.  2014.  ISBN-13: 978-1107044241
+
+
+\bibitem{Turi2001}
+Daniele Turi. \textbf{Category Theory Lecture Notes}.  September 1996 – December 2001.  \url{http://www.dcs.ed.ac.uk/home/dt/CT/categories.pdf}
+
+\bibitem{AHS2004}
+Ji\v{r}\'{i} Ad\'{a}mek, Horst Herrlich, George E. Strecker.   \textbf{Abstract and Concrete Categories The Joy of Cats}. 2004.   
+
+\end{thebibliography}
+
+\end{document}
