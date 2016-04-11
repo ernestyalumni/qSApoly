@@ -1,0 +1,2403 @@
+%
+% Rotman_AdvModAlg.tex 
+%
+\documentclass[twoside,landscape]{amsart}
+\usepackage{amssymb,latexsym}
+\usepackage{times}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue}
+\usepackage{listings}
+
+
+\usetikzlibrary{matrix,arrows}
+%\usepackage{graphics}
+
+\usepackage{multicol}
+%\setlength\columnsep{20pt}
+
+%\usepackage{mathptmx}
+
+%\usepackage{listings}
+
+\oddsidemargin=15pt
+\evensidemargin=5pt
+\hoffset-45pt
+\voffset-55pt
+\topmargin=-4pt
+\headsep=5pt
+\textwidth=1120pt
+\textheight=580pt
+\paperwidth=1200pt
+\paperheight=700pt
+\footskip=40pt
+
+\marginparsep=4pt
+\marginparwidth=8pt
+
+\parindent0.0em
+\parskip7pt plus3pt minus2pt
+
+%\oddsidemargin-0.85cm
+%\evensidemargin-0.65cm
+%\topmargin-2.05cm     %I recommend adding these three lines to increase the 
+%\textwidth19.05cm   %amount of usable space on the page (and save trees)
+%\textheight25.05cm  
+%\parindent0.0em
+
+%This next line (when uncommented) allow you to use encapsulated
+%postscript files for figures in your document
+%\usepackage{epsfig}
+
+%\linespread{1.2}
+
+%plain makes sure that we have page numbers
+\pagestyle{plain}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{axiom}{Axiom}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{notation}{Notation}
+
+
+\setcounter{tocdepth}{1}
+
+%\setcounter{tocdepth}{2} % to get subsubsections in toc                                              
+% cf. http://www.latex-community.org/forum/viewtopic.php?f=47&p=44760  
+
+
+
+\title{Notes and Solutions to Advanced Modern Algebra by Joseph Rotman
+}
+
+\author{
+  Ernest Yeung - M\"{u}nchen
+       }
+\date{inverno 2012}
+
+%This defines a new command \questionhead which takes one argument and
+%prints out Question #. with some space.
+\newcommand{\questionhead}[1]
+  {\bigskip\bigskip
+   \noindent{\small\bf Question #1.}
+   \bigskip}
+
+\newcommand{\problemhead}[1]
+  {
+   \noindent{\small\bf Problem #1.}
+   }
+
+\newcommand{\exercisehead}[1]
+  { \smallskip
+   \noindent{\small\bf Exercise #1.}
+  }
+
+\newcommand{\solutionhead}[1]
+  {
+   \noindent{\small\bf Solution #1.}
+   }
+
+
+%-----------------------------------
+\begin{document}
+%-----------------------------------
+
+\maketitle
+
+
+\noindent gmail        : ernestyalumni \\
+linkedin     : ernestyalumni \\
+twitter      : ernestyalumni \\
+wordpress.com: ernestyalumni \\
+
+
+These notes are open-source, governed by the Creative Common license.  Use of these notes is governed by the Caltech Honor Code: ``No member of the Caltech community shall take unfair advantage of any other member of the Caltech community.'' \\
+\tableofcontents
+
+
+\definecolor{darkgreen}{rgb}{0, 0.4, 0}
+\lstset{language=Python,
+%  numbers=left,
+  frame=bottomline,
+  basicstyle=\scriptsize,
+  identifierstyle=\color{blue},
+  keywordstyle=\bfseries,
+  commentstyle=\color{darkgreen},
+  stringstyle=\color{red},
+  literate={Ö}{{\"O}}1 {é}{{\'e}}1 {Å}{{\AA}}1,
+}
+\lstlistoflistings
+
+
+\begin{multicols*}{2}
+
+
+\section{Things Past }
+
+\subsection{Some Number Theory}
+
+\[
+\mathbb{N} = \lbrace n | n \in \mathbb{Z} , n \geq 0 \rbrace
+\]
+
+\begin{definition}
+$p \in \mathbb{N}$, prime if $p\geq 2$, and $\nexists $ factorization $p=ab$ where $a<p, b<p$, $a,b\in \mathbb{N}$
+\end{definition}
+
+
+
+\begin{axiom} \textbf{Least Integer Axiom}
+$\exists \, $ smallest integer in every $C \subset \mathbb{N}$, $C\neq \emptyset$
+\end{axiom}
+
+
+
+\begin{theorem}[1.2] (\textbf{Mathematical Induction}).  Let $S(n)$ family of statements, $\forall \, n \in \mathbb{Z}$, $n\geq m$, where $m$ some fixed integer.  \\
+If \begin{enumerate}
+\item[(i)] $S(m)$ true 
+\item[(ii)] $S(n)$ true implies $S(n+1)$ true
+\end{enumerate}
+then $S(n)$ true $\forall \, n \in \mathbb{Z}$, $n\geq m$
+\end{theorem}
+\begin{proof} Let $C$ be set of all integers $n\geq m$ for which $S(n)$ false. \\
+If $C =\emptyset$ done. \\
+Otherwise, $\exists \, $ smallest integer $k$ in $C$. \\
+
+By (i), $k > m$ \\
+\phantom{\quad } But statement $S(k-1)$ (EY !!!)
+\phantom{\quad \quad } $S(k-1)$ true. \\
+But by (ii), $S(k)$ true.  \\
+Contradiction that $k\in C$
+
+\end{proof}
+
+
+\begin{theorem}[1.3] (\textbf{Second Form of Induction}).  Let $S(n)$ family of statements, $\forall \, n \in \mathbb{Z}$, $n\geq m$, where $m$ some fixed integer.  \\
+If \begin{enumerate}
+\item[(i)] $S(m)$ true 
+\item[(ii)] if $S(k)$ true $\forall \, k $ with $m \leq k <n$, then $S(n)$ itself true
+\end{enumerate}
+then $S(n)$ true $\forall \, n \in \mathbb{Z}$, $n\geq m$
+\end{theorem}
+\begin{proof} Let $C$ be set of all integers $n\geq m$ for which $S(n)$ false. \\
+If $C =\emptyset$ done. \\
+Otherwise, $\exists \, $ smallest integer $j$ in $C$. \\
+
+By (i), $j > m$ \\
+Then $S(j-1)$ true, $S(j-2)$ true, $\dots$ $S(m+1)$ true, otherwise contradiction. \\
+By (ii), $S(j)$ true.  Contradiction.
+
+\end{proof}
+
+\begin{theorem}[1.4] (\textbf{Division Algorithm})
+  $\forall \, a , b \in \mathbb{Z}$, $a\neq 0$, $\exists \, ! \, q,r \in \mathbb{Z}$ s.t. 
+\[
+b = qa + r \text{ and } 0 \leq r < |a|
+\]
+\end{theorem}
+\begin{proof}
+Consider $n \in \mathbb{Z}$, $b-na \in \mathbb{Z}$ \\
+Let $C= \lbrace b - na | n \in \mathbb{Z} \rbrace \bigcap \mathbb{N}$.  \\
+\phantom{\quad} $C\neq \emptyset$ (otherwise, consider $b-na < 0$, $b<na$, then contradiction) \\
+By Least Integer Axiom, $\exists \, $ smallest $r\in C$, $r= b-na$.  \\
+\phantom{\quad } define $q=n$ when $r=b-na$.  \\
+Suppose $\begin{aligned} & \quad \\ & qa + r = q'a + r' \\ & (q-q')a = r'-r \\ & |(q-q')a| = |r'-r| \end{aligned}$, $0\leq r' < |a|$.  Now $0\leq |r'-r | < |a|$ \\
+\phantom{\quad } if $|q-q'| \neq 0$, $|(q-q')a | \geq |a|$ 
+\[
+\Longrightarrow q=q', r=r'
+\]
+Conclude both sides are $0$
+\end{proof}
+
+\begin{definition}
+  $a,b \in \mathbb{Z}$, $a$ \textbf{divisor} of $b$ if $\exists \, d \in \mathbb{Z}$ s.t. $b=ad$. \\
+  $a$ \textbf{divides} $b$ or $b$ multiple of $a$, denote 
+\[
+a | b
+\]
+$a|b$ iff $b$ has remainder $r=0$ after dividing by $a$
+\end{definition}
+
+\begin{theorem}[1.14] \textbf{(Euclidean Algorithm)} Let $a,b \in \mathbb{Z}^+$ \\
+$\exists \, $ algorithm finds gcd, $d= (a,b)$ and finds $s,t \in \mathbb{Z}$ with $d=sa + tb$
+\end{theorem}
+
+\begin{proof}
+$b=qa + r$ where $0 \leq r < a$ \\
+  $a=q'r + r' $ where $0\leq r' < r$ \\
+$r=q''r' + r''$ where $0\leq r'' < r'$
+\end{proof}
+
+
+\begin{lemma}[1.53]
+  If $\sim$ equivalence relation on set $X$, then $x\sim y$ iff $[x] = [y]$
+\end{lemma}
+
+\begin{proof}
+  If $x\sim y$, then if $z\in [x]$, $z\sim x$, and so $z\sim y$, so $[x] \subseteq [y]$.  Likewise (by label symmetry), $[y] \subseteq [x] \Longrightarrow [y] = [x]$.  \\
+If $[x]= [y]$, then $x\in [x]$, by reflexivity, $x \sim x$.  $x \in [x] = [y]$.  So $x\sim y$
+\end{proof}
+
+\begin{proposition}[1.54]
+If $\sim $ equivalence relation on set $X$, then equivalence classes form a partition.  \\
+If given partition $\lbrace A_i | i \in I \rbrace$ of $X$, $\exists \, $ equivalence relation $\sim $ on $X$ s.t. equivalence classes are the $A_i$.  
+\end{proposition}
+
+\begin{proof}
+Assume equivalence relation $\sim$ on $X$.  \\
+$\forall \, x \in X$, $x\in [x]$, since $x$ reflexive ($x\sim x$), so $[x] \subseteq X$, $[x] \neq \emptyset$ and $\bigcup_{x\in X} [x] = X$.  \\
+Suppose $a \in [x] \bigcap [y]$, so $\begin{aligned} & \quad \\
+  & a \sim x \\
+  & a \sim y \end{aligned}$.  Then $x\sim y$.  By Lemma 1.53, ($x\sim y$ iff $[x]=[y]$), then $[x] = [y]$.  So $\lbrace [x] \rbrace$ partition $X$.  
+
+If $\lbrace A_i | i \in I \rbrace$ partition of $X$.   \\
+If $x,y \in X$, define $x\sim y$ if $\exists \, i \in I$ s.t. $\begin{aligned} &  \quad \\
+  & x \in A_i \\
+  & y \in A_i \end{aligned}$.  $x\sim y$ is clearly reflexive and symmetric.  
+
+Suppose $x\sim y$, $y\sim z$, so $\exists \, i,j \in I$ , s.t. $\begin{aligned} & \quad \\
+  & x,y \in A_i \\
+  & y,z \in A_j \end{aligned}$.  Since $y \in A_i \bigcap A_j$, so $i=j$ (since $A_i,A_j$ pairwise disjoint by definition of partition).  \\
+So $x\sim z$ since $x,z \in A_i$ \\
+If $x\in X$, then $x\in A_i$, for some $i$.  \\
+If $y \in A_i$, then $y\sim x$, and $y\in [x]$, so $A_i \subseteq [x]$ \\
+Let $z\in [x]$, so $z\sim x$.  Then $\exists \, j$ s.t. $x\in A_j$ and $z\in A_j$, then $x\in A_j \bigcap A_i$ \, $\Longrightarrow i=j$ by pairwise disjointness, so $z \in A_i$, so $[x] \subseteq A_i$.  $\Longrightarrow [x] = A_i$
+\end{proof}
+
+
+
+
+\subsubsection*{Exercises}
+
+\exercisehead{1.1} 
+First, knowing that the law of exponents works for real (complex) numbers (if you really want to, look into Apostol's Calculus Volume 1
+\[
+\frac{1}{6} n(n+1)(2n+1) = \frac{1}{6}n(2n^2 + 3n+1) = \frac{1}{3}n^3 + \frac{1}{2} n^2 + \frac{n}{6}
+\]
+Now I think the point of this exercise and exercises 1.2, 1.3 is to apply what one learns about proving things by induction in the corresponding section.
+
+$n=1$.  $1 = \frac{1}{6}1(2)(3)$ \\
+Assume $n$th case.  
+\[
+\begin{gathered}
+  \frac{1}{6}(n+1)(n+2)(2(n+1) + 1) = \frac{1}{6}(n+1)(n+2)(2n+1 +2) = \frac{1}{6}n(n+1)(2n+1+2) + \frac{1}{3}(n+1)(2n+1+2) = \\
+  = 1^2 + \dots + n^2 + \frac{1}{3}n(n+1) + \frac{1}{3}(n+1)(2n+3) = 1^2 + \dots + n^2 + (n+1)^2
+\end{gathered}
+\]
+
+\exercisehead{1.11} Let $p_1, p_2, \dots$ be list of primes in ascending order: $p_1 = 2, p_2=3, p_3 = 5 \dots$
+
+cf. \url{}
+
+
+
+\exercisehead{1.68} 
+Let $f: X \to Y$ \\
+$V, W \subseteq Y$ \\
+\begin{enumerate}
+\item[(i)] $f^{-1}(VW) = f^{-1}(V) f^{-1}(W)$.  $f^{-1}(V \bigcup W) = f^{-1}(V) \bigcup f^{-1}(W)$  \\
+
+Suppose $x \in f^{-1}(VW)$.  \\
+\quad Then $f(x) \in VW$.  Then $f(x) \in V$ and $f(x) \in W$.  Then $x\in f^{-1}(V)$ and $x\in f^{-1}(W)$.  $x\in f^{-1}(V) f^{-1}(W)$.  \\
+if $x\in f^{-1}(V) f^{-1}(W)$ then $x \in f^{-1}(V)$ and $x\in f^{-1}(W)$.  Then $f(x) \in V$ and $f(x) \in W$.  So $f(x) \in VW$, with $f(x)$ in it $(VW)$.  \\
+Then $x\in f^{-1}(VW)$.  
+\[
+\boxed{ f^{-1}(VW) = f^{-1}(V) f^{-1}(W) } 
+\]
+
+Suppose $x\in f^{-1}(V\bigcup W)$.  Then $f(x) \in V \bigcup W$.  Then $f(x) \in V$ or $f(x) \in W$.  Then $x \in f^{-1}(V)$ or $x\in f^{-1}(W)$.  Then $x\in f^{-1}(V) \bigcup f^{-1}(W)$.  \\
+Suppose $x\in f^{-1}(V) \bigcup f^{-1}(W)$.  Then $x\in f^{-1}(V)$ or $x\in f^{-1}(W)$.  Then $f(x) \in V$ or $f(x) \in W$.  $f(x) \in V \bigcup W$.  So $x\in f^{-1}(V \bigcup W)$.  
+
+\end{enumerate}
+
+\section{Groups I }
+
+\subsection{Introduction}
+
+\subsection{Permutations}
+
+\begin{definition}
+\text{permutation} of set $X$ is a bijection from $X$ to $X$ (itself)
+\end{definition}
+
+\begin{definition}
+  $S_X =  $ family of all permutations of set $X$, \textbf{symmetric group} on $X$ \\
+  When $X = \lbrace 1 \dots n\rbrace$, $S_X \equiv S_n$ symmetric group of $n$ letters
+\end{definition}
+
+
+\[
+\alpha = \left( \begin{matrix} 1 & 2 & \dots & j & \dots  & n \\ \alpha(1) & \alpha(2) & \dots & \alpha(j) & \dots & \alpha(n) \end{matrix} \right)
+\]
+
+\begin{definition}
+Let $i_1 \dots i_r$ distinct integers in $\lbrace 1 \dots n \rbrace$
+
+If $\alpha \in S_n$ 
+\[
+\alpha(i_1) = i_2 \dots \alpha(i_r) = i_1 
+\]
+$\alpha$ $r$-cycle
+\[
+\alpha = (\begin{matrix} i_1 & i_2 & \dots & i_r \end{matrix} )
+\]
+\end{definition}
+
+\begin{lstlisting}
+sage: S_3 = SymmetricGroup(3)
+sage: for perm in S_3.list():
+....:     print perm.tuple()
+....:     
+(1, 2, 3)
+(2, 1, 3)
+(2, 3, 1)
+(3, 1, 2)
+(1, 3, 2)
+(3, 2, 1)
+\end{lstlisting}
+
+\begin{lstlisting}
+sage: S_9 = SymmetricGroup(9)
+sage: S_9([6,4,7,2,5,1,8,9,3])
+(1,6)(2,4)(3,7,8,9)
+sage: alpha = S_9([6,4,7,2,5,1,8,9,3])
+sage: alpha
+(1,6)(2,4)(3,7,8,9)
+sage: alpha.tuple()
+(6, 4, 7, 2, 5, 1, 8, 9, 3)
+\end{lstlisting}
+
+Notice that while Rotman \cite{JRotman2010} defines that ``we multiply permutations from right to left, because multiplication here is composite of functions; that is, to evaluate $\alpha \beta(1)$, we compute $\alpha (\beta(1))$'', in Sage Math, it's the other way.  This makes sense because in math, we think in terms of operations acting from the left, while in Sage Math, based on Python, function call are chained together from left to right.  
+
+So Rotman has
+\[
+\sigma = (1 \, 2)(1 \, 3 \, 4 \, 2 \, 5)(2 \, 5 \, 1 \, 3)
+\]
+while
+
+\begin{lstlisting}
+sage: S_5 = SymmetricGroup(5)
+sage: S_5((1,2))
+(1,2)
+sage: S_5((2,5,1,3))*S_5((1,3,4,2,5))*S_5((1,2))
+(1,4)(3,5)
+sage: sigma = S_5((2,5,1,3))*S_5((1,3,4,2,5))*S_5((1,2))
+sage: sigma.tuple()
+(4, 2, 5, 1, 3)
+\end{lstlisting}
+
+whereas, if we did this, we'd get something different than desired:
+\begin{lstlisting}
+sage: S_5((1,2))*S_5((1,3,4,2,5))*S_5((2,5,1,3))
+(3,4,5)
+sage: (S_5((1,2))*S_5((1,3,4,2,5))*S_5((2,5,1,3))).tuple()
+(1, 2, 4, 5, 3)
+\end{lstlisting}
+
+\subsection{Groups }
+
+
+\begin{definition}
+  group $G$ is a set equipped with binary operation $*$ s.t.
+\begin{enumerate}
+\item associative $\forall \, x,y,z \in G$, $x*(y*z) = (x*y)*z$
+\item $\exists \, e \in G$, called identity, with $e* x = x*e$ \, $\forall \, x \in G$  
+\item $\forall \, x \in G$, $\exists \, $ inverse $x^{-1} \in G$ s.t. $x*x^{-1} = e = x^{-1} * x$ 
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+  $G$ abelian if commutativity $x*y = y*x$ \, $\forall \, x,y \in G$
+\end{definition}
+
+\begin{definition} Let $G$ group, let $a \in G$, \\
+  \quad \, If $a^k =1$, for some $k\geq 1$, then the smallest such exponent $k\geq 1$ is order of $a$.  \\
+\quad \, If $\nexists \, k$, $a$ has infinite order
+\end{definition}
+
+\begin{proposition}[2.27] If $G$ finite group, $\forall \, x \in G$ has finite order  \end{proposition}
+
+\begin{proof}
+cf. Example 2.26 \\
+
+If $G$ finite group, $a\in G$, \\
+\quad Consider subset $\lbrace 1, a, a^2 \dots a^n \dots \rbrace$ \\
+\quad \quad Since $G$ finite, $\exists \, m,n \in \mathbb{Z}, \, m > n$ s.t. $a^m = a^n$ (i.e. there must be repetition) 
+
+\[
+1 = a^m a^{-n} = a^{m-n}
+\]
+
+Thus, if $G$ finite group, $a \in G$, $\exists \, k \geq 1$ s.t. $a^k = 1$
+
+\end{proof}
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+
+
+\subsubsection*{ Exercises }
+
+\exercisehead{2.17} $a_2^{-1} a_1^{-1} a_1 a_2 = e$ \\
+
+Assume $n-1$ case.  
+\[
+a_n^{-1} a_{n-1}^{-1} \dots a_2^{-1} a_1^{-1} a_1 a_2 \dots a_{n-1} a_n = a_n^{-1} e a_n = e
+\]
+
+
+
+\exercisehead{2.27 }
+
+cf. \url{http://math.stanford.edu/~akshay/math109/hw2.pdf}
+
+Let $S = $ elements of $G$ of order greater than 2. \\
+Note, only 1 has order 1, and $a\in G$ has order 2 only if $a=a^{-1}$, then 
+\[
+S = \lbrace a | a\in G, \, a^2 \neq 1 \rbrace
+\]
+
+if $s\in S$, \, $s^{-1} \neq s$ \\
+so
+\[
+S = \bigcup_{ s\in S} \lbrace s, s^{-1} \rbrace
+\]
+
+Note that $\forall \, \lbrace s , s^{-1} \rbrace$, \, $s\neq s^{-1}$ (distinct) \\
+\quad Since $s^{-1}$ unique ($s^{-1} s = bs = 1$, \, $s^{-1} = b$), then for $\lbrace x_1 , x_1^{-1} \rbrace$, $\lbrace x_2, x_2^{-1} \rbrace \subset S$, \\
+\quad \quad $x_1 ,x_2$ equal or distinct.  \\
+Thus $|S|$ even (number of elements in $S$, or ``order'', is even).
+
+$1 \in G$, $S \subset G$.  $\Longrightarrow \exists \, a \in G$, s.t. $a^2 = 1$.  At least 1 $a$ must exists.  \\
+There can be an odd number of $a$'s.  \\
+Precisely, let $T = \lbrace a | a \in G, \, a^2 = 1\rbrace$, $|T| = k$ (number of elements in $T$) \\
+$G = T \coprod S \coprod \lbrace e \rbrace$, \, $|G|= k + 2m + 1 = 2n$.  $k = 2(n-m)-1$, so $k$ odd.  
+
+
+
+\subsection{Lagrange's Thm. }
+
+Example 2.29 $A_n \leq S_n$, $|A_n|=n!/2$, and $A_n$ consists of all even permutations (sign $+1$).
+\begin{lstlisting}
+sage: A_3 = AlternatingGroup(3)
+sage: A_3.cardinality()
+3
+sage: for a in A_3.list(): print a.tuple()
+(1, 2, 3)
+(2, 3, 1)
+(3, 1, 2)
+sage: for a in A_3.list(): print a.sign()
+1
+1
+1
+\end{lstlisting} 
+
+Easy to prove a subset is a subgroup with this:
+\begin{proposition}[2.30]
+$ H \subseteq G$ subgroup iff $H \neq 0$ and $\forall \, x,y \in H$, then $xy^{-1}\in H$
+\end{proposition}
+\begin{proof}
+  If $H$ subgroup, $xy^{-1} \in H$ since $y^{-1} \in H$ (by def.) and $1 \in H$, so $H \neq 0$.  \\
+If $H \neq 0$, and $\forall \, x ,y \in H$, then $xy^{-1} \in H$, then $yy^{-1} = 1 \in H$, $1y^{-1} = y^{-1} \in H$, \, $\forall \, y \in H$,  \\
+If $x,y \in H$, $y^{-1} \in H$, so $xy = x(y^{-1})^{-1} \in H$
+\end{proof}
+
+\textbf{cyclic subgroup}, \textbf{generator} of $G$
+
+e.g.
+\begin{lstlisting}
+sage: S_3.list()[1]
+(1,2)
+sage: S_3.subgroup( S_3.list()[1] ).list()
+[(), (1,2)]
+\end{lstlisting}
+
+\begin{definition}
+  $H$ subgroup of $G$, coset $aH = \lbrace ah  | h \in H \rbrace$.  left cosets.  \\
+$Ha = \lbrace ha | h \in H \rbrace$ right cosets.  
+\end{definition}
+
+Example 2.39
+\begin{enumerate}
+\item[(i)]
+\item[(ii)]
+\item[(iii)]
+\begin{lstlisting}
+sage: H = S_3.subgroup( S_3.list()[1] )
+sage: H
+Subgroup of (Symmetric group of order 3! as a permutation group) generated by [(1,2)]
+sage: H.list()
+[(), (1,2)]
+\end{lstlisting}
+
+``Notice that now Sage’s results will be “backwards” compared with the text.'' \cite{TJudsonRBeezer2015}
+
+\begin{lstlisting}
+sage: H = S_3.subgroup( S_3.list()[1] )
+
+sage: S_3.cosets(H,side='right')
+[[(), (1,2)], [(2,3), (1,3,2)], [(1,2,3), (1,3)]]
+
+[[(), (1,2)], [(2,3), (1,2,3)], [(1,3,2), (1,3)]]
+sage: S_3.cosets(H,side='left')[1][1].tuple()
+\end{lstlisting}
+
+\end{enumerate}
+
+
+\begin{lemma}[2.40] \label{Lemma:2.40} Let $H \leq G$, $\forall \, a ,b \in G$ 
+\begin{enumerate}
+  \item[(i)] $aH = bH$ iff $b^{-1}a \in H$ ; in particular $aH = H$ iff $a\in H$ 
+\item[(ii)]  if $aH \bigcap bH \neq \emptyset $, $aH = bH$
+\item[(iii)] $|aH| = |H|$ \, $\forall \, a \in G$
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}
+  \item[(i)] If $b^{-1}a \in H$, consider $x\in aH$.  Consider $bh'$ where $h' = b^{-1}ah \in H$, since $H$ closed.  $bh' \in bH$ and $x = ah = bh'$.  So $x \in bH$.  
+
+Consider $x \in bH$.  $x=bh$ for some $h \in H$.  $b^{-1} a \in H$, so $a^{-1}b = (b^{-1}a)^{-1} \in H$, since $H$ is a subgroup with inverses.  \\
+Consider $ah' \in aH$, where $h' = a^{-1}bh$.  Then 
+\[
+x = bh = ah' \in aH \text{ so } bH \subseteq aH
+\]
+$\Longrightarrow bH = aH$.  
+
+If $aH = bH$, the $\forall \, x \in aH$, $x=ah$ for some $h\in H$ and $x=bh'$ for some $h' \in H$.  $b^{-1}ah = h'$ or $b^{-1}a = h' h^{-1}$ since $H$ closed, $h'h^{-1} \in H$, so $b^{-1}a \in H$
+\item[(ii)] $\forall \, a ,b \in G$, suppose $a\sim b$, if $b^{-1}a \in H$.  Then $aH = bH$ from above.  
+
+$a\sim a$ means $a^{-1}a = 1 \in H$ (since $H\leq G$) \\
+  $b\sim a$ means $a^{-1}b \in H$ since $(b^{-1}a)^{-1} = a^{-1}b \in H$ \\
+If $b\sim c$ as well, so $c^{-1}b \in H$, $c^{-1}b(b^{-1}a) = c^{-1}a \in H$.  So $a\sim c$.  
+
+Thus $\sim$ is an equivalence relation.  Then $[a]$ form a partition of $G$.  $[a]$ happens to be $aH$ (indeed, $1 \in H$, so $a\in aH$).  
+
+By def. of partition, if $aH \bigcap bH \neq \emptyset$, then $aH = bH$.  
+\item[(iii)] Consider $\begin{aligned} & \quad \\
+  & H \to aH \\
+  & h \mapsto ah \end{aligned}$, since $a^{-1} \in G$, then mapping is injective.  
+
+$\forall \, x \in aH$, $x= ah'$ for some $h' \in H$. Then $h' \mapsto ah' =x$.  It's surjective.  
+
+Then $\exists \, $ isomorphism (bijective mapping) between $H$ and $aH$.  $\Longrightarrow |H| = |aH|$
+\end{enumerate}
+\end{proof}
+
+EY : 20150917: If $H \leq G$, cosets of $H$ in $G$ form a partition of $G$.  
+
+\begin{theorem}[2.41](Lagrange's Thm.)
+  If $H\leq G$, then $|H|$ is a divisor of $|G|$
+\end{theorem}
+\begin{proof}
+  Let $\lbrace a_1 H, a_2 H \dots a_t H \rbrace$ be distinct cosets of $H$ that partition $G$.  
+\[
+\Longrightarrow G = \coprod_{i=1}^t a_i H
+\]
+\[
+\Longrightarrow |G| = \sum_{i=1}^t |a_i H| = \sum_{i=1}^t |H| = t|H| \Longrightarrow \frac{|G|}{|H|} = t
+\]
+\end{proof}
+
+
+
+\exercisehead{2.29} \begin{enumerate}
+\item[(i)] If $Ha= Hb$, \\
+Then $\exists \, h_1, h_2 \in H$ s.t. $\begin{aligned} & \quad \\
+  h_1 a & = h_2 b \\ 
+  ab^{-1} & = h_2 h_1^{-1} \in H \end{aligned}$ since $H$ subgroup.   \\
+
+For $h_1 a \in Ha$, $h_1 a = h_1 h b \in Hb$ \\
+For $h_2 b \in Hb$, $h_2 b = h_2 h^{-1} a \in Ha$.  $Ha = Hb$
+
+Thus, for right cosets $Ha, Hb$, 
+\[
+Ha = Hb \text{ iff } ab^{-1} \in H
+\]
+
+
+\item[(ii)] $a\sim b$ if $ab^{-1} \in H$ \\
+$a\sim a$ if $aa^{-1} = e \in H$ since $H$ subgroup.  \\
+If $a\sim b$, $(ab^{-1})^{-1} = ba^{-1} \in H$ since $H$ subgroup, so $b\sim a$.  \\
+$ab^{-1}, bc^{-1} \in H$.  $H$ subgroup, so $ac^{-1} \in H$.  So $a\sim c$.  $a\sim b$ an equivalence relation.  \\
+
+For $[a]$, if $a\sim b$, $ab^{-1} \in H$ so $Ha= Hb$, so $[a] = Ha$, since $ea =a$ and $ha =b$.  
+\end{enumerate}
+
+\exercisehead{2.30}
+
+\begin{enumerate}
+  \item[(i)] define \textbf{special linear group} by 
+\[
+\text{SL}(2, \mathbb{R}) = \lbrace A \in \text{GL}(2,\mathbb{R}) | \text{det}(A) = 1 \rbrace
+\]
+$\text{GL}(2,\mathbb{R})$ is a group.  Clearly, $\text{SL}(2,\mathbb{R}) \subseteq \text{GL}(2,\mathbb{R})$.  
+
+Use Prop. 2.30, $H \subseteq G$ is a subgroup iff $H \neq 0$ and $\forall \, x,y \in H$, then $xy^{-1} \in H$.  
+
+$1 \in \text{SL}(2,\mathbb{R})$.  $\text{det}1 =1$.  So $SL(2,\mathbb{R}) \neq 0$ as well.  
+
+Let $x,y \in \text{SL}(2,\mathbb{R})$.  $xy^{-1} \in \text{GL}(2,\mathbb{R})$, since $\text{GL}(2,\mathbb{R})$ a group and $x,y^{-1} \in \text{GL}(2,\mathbb{R})$.  $\text{det}(xy^{-1}) = \text{det}x \text{det}y^{-1} = 1$ since $\text{det}y=1$.  
+
+Then $xy^{-1} \in \text{SL}(2,\mathbb{R}) \Longrightarrow \text{SL}(2,\mathbb{R}) < \text{GL}(2,\mathbb{R})$.  
+
+
+
+\item[(ii)] $1 \in \text{GL}(2,\mathbb{Q})$ since $1\in \mathbb{Q}$.  Also $\text{GL}(2,\mathbb{Q}) \neq 0$.  
+
+Let $x,y \in \text{GL}(2,\mathbb{Q})$.  
+
+Let $y = \left[ \begin{matrix} e & f \\
+    g & h \end{matrix} \right]$ $y^{-1} = \frac{1}{ eh - fg} \left[ \begin{matrix} h & -f \\
+    -g & e \end{matrix} \right]$.  $xy^{-1} \in \text{GL}(2,\mathbb{Q})$ as $\forall \, $ entry is in $\mathbb{Q}$, since $\mathbb{Q}$ closed under addition, multiplication, and division, and $\text{det}(xy^{-1}) = \text{det}x \text{det}y^{-1} = \frac{ \text{det}x }{ \text{det}y} \neq 0$
+\end{enumerate}
+
+\exercisehead{2.37} Consider $\varphi : aH \mapsto Ha^{-1}$.  
+
+EY:20150918 is it true that $\varphi : 2^G \to 2^G$ ?
+
+Consider right coset $Ha$.  $a^{-1} \in G$ since $G$ group.  $a^{-1}H$ is a left coset.  $\varphi$ surjective, $\varphi(a^{-1}H) = H(a^{-1})^{-1} = Ha$
+
+Suppose $\varphi(aH) = \varphi(bH) \Longrightarrow Ha^{-1} = Hb^{-1}$.  $a^{-1}(b^{-1})^{-1} = a^{-1}b \in H$,  by Exercise 2.29 (right cosets $Ha = Hb$ iff $ab^{-1} \in H$).  \\
+\phantom{\quad \, } $(a^{-1} b)^{-1} = b^{-1}a \in H$ then, since $H \leq G$.  
+
+Lemma \ref{Lemma:2.40}, i.e. Lemma 2.40, says $aH = bH$ iff $b^{-1}a \in H$, and so $aH = bH$.  $\varphi$ injective.
+
+Thus there is a bijection between left cosets and right cosets.  Then the number of left cosets is equal to the number of right cosets.  
+
+\subsection{Homomorphisms}
+
+
+
+\begin{proposition}[2.56] Let $f:G \to H$ homomorphism.  
+\begin{enumerate}
+\item[(i)] $\text{ker}{f}$ subgroup of $G$ \\
+$\text{im}{f}$ subgroup of $H$
+\item[(ii)] If $x\in \text{ker}{f}$, $\forall \, a \in G$ 
+\[
+axa^{-1} \in \text{ker}{f}
+\]
+
+\item[(iii)] $f$ injection iff $\text{ker}{f} = 1$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{enumerate}
+\item[(i)] Let $x,y \in \text{ker}{f} $ \quad \quad $f(xy) = f(x)f(y) = 1 \cdot 1 = 1 \quad \quad xy \in \text{ker}{f}$ \\
+Let consider $x^{-1}$.  \quad \quad $f(x^{-1}) f(x) = f(x^{-1}x) = 1  = 0 $
+
+Consider 1.  $f(1) = 1$ since $f(1) = f(1\cdot 1) = f(1) f(1)$, so $f(1) = 1$  
+
+$f(x^{-1}x) = f(x^{-1})f(x) = 1$, so $(f(x))^{-1} = f(x^{-1})$
+
+\[
+\begin{aligned}
+  & f(x) f(y) = f(xy) \in \text{im}{f} \\ 
+  & f(x^{-1}) f(x) = f(x^{-1}x ) = f(1) = 1 \\ 
+  &  1 = f(1), \text{ since } 1 f(x) = f(1) f(x) = f(x)
+\end{aligned}
+\]
+\item[(ii)] 
+\[
+\begin{gathered}
+f(axa^{-1}) = f(a) f(x) f(a^{-1}) = f(a) 1 (f(a))^{-1} = 1  \\ 
+axa^{-1} \in \text{ker}{f}
+\end{gathered}
+\]
+
+\item[(iii)] If $f$ injective, if $f(x) = 1$, $x=1$, so $\text{ker}{f} = 1$ \\
+If $\text{ker}{f} = 1$, consider $f(a) = f(b)$ 
+\[
+f(a) f(b^{-1}) = f(ab^{-1}) = f(a) f(b^{-1})=  1 \Longrightarrow ab^{-1} = 1 \quad \quad \boxed{ a = b}
+\]
+\end{enumerate}
+\end{proof}
+
+\begin{definition} subgroup $K$ of $G$ \textbf{normal subgroup} if $k \in K$, $g\in G$, $gkg^{-1} \in K$.  $K \lhd G$.  
+\end{definition}
+
+
+\begin{definition} If $a \in $ group $G$, conjugate of $a = gag^{-1} \in G$
+\end{definition}
+
+
+\begin{proposition}[2.56] Let $f:G\to H$ be a homomorphism.  $ \text{ker}{f}$ is a normal subgroup i.e. if $x\in \text{ker}f$ and if $a\in G$, then $axa^{-1} \in \text{ker}f$.  \end{proposition}
+
+If $G$ abelian, every subgroup is a normal subgroup.  
+
+\[
+h \in H \quad \quad gh g^{-1} = gg^{-1} h = h \in H
+\]
+
+cyclic subgroup $H=\langle (1 \, 2) \rangle $ of $S_3$, \, $H = \lbrace (1), (1, \, 2) \rbrace$ not normal subgroup.  
+
+(Trying stuff: 20130116)
+
+$\begin{aligned} & \quad \\ & \alpha = (\begin{matrix} 1 & 2 & 3 \end{matrix} ) \\ 
+  & \alpha^{-1} = ( \begin{matrix} 3 & 2 & 1 \end{matrix} ) \end{aligned}$ \quad \quad $\alpha ( \begin{matrix} 1 & 2 \end{matrix} ) \alpha^{-1} = ( \begin{matrix} 1 & 2 & 3  \end{matrix} )( \begin{matrix} 1 & 2 \end{matrix} ) ( \begin{matrix} 3 & 2 & 1 \end{matrix} ) = ( \begin{matrix} 2 & 3 \end{matrix} ) \notin H$
+
+
+$K = \langle ( \begin{matrix} 1 & 2 & 3 \end{matrix} \rangle$
+
+
+\begin{proposition}[2.58]
+  \begin{enumerate}
+\item[(i)] conjugation $\gamma_g : G \to G$ isomorphism
+\item[(ii)] conjugate elements have same order
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{enumerate}
+\item[(i)] $\gamma_g$  homomorphism since 
+\[
+\gamma_g(ab) = gabg^{-1} = gag^{-1} gbg^{-1} = \gamma_g(a) \gamma_g(b)
+\]
+Now 
+\[
+\gamma_g \gamma_h(a) = \gamma_g hah^{-1} = gh ah^{-1} g^{-1} = \gamma_{gh} a
+\]
+so 
+\[
+\gamma_g \gamma_{g^{-1}} (a) = \gamma_e a = a = \gamma_{g^{-1}} \gamma_g a
+\]
+so $\gamma_g$ bijective.  $\gamma_g$ isomorphism
+\item[(ii)] conjugation is an isomorphism and preserves order of the each element, by Exercise 2.42.  
+\end{enumerate}
+\end{proof}
+
+
+Example 2.59.
+
+Center of group $G$, $Z(G)$ 
+\[
+Z(G) = \lbrace z \in G: zg = gz \quad \, \forall \, g \in G \rbrace
+\]
+$Z(G)$ subgroup $z^{-1}(zg) z^{-1} = z^{-1} gz z^{-1}$ \\
+$Z(G)$ normal subgroup $gz^{-1} = z^{-1} g$
+\[
+gzg^{-1} = zgg^{-1} = z \in Z(G)
+\]
+
+
+
+
+\subsubsection{ Exercises}
+
+\exercisehead{2.41} $G$ abelian.  
+\[
+\begin{aligned}
+  & f(ab) = b^{-1} a^{-1} = f(b) f(a) = f(ba) \\
+  & f(aa^{-1} ) = aa^{-1} = e = f(a^{-1}) f(a) = f(a^{-1} a) = f(e)
+\end{aligned} 
+\]
+so $f$ homomorphism.  \\
+
+If $f(a) = a^{-1}$, homomorphism, 
+\[
+f(ab) = b^{-1} a^{-1} = f(b) f(a) = f(ba)
+\]
+so $ab= ba$
+
+
+\exercisehead{2.42}
+
+\begin{enumerate}
+\item[(i)] Let $f: G \to H$ isomorphism. \\
+if $a \in G$ has infinite order, \\
+Suppose $f(a)$ finite order, i.e. $\exists \, $ smallest $k\in \mathbb{Z}$ s.t. $f(a))^k =1$ \\
+$f(a)^k = f(a^k )= 1$.  $f$ isomorphism so $a^k =1$.  Contradiction.  \\
+\[
+\boxed{ \text{ so if $a\in G$ has infinite order, $f(a)$ has infinite order } }
+\]
+
+If $a$ has finite order $n$, $f(a^n) = (f(a))^n = f(1) = 1$.  \\
+$\Longrightarrow $ if $a$ has finite order $n$, $f(a)$ has finite order $n$.  \\
+
+if $G$ has element $a$ of some order $n$, suppose $f$ isomorphism. \\
+\quad $f(a)^n = 1$, i.e. $f(a)$ order of $n$.  $f(a) \in H$ \\
+Contradiction.  
+
+\[
+\boxed{ \text{ if $a\in G$, $a^n=1$ , and $\nexists \, h \in H$ s.t. $h^n=1$, then $G \ncong H$ } }
+\]
+
+
+\item[(ii)] EY 20131227
+\end{enumerate}
+
+
+
+
+
+\exercisehead{2.46} Consider $\lbrace \left[ \begin{matrix} a & b \\ 0 & 1 \end{matrix} \right] \in GL(2,\mathbb{R} ) \rbrace$
+\[
+\begin{gathered}
+  \left[ \begin{matrix} a & b \\ & 1 \end{matrix} \right] \left[ \begin{matrix} c & d \\ & 1 \end{matrix} \right] = \left[ \begin{matrix} ac & ad+ b \\ & 1 \end{matrix} \right]  \\ 
+  \left[ \begin{matrix} \frac{1}{a} & \frac{-b}{a} \\ & 1 \end{matrix} \right] \left[ \begin{matrix} a & b \\ & 1 \end{matrix} \right] = 1 \\
+  \left[ \begin{matrix} a & b \\ & 1 \end{matrix} \right] \left[ \begin{matrix} \frac{1}{a} & \frac{-b}{a} \\ & 1 \end{matrix} \right] = 1
+\end{gathered}
+\]
+
+Matrices are associative and $1 = \left[ \begin{matrix} 1 & \\ & 1 \end{matrix} \right]$ is identity to any $GL(2,\mathbb{R})$ matrix.  
+
+By identifying entries $a,b$ to $f(x)= ax + b$ and vice versa, $G = \lbrace f : \mathbb{R} \to \mathbb{R} | f(x) = ax + b, \, a \neq 0 \rbrace$ clearly isomorphic to $\lbrace \left[ \begin{matrix} a & b \\ c & 1 \end{matrix} \right] $ \\
+
+So $G$ also a group.  Note, 
+\[
+fg(x) = a(cx + d) + b = acx + ad + b
+\]
+
+
+
+
+
+\subsection{Quotient Groups }
+
+\begin{lemma}[2.65] normal subgroup $K$ iff s.t. $gK = Kg$ \quad $\forall \, g \in G$ \end{lemma} 
+
+\begin{proof} Suppose $K$ normal subgroup (if $k\in K, \, \forall \, g$, $gk g^{-1} \in K$)
+
+\[
+\begin{gathered}
+  \begin{aligned}
+    & gK = g(g^{-1} k g) = kg \text{ so } gK \subset Kg \\ 
+    & kg = (gkg^{-1})g = gk \text{ so } Kg \subset gK 
+\end{aligned} \\
+gK = Kg 
+\end{gathered}
+\]
+
+
+Suppose $gK = Kg$.  $\forall \, g \in G$ 
+\[
+gkg^{-1} = kgg^{-1} = k \in K 
+\]
+So $K$ normal subgroup (i.e. $K \lhd G$)
+
+
+\end{proof}
+
+\begin{theorem}[2.67] Let $G/K = \lbrace gK  | g\in G, K \text{ subgroup }\rbrace$, set of all left cosets of subgroup $K$.   \\
+if $K$ normal subgroup, $G/K$ group under $aK bK = (ab) K$ operation \end{theorem}
+
+\begin{proof}
+If $K$ normal subgroup, 
+\[
+(aK) (bK) = a(Kb)K = abKK = abK
+\]
+so product of 2 cosets of $K$ operation well-defined.  
+
+cosets of $K$ are associative.  $K$ associative.  
+
+identity: $K=1K$.  $(1K)(bK) = bK = (bK)(1K)$
+
+inverse: $a^{-1} K$.  $(a^{-1}K)(aK) = 1 K = (aK)(a^{-1}K)$ $G/K$ group.  
+
+\end{proof}
+
+
+\begin{corollary}[2.69] $\forall \, $ normal subgroup $K \lhd G$, $K = \text{ker}{f}$, $f$ some homomorphism.  \end{corollary}
+
+\begin{proof} Define \textbf{natural map} $\begin{aligned} & \quad \\ & \pi : G \to G/K \\ & \pi(a) = aK \end{aligned}$
+
+\[
+aK bK = abK = \pi(a) \pi(b) = \pi(ab) \quad \quad \text{ so $\pi$ surjective homomorphism }
+\]
+
+$K$ identity element in $G/K$ 
+\[
+\text{ker}{\pi} = \lbrace a \in G | \pi(a) = K \rbrace = \lbrace a \in G | aK = K \rbrace = K 
+\]
+By Lemma 2.40(i)
+
+\end{proof}
+
+\begin{theorem}[2.70] (First Isomorphism Thm.)
+If $f: G \to H$ homomorphism, \\
+then $\begin{aligned} & \quad \\ 
+  & \text{ker}{f} \lhd G \\ 
+  & G/\text{ker}{f} \cong \text{im}{f} \end{aligned}$
+
+i.e. if $\text{ker}{f} = K $, \, $\begin{aligned} & \quad \\ & \varphi : G/K \to \text{im}{f} \leq H \\ & aK \mapsto f(a) \end{aligned}$, then $\varphi$ isomoprhism.  
+
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex]
+{G   &  H \\
+G/K  &  \\};
+\path[->,font=\scriptsize]
+(m-1-1) edge node[auto]{$f$} (m-1-2)
+edge node[auto]{$\pi$} (m-2-1) 
+(m-2-1) edge node[auto]{$\varphi$} (m-1-2);
+\end{tikzpicture} \quad \quad $\varphi \pi = f$
+
+
+
+
+
+\end{theorem}
+
+\begin{proof} By Prop. 2.56(ii), $K = \text{ker}{f}$ \quad normal subgroup of $G$ 
+
+if $aK = bK$, then $a=bk$ for some $k \in K$, so 
+\[
+\varphi(ak) = f(a) = f(bk) = f(b) f(k) = f(b) 1 = f(b) = \varphi(bK) , \quad \text{ since } k \in K = \text{ker}{f} \, (f(k) = 1) 
+\]
+$\varphi$ well-defined 
+
+\[
+\varphi(a K bK ) = \varphi(ab K) = f(ab) = f(a) f(b) = \varphi(aK) \varphi(bK) 
+\]
+$\varphi$ homomorphism.  
+
+$\text{im}{\varphi} \leq \text{im}{f}$ clearly.  
+
+Let $y\in \text{im}{f}$.  $y=f(a)$, some $a\in G$  \quad \quad $y= f(a) = \varphi(aK)$  \quad \quad $\text{im}{f} \leq \text{im}{\varphi}$
+
+$\varphi$ surjective onto $\text{im}{f}$
+
+If $\varphi(aK) = \varphi(bK)$, $f(a) = f(b)$ 
+
+\[
+\begin{gathered}
+1 = f(b)^{-1} f(a) \overset{\text{ $f$ homomorphism }}{=} f(b^{-1}) f(a) = f(b^{-1} a)  \\
+b^{-1} a \in \text{ker}{f} = K
+\end{gathered}
+\]
+\[
+b^{-1} a K = K \quad \quad aK = bK \text{ so  $\varphi$ injective }
+\]
+
+So $\varphi $ isomorphism, $G/\text{ker}{f} \simeq \text{im}{f}$
+
+\end{proof}
+
+Example 2.7.1. Let $G = \langle a \rangle$ cyclic group of order $m$ \\
+Define $\begin{aligned} & \quad \\ 
+  & f: \mathbb{Z} \to G \\
+  & f(n) = a^n \quad \quad \forall \, n \in \mathbb{Z} \end{aligned}$
+
+$f$ homomorphism.  
+
+$f$ surjective (because a generator of $G$)
+
+\[
+\text{ker}{f} = \lbrace n\in \mathbb{Z} | a^n = 1 \rbrace = \langle m \rangle \quad \quad (\text{Thm. 2.24})
+\]
+
+1st. isomorphism Thm. $\Longrightarrow \mathbb{Z}/ \langle m \rangle \simeq G$ 
+
+every cyclic group of order $m$ is isomorphic to $\mathbb{Z}/\langle m \rangle$
+
+Example 2.72.  
+$\mathbb{R}/\mathbb{Z}$
+
+define $ \begin{aligned} & \quad \\ 
+  & f: \mathbb{R} \to S^1 \\
+  & x\mapsto e^{2\pi i x} \end{aligned}$
+
+$f$ homomorphism: $f(x+y) = e^{2\pi i (x+y)} = e^{2\pi i x} e^{2\pi i y} = f(x) f(y)$
+
+$f$ surjective.  
+
+$\text{ker}{f} = \mathbb{Z}$
+
+$\mathbb{R}/\mathbb{Z} \cong S^1$
+
+\begin{theorem}[2.7.4] (second Isomorphism Thm.)
+If $H,K$ subgroups of $G$, $H \lhd G$, \\
+\quad then $HK$ subgroup, $H \cap K \lhd K$
+\[
+K/(H \cap K) \cong HK/ H
+\]
+\end{theorem}
+
+\begin{proof} Since $H \lhd G$, Prop. 2.66 shows $HK$ subgroup. 
+
+
+
+
+
+
+
+
+
+
+\end{proof}
+
+
+
+
+
+\subsection{Group Actions}
+
+\begin{theorem}[2.87] \textbf{(Cayley)} $\forall \, $ group $G \simeq $ subgroup of symmetric group $S_G$ \\
+If $|G| = n$, $G \simeq $ isomorphic to subgroup $S_n$ 
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}[2.88] \textbf{(Representation on Cosets)} Let $G$, $H$ subgroup of $G$ having finite index $n$.  Then $\exists \, $ homomorphism $\varphi:G \to S_n$ with $\text{ker}{\varphi} \leq H$
+\end{theorem}
+
+
+\begin{definition} if set $X$, group $G$, then $G$ acts on $X$ if $\exists \, $ function $G\times X \to X$, denoted $(g,x) \mapsto gx$ s.t. 
+\begin{enumerate}
+\item[(i)] $(gh)x = g(hx)$ , $\forall \, g, h \in G$, $x\in X$
+\item[(ii)] $1x = x$, \, $\forall \, X$
+\end{enumerate}
+\end{definition}
+
+\textbf{Example 2.91} $G$ acts on itself by conjugation: i.e. $\forall \, g\in G$, define $\alpha_g : G \to G$ to be conjugation
+\[
+\alpha_g(x) = gxg^{-1}
+\]
+
+
+
+$X$ a $G$-set if $G$ acts on $X$.  If $G$ acts on $X$, $x\in X$, then \textbf{orbit} of $x$, $\mathcal{O}(x) = \lbrace gx | g\in G \rbrace \subseteq X$.  \\
+\textbf{stabilizer} of $x$, $G_x = \lbrace g \in G|gx = x \rbrace \leq G$
+
+\textbf{Example 2.92} 
+\begin{enumerate}
+\item[(i)] By Cayley's Thm., $G$ acts on \emph{itself} by translations: $\tau_g: a\mapsto ga$
+If $a\in G$, then $\mathcal{O}(a) = G$, for if $b\in G$, $b=(ba^{-1})a = \tau_{ba^{-1}}(a)$.
+Stabilizer $G_a$ of $a\in G$ is $\lbrace 1 \rbrace$ for if $a = \tau_g(a) = ga$, then $g=1$
+
+$G$ acts \emph{transitively} on $X$ if $\exists \, $ only 1 orbit
+\end{enumerate}
+
+\textbf{Example 2.93} $G$ acts on itself by conjugation. 
+\[
+\mathcal{O}(x) = \lbrace y \in G | y = axa^{-1}, a \in G \rbrace \equiv \text{ conjugacy class of $x$ } \equiv x^G
+\]
+e.g. Thm. 2.9 shows if $\alpha \in S_n$, conjugacy class of $\alpha$ consists of all permutations of $S_n$ having same cycle structure as $\alpha$. \\
+$z\in $ center $Z(G)$ iff $z^G = \lbrace z \rbrace$, i.e. no other element in $G$ conjugate to $z$
+
+If $x\in G$, stabilizer $G_x$ of $x$ is $C_G(x) = \lbrace g\in G | gxg^{-1} = x\rbrace$ \\
+centralizer of $x$ in $G$ is subgroup of $G$ of all $g\in G$ that commute with $x$.  
+
+\textbf{Example 2.94} $\forall \, $ group $G$ acts on set $X$ of all its subgroups, by conjugation: if $a\in G$, $a$ acts on $H \mapsto aHa^{-1}$, where $H \leq G$.  
+
+conjugate of $H$ is subgroup of $G$, $aHa^{-1} = \lbrace aha^{-1} | h \in H, a\in G \rbrace$ \\
+$\begin{aligned}
+  & H \to G \\
+  & h \mapsto aha^{-1} \end{aligned}$ \quad \quad \, $aha^{-1} = ah' a^{-1}$ so injection.  conjugate subgroups of $G$ are isomorphic.   \\
+
+
+orbit of subgroup $H$ consists of all its conjugates \\
+\quad $\mathcal{O}(H) = \lbrace H \brace $ iff $H \lhd G$ i.e. $aHa^{-1}=H $ \quad \, $ \forall \, a \in G$ \\
+
+stabilizer of $H$ is $N_G(H) = \lbrace g\in G | gHg^{-1} = H \rbrace$ \quad \text{normalizer} of $H$ in $G$
+
+\textbf{Example 2.95} $G = D_8$ Dihedral group
+
+\subsubsection*{Exercises}
+
+\exercisehead{2.100} How many flags are there with $n$ stripes each of which can be colored any one of $q$ given colors?
+
+\textbf{Hint} parity of $n$ is relevant.
+
+Parity of $n$ matters, means if $n=2N$, $N\in\mathbb{Z}$ or $n=2N+1$, matters, i.e. $n$ even or $n$ odd, respectively.  
+
+cf. \url{http://www.cs.virginia.edu/~krw7c/Burnsides.pdf}
+
+
+\section{Commutative Rings I}
+
+
+
+\subsection{Introduction}
+
+
+
+
+\subsection{First Properties }
+
+\begin{definition} commutative ring $R$ is a set with 2 binary operations, addition and multiplication, s.t.
+\begin{enumerate}
+  \item[(i)] $R$ abelian group under addition 
+  \item[(ii)] (commutativity) $ab=ba$ \quad $\forall \, a,b \in R$  (this isn't there for noncommutativity)
+  \item[(iii)] (associativity) $a(bc) = (ab)c$ \quad \, $\forall \, a,b,c\in R$
+  \item[(iv)] $\exists \, 1 \in R$ s.t. $1a = a$ \, $\forall \, a  \in R$ \quad \, (many names used: one, unit, identity)
+  \item[(v)] (distributivity) $a(b+c) = ab+ac$ \quad \, $a,b,c \in R$ (this splits up into 2 distributivity laws for noncommutativity)
+\end{enumerate}
+\end{definition}
+
+Example 3.1 
+\begin{enumerate}
+\item[(i)] $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{R}$, $\mathbb{C}$
+In Sage Math:
+
+\begin{lstlisting}
+sage: ZZ
+Integer Ring
+sage: ZZ.is_commutative()
+True
+sage: QQ
+Rational Field
+sage: QQ.is_commutative()
+True
+sage: RR
+Real Field with 53 bits of precision
+sage: RR.is_commutative()
+True
+sage: CC
+Complex Field with 53 bits of precision
+sage: CC.is_commutative()
+True
+\end{lstlisting}
+
+
+
+\item[(ii)] $\mathbb{I}_m \equiv \mathbb{Z}_m \equiv \mathbb{Z}/m\mathbb{Z}$ (many different notations used)
+
+\begin{lstlisting}
+sage: Integers(5)
+Ring of integers modulo 5
+sage: Integers(5).is_commutative()
+True
+\end{lstlisting}
+
+\verb|Integers(5)| is $\mathbb{Z}_5 \equiv \mathbb{Z}/5\mathbb{Z}$.  
+\item[(iii)]
+\end{enumerate}
+
+\begin{proposition}[3.2]
+\begin{enumerate}
+\item[(i)] $0\cdot a = 0$ \quad \, $\forall \, a \in R$ 
+\item[(ii)] if $1=0$, $R = \lbrace 0 \rbrace$.  $R$ zero ring.  
+\item[(iii)]
+\item[(iv)]
+\item[(v)]
+\item[(vi)] binomial theorem holds: if $a,b \in R$, then
+\[
+(a+b)^n = \sum_{r=0}^n \binom{n}{r} a^rb^{n-r}
+\]
+\end{enumerate}
+\end{proposition}
+
+
+\begin{proof}
+  \begin{enumerate}
+    \item[(i)] $0$ is addition identity.  $0+0 =0$ \quad \,
+\[
+\begin{gathered}
+  0\cdot a + 0 \cdot a = (  0 + 0 ) a = 0 a \\ 
+  0 \cdot a + 0 \cdot a -  0\cdot a = 0 \cdot a - 0\cdot a = 0 = 0\cdot a
+\end{gathered}
+\]
+    \item[(ii)] 
+\[
+a = 1 \cdot a = 0\cdot a = 0 
+\]
+\end{enumerate}
+\end{proof}
+
+
+\begin{definition}
+$S \subset R$ \quad \, subring of $R$ if 
+\begin{enumerate}
+\item[(i)] $ 1 \in S$ 
+\item[(ii)] $\forall \, a,b, \in S$, then $a-b\in S$ \\ 
+\item[(iii)] $\forall \, a,b \in S$, then $ab \in S$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+  \textbf{domain} (often called integral domain) is a commutative ring $R$ s.t.  \\
+$1 \neq 0$ \\
+$\forall \, a,b, c \in R$, if $ca=cb$, $c\neq 0$, then $a=b$
+
+(EY: domain has $1\neq 0$ and cancellation)
+\end{definition}
+
+
+\begin{proposition}[3.5]
+nonzero commutative ring $R$ domain iff $\forall \, a,b \in R$, $a,b \neq 0$, $ab\neq 0$
+\end{proposition}
+
+
+\begin{lstlisting}
+sage: QQ.is_integral_domain()
+True
+sage: ZZ.is_integral_domain()
+True
+sage: QQ.is_integral_domain()
+True
+sage: RR.is_integral_domain()
+True
+sage: CC.is_integral_domain()
+True
+sage: Integers(5).is_integral_domain()
+True
+sage: Integers(4).is_integral_domain()
+False
+\end{lstlisting}
+
+\begin{proof}
+  if $R$ domain, consider $a,b \neq 0$.  Suppose $ab=0$.  $ab=0 = a0$ so $b=0$.  Contradiction.  \\
+If $\forall \, a,b \in R$, \, $a,b \neq 0$, \, $ab\neq 0$,  \\
+Consider $a(b-c) = ab-ac=0$ or $ab=ac$.  Then $a=0$ or $b-c =0$ \\
+If $b=c$ done.  
+
+Suppose $1=0$.  $1a = a$, \, $\forall \, a \in R$.  $0a =a=0$.  But then $R$ zero ring.  Zero ring is not a domain.  
+
+Then $1\neq 0$
+\end{proof}
+
+
+Example 3.7. 
+\begin{enumerate}
+\item[(i)] $\mathcal{F}(\mathbb{R})$ - set of all functions $R \to R$ equipped with pointwise addition and pointwise multiplication.  
+
+$\forall\, f, g \in \mathcal{F}(\mathbb{R})$, \, define  $\begin{aligned}
+  & f+ g : a \mapsto f(a) + g(a) \\ 
+  & fg : a \mapsto f(a) g(a) \end{aligned}$ 
+
+$\mathcal{F}(\mathbb{R})$ commutative ring.  
+
+So
+\[
+\mathcal{F}(\mathbb{R}) := \lbrace f | f: \mathbb{R} \to \mathbb{R}, \, \forall \, f,g \in \mathcal{F}(\mathbb{R}), \, \begin{aligned} & f+g = (f+g)(a) = f(a)+g(a) \\
+  & f\cdot g = (f\cdot g)(a) = f(a)g(a) \end{aligned} \, \forall \, a \in \mathbb{R} \rbrace
+\]
+is a commutative ring, with \\
+zero element, $0 \equiv a \mapsto 0 \, \forall \, a \in \mathbb{R}$ i.e. $0(a)=0$ \\
+unit, $1 \equiv a \mapsto 1 \, \forall \, a \in \mathbb{R}$ i.e. $1(a) = 1$
+
+$\mathcal{F}(\mathbb{R})$ is not a domain.  
+
+\item[(ii)] $C^{\infty}(\mathbb{R}) \subsetneq \mathcal{F}(\mathbb{R})$ is a subring of $\mathcal{F}(\mathbb{R})$ (that's what the notation $\subsetneq$ means, that it's a proper subring)
+\end{enumerate}
+
+
+\begin{definition}
+Let $a,b \in R$, commutative ring \\
+$a|b \equiv a $ \textbf{divides } $b$ in $R$ (or $a$ \textbf{divisor} of $b$ or $b$ multiple of $a$) if $\exists \, c \in R$ s.t. $b=ca$
+\end{definition}
+
+
+\begin{definition} $u \in $ commutative ring $R$ unit if $ u | 1 $ in $R$, i.e. $\exists \, v \in R$ with $uv =1$ (EY: $u|1$ is $1/u$ and $u$ unit if it has a multiplicative inverse)
+\end{definition}
+
+\begin{definition} \textbf{field} $F$ commutative ring, $1 \neq 0$, $\forall \, a \neq 0$, $a$ unit, i.e. $ a^{-1} \in F$, $a^{-1}a = 1$
+\end{definition}
+
+\begin{lstlisting}
+sage: ZZ.is_field()
+False
+sage: QQ.is_field()
+True
+sage: RR.is_field()
+True
+sage: CC.is_field()
+True
+sage: Integers(5).is_field()
+True
+sage: Integers(4).is_field()
+False
+\end{lstlisting}
+
+
+\subsection*{ Exercises }
+
+\exercisehead{3.1} Suppose $\exists \, 1'$  
+
+$1' a = a = 1 a$ so 
+
+\[
+1 = 1'1 = 11' = 1'
+\]
+since we could commute in a commutative ring.  
+
+\exercisehead{3.2} 
+\begin{enumerate}
+\item[(i)] Let $x,y,z \in \mathbb{Z}$.  $\mathbb{Z}$ commutative ring as it's an abelian group under addition, with the existence of an additive inverse, subtraction.  
+
+Treat subtraction as a binary group operation.  
+
+\[
+\begin{gathered}
+  (xy)z = (x-y)z = (x-y) - z = x-y-z \\ 
+  x(yz) = x - (yz)  = x- (y-z) = x-y +z 
+\end{gathered}
+\]
+\item[(ii)] $\mathbb{Z}/2$ Suppose $x-y-z = x-y+z$  (from above, part (i))
+
+Suppose $z=0$.  Done.  Otherwise, $-z = z$.  So $z=1$ and $-1\sim 1$ for $\mathbb{Z}/2$  Done.  
+\end{enumerate}
+
+
+\exercisehead{3.3} \begin{enumerate}
+\item[(i)] $R$ domain.  
+
+Recall, domain has $1\neq 0$ and cancellation.  
+
+$a^2 = a = a \cdot 1$.  So $a=1$  Otherwise $a=0$
+\item[(ii)] $f^2 = f$ 
+\[
+f(x) = \begin{cases} 1 & \text{ if } x \geq b \\ 0 & \text{ if } a \leq x \leq b  \\ -1 & \text{ if } x \leq a \end{cases}
+\]
+$f^2 = f$ \, $\forall \, x \in \mathbb{R}$, pointwise, but $a,b \in \mathbb{R}$ arbitrary.  
+\end{enumerate}
+
+
+\subsection{ Polynomials }
+
+
+\begin{definition}
+  sequence $\sigma = (s_0 \dots s_i \dots )$ polynomial if $\exists \,  m \geq 0$, \, $s_i =0$, \, $\forall \, i > m$
+\end{definition}
+
+
+\textbf{Notation}.  If $R$ commutative ring, then set of all polynomials with coefficients in $R$ denoted by $R[x]$
+
+\begin{proposition}[3.14] 
+  If $R$ commutative ring, \\
+then $R[x]$ commutative ring that contains $R$ as subring.
+\end{proposition}
+
+\begin{proof} 
+define addition: 
+
+\[
+\sigma + \tau = (s_0 + t_0 , s_1 + t_1  \dots s_i + t_i , \dots s_m + t_m , t_{m+1} \dots t_n )
+\]
+
+without loss of generality, assume $\sigma $ of degree $m \leq n$, $\tau$ degree $n$  \\
+
+define $\sigma \tau = (c_0, c_1 \dots )$ 
+
+\[
+c_k = \sum_{i+j =k } s_i t_j = \sum_{i=0}^k s_i t_{k-i}
+\]
+
+$\sigma + \tau \in R[x]$ since $s_i + t_i \in R$, $t_i \in R$
+
+\[
+\sigma + \tau = \tau + \sigma
+\]
+
+(by each entry, $s_i, t_i \in R$ and $R$, commutative ring, is abelian in addition) \\
+
+also since $\forall \, s_i \in R$, $\exists \, -s_i \in R$, \, $0 \in R$, then 
+
+\[
+\begin{aligned}
+  & \sigma + (- \sigma) = 0 \\ 
+  &  \sigma + 0 = \sigma \text{ with } 0 = (0,0, \dots )
+\end{aligned}
+\]
+
+\[
+r\sigma = (rs_0 \dots rs_m , 0 \dots ) \in R[x]  
+\]
+since 
+\[
+(\sigma + \tau ) + \omega = ( \dots (s_i + t_i ) + w_i \dots ) = ( \dots s_i + (t_i + w_i ) \dots ) = \sigma + (\tau + \omega )
+\]
+
+So $R[x]$ abelian group in addition.
+
+\[
+\sum_{i=0}^k s_i t_{k-i} = \sum_{j=0}^k s_{k-j} t_j = \sum_{j=0}^k t_j s_{k-j} 
+\]
+since $s_{k-j}, t_j \in R$, commutative ring.  
+
+So
+\[
+\sigma \tau = \tau \sigma
+\]
+
+Now
+\[
+(\sigma (\tau \omega) )_l = \sum_{i+j = l } s_i (tw)_j = \sum_{i+j = l } \sum_{a+b= j} s_i (t_a w_b) = \sum_{ i + a+ b = l } s_i t_a w_b = \sum_{ j +b = l } \sum_{i + a =j } (s_it_a) w_b = \sum_{j+b =l } (st)_j w_b = ((\sigma \tau)w)_l
+\]
+
+$R \subset R[x]$ since polynomials of degree $0$ are $R$.  
+
+
+\end{proof}
+
+\subsubsection*{Exercises}
+
+\exercisehead{3.21}
+
+\begin{enumerate}
+\item[(i)]
+\item[(ii)] 
+\begin{lstlisting}
+sage: Integers(4)[x]
+Univariate Polynomial Ring in x over Ring of integers modulo 4
+sage: x
+x
+sage: (2*x+1)**2-1 in Integers(4)[x]
+True
+\end{lstlisting}
+\end{enumerate}
+
+
+\subsection{ Greatest Common Divisors }
+
+\begin{theorem}[3.21] (\textbf{Division Algorithms})
+  Assume $k$ field, $f(x),g(x) \in k[x]$, $f(x)\neq 0$ \\
+Then $\exists \, !$ \, $q(x),r(x) \in k[x]$ s.t. $g(x) = q(x)f(x) + r(x)$ and either $r(x)=0$ or $\text{deg}(r) < \text{deg}(f)$
+\end{theorem}
+
+\begin{proof}
+If $f | g$, then $g=qf$ for some $q$ and $r=0$.  Done.  
+
+If $f \nmid g$, then consider all $g-qf \in k[x]$ \, $\forall \, q \in k[x]$ \\
+By least integer axiom, $\exists \, r = g -qf \in k[x]$ s.t. $\text{deg}(r) \leq \text{deg}(g-qf)$
+
+Let $\begin{aligned} & \quad \\
+  & f(x) = s_n x^n + \dots + s_1x + s_0 \\
+  & r(x) = t_m x^m + \dots + t_1x + t_0 \end{aligned}$
+
+$s_n \neq 0 $, so $s_n$ unit ($k$ field), so $\exists \, s_n^{-1} \in k$ \\
+If $\text{deg}(r) \geq \text{deg}(f)$, define
+\[
+h(x) = r(x) - t_ms_n^{-1}x^{m-n}f(x)
+\]
+Define
+
+\textbf{leading term} $LT$, 
+\[
+\begin{aligned} 
+  & \text{LT}:k[x] \to k[x] \\
+  & \text{LT}(f) = s_n x^n \end{aligned}
+\]
+
+\[
+\Longrightarrow h = r - \frac{\text{LT}(r) }{ \text{LT}(f) }f 
+\]
+$h=0$ or $\text{deg}(h) < \text{deg}(r)$
+
+If $h=0$, then $r = \frac{\text{LT}(r)}{\text{LT}(f)}f$ and $g =qf + r = \left( q + \frac{\text{LT}(r)}{ \text{LT}(f)} \right)f$, contradicting $f \nmid g$
+
+If $h\neq 0$, then $\text{deg}(h) < \text{deg}(r)$, and 
+\[
+\begin{gathered}
+  g - qf = r = h + \frac{\text{LT}(r) }{ \text{LT}(f) } f \\ 
+  g - \left[ q + \frac{\text{LT}(r)}{ \text{LT}(f)} \right]f = h 
+\end{gathered}
+\]
+Contradicting $r$ being polynomial of least degree since $\text{deg}(h) < \text{deg}(r)$
+
+\[
+\Longrightarrow \text{deg}(r) < \text{deg}(f)
+\]
+
+
+
+\end{proof}
+
+
+\begin{lemma}[3.23]
+  Let $f(x) \in k[x]$, where $k$ field.  Let $u\in k$ \\
+Then $\exists \, q(x) \in k[x]$ s.t. 
+\[
+f(x) = q(x)(x-u) + f(u)
+\]
+
+\end{lemma}
+
+\begin{proof}
+  By division algorithm, $f(x) = q(x)(x-u) + r$ \quad \, $\text{deg}(r) < (x-u)$, so $r$ constant. 
+\[
+f(u) = 0 + r \text{ so } r = f(u)
+\]
+\end{proof}
+
+\begin{proposition}[3.24]\label{Prop:3.24} If $f(x) \in k[x]$, $k$ field, then \\
+$a$ root of $f(x)$ in $k$ iff $x-a | f(x)$ in $k[x]$
+\end{proposition}
+
+\begin{proof}
+  If a root of $f(x)$, then $f(a) =0$.  By Lemma 3.23, 
+\[
+f(x) = q(x) (x-a) + f(a) = q(x)(x-a) \Longrightarrow \frac{f(x)}{x-a} =q(x)
+\]
+if $f(x) = g(x)(x-a)$, $f(a) = g(a)(a-0)=0$
+\end{proof}
+
+\begin{theorem}[3.25]
+Let $k$ field, let $f(x) \in k[x]$
+
+If $\text{deg}(f(x)) = n$, then $f(x)$ has at most $n$ roots in $k$
+\end{theorem}
+
+\begin{proof}
+  If $n=0$, then $f(x)=a_0 \neq 0$, and so number of roots in $k$ is $0$ \\
+Let $n> 0$. If $f(x)$ has no roots in $k$, then $0\leq n$. Done.  
+
+Assume $\exists \, a \in k$, $a$ root of $f(x)$.  \\
+\phantom{Assume} By Prop. 3.24 or \ref{Prop:3.24}, $f(x) = q(x)(x-a)$, $q(x) \in k[x]$, $\text{deg}q(x) = n-1$.  \\
+\phantom{Assume By} If $\exists \, $ root $b\in k$, $b\neq a$, then $0=f(b)=  q(b)(b-a)$ \\
+\phantom{Assume By} $b-a \neq 0$, so $q(b) =0$ ($k$ field, so $k$ domain, so cancellation law applies).  So $b$ root of $q(x)$ \\
+\phantom{Assume By} $\text{deg}(q) =n-1$, so by induction hypothesis, $q(x)$ has at most $n-1$ roots in $k$\\
+\phantom{Assume By} $f(x)$ has at most $n$ roots in $k$.  
+
+
+\end{proof}
+
+
+\begin{definition}
+  If $f(x),g(x) \in k[x]$, $k$ field, then \\
+\textbf{common divisor} is $c(x) \in k[x]$ s.t. $\begin{aligned} & \quad \\
+  & c(x) | f(x) \\
+  & c(x) | g(x) \end{aligned}$
+
+If $f(x),g(x) \in k[x]$, $\begin{aligned} & \quad \\
+& f\neq 0 \\
+  & g \neq 0 \end{aligned}$,  \\
+define \textbf{greatest common division } gcd to be monic common divisor having largest degree. \\
+denote notation $(f,g)$
+\end{definition}
+Recall that monic is $f(x) \in k[x]$ if its leading coefficient is $1$ \\
+\textbf{leading coefficient} of $f(x) \in k[x]$, is coefficient of highest power of $x$ occurring in $f(x)$.  
+
+
+\subsection{ Homomorphisms }
+
+Just as homomorphisms are used to compare groups, so are homomorphisms used to compare commutative rings.  
+
+\begin{definition} if $A,R$ (commutative) rings, (ring) homomorphism is \\
+$f:A\to R$ s.t.
+\begin{enumerate}
+  \item[(i)] $f(1) = 1 $ 
+  \item[(ii)] $f(a+a') = f(a) + f(a')$
+  \item[(iii)] $f(aa') = f(a)f(a')$
+\end{enumerate}
+\end{definition}
+
+A homomorphism that is also a bijection is called an isomorphism.  commutative rings $A$ and $R$ are called isomorphic, denoted $A\cong R$, if $\exists \, $ isomorphism $f:A \to R$
+
+Example 3.40
+
+\begin{enumerate}
+\item[(i)]
+\item[(ii)]
+\item[(iii)]
+\item[(iv)] $R$ commutative ring, $a\in R$.  Define \\
+\textbf{evaluation homomorphism } \\
+$e_a: R[x] \to R$ \\
+$e_a(f(x)) = f(a)$ i.e. if $f(x) = r_i x^i$, then $f(a) = r_i a^i$  \\
+$e_a$ ring homomorphism
+\[
+\begin{aligned}
+  & e_a(1(x)) = 1(a) = a \\ 
+  & e_a((f+g)(x)) = e_a(f(x) + g(x)) = f(a) + g(a) = (f+g)(a) = e_a(f(x)) + e_a(g(x)) \\ 
+  & e_a((fg)(x)) = (fg)(a) = f(a) g(a) = e_a f(x) e_a g(x)
+\end{aligned}
+\]
+
+\end{enumerate}
+
+
+
+\begin{definition} \textbf{ideal} $I \subset R$ s.t. 
+\begin{enumerate}
+\item[(i)] $0 \in I$ 
+\item[(ii)] $\forall \, a,b \in I$, $a+b \in I$
+\item[(iii)] if $a\in I$, $r \in R$, then $ra \in I$
+\end{enumerate}
+proper ideal $I$-ideal $I\neq R$
+\end{definition}
+
+
+Example 3.49.  \\
+
+If $b_1, b_2, \dots b_n \in R$, then set of all linear combinations
+
+\[
+I = \lbrace r_1 b_1 + r_2 b_2 + \dots + r_n b_n | r_i \in R \quad \forall \, i \rbrace
+\]
+
+is an ideal in $R$.  
+
+write $I = (b_1, b_2, \dots , b_n)$ and call $I$ ideal generated by $b_1, b_2, \dots , b_n$
+
+\, in particular, if $n=1$, 
+\[
+I = (b) = \lbrace rb | r \in R \rbrace
+\]
+
+is an ideal in $R$, consists of all multiples of $b$, and is called principal ideal generated by $b$ 
+
+$R, \lbrace 0 \rbrace$ are always principal ideals $R=(1)$, $\lbrace 0 \rbrace = (0)$ \\
+\, in $\mathbb{Z}$, even integers form principal ideal $(2)$
+
+
+
+\begin{proposition}[3.50]
+  if $f:A \to R$ ring homomorphism, \\
+\, then $\text{ker}{f}$ ideal in $A$ \\
+\, \phantom{then } $\text{im}{f}$ \, subring of $R$ 
+
+if $A,R \neq $ zero rings, then $\text{ker}{f}$ proper ideal.  
+\end{proposition}
+
+\begin{proof}
+$f(0) = 0$ so $0 \in \text{ker}{f}$
+
+If $f(a) = f(b) =0 $, \\
+$f(a+b) = f(a) + f(b) = 0$.  $a+b \in \text{ker}{f}$ \\
+i.e. $\text{ker}{f}$ additive subgroup of $A$.  
+
+\[
+f(ra) = f(r)f(a) = f(r) 0 = 0 \quad \quad \, ra \in \text{ker}{f}
+\]
+$\text{ker}{f}$ ideal.  
+
+
+If $R$ not zero ring, $1\neq 0$, \\
+\phantom{if } $f(1) = 1 \neq 0$ and so for $1\in A$ \\
+\phantom{if } \quad \quad $1 \notin \text{ker}{f}$, so $\text{ker}{f}$ proper ideal
+
+$1 \in A$, so \\
+$f(1) = 1 \in \text{im}{f}$ \\
+if $\begin{aligned} & \quad \\ 
+  & c = f(a) \\ 
+  & d = f(b) \end{aligned}$ \, i.e. $c,d \in \text{im}{f}$, \, $c+d = f(a+b)$ 
+
+$a+b \in A$ so $c+d \in \text{im}{f}$
+
+\[
+cd = f(a) f(b) = f(ab)
+\]
+$ab \in A$ so $cd \in \text{im}{f}$
+
+$\text{im}{f}$ a subring
+
+\end{proof}
+
+
+
+\begin{definition}
+  domain $R$ \textbf{principal ideal domain} (PID) if every ideal in $R$ is a principal ideal
+\end{definition}
+
+Example 3.55
+
+\begin{enumerate}
+  \item[(i)] the ring of integers is a PID 
+\item[(ii)] every field is a PID, by Example 3.51 (ii)
+\end{enumerate}
+
+
+
+
+\subsection*{ Exercises} 
+
+\exercisehead{3.39} 
+
+\begin{enumerate}
+  \item[(i)] Let $\varphi :A \to R$ isomorphism, $\psi : R \to A$ its inverse.  
+
+$a = \psi(\varphi(a))$ so $\forall \, a \in \text{im}{\psi}$, $\psi$ surjective.  
+
+Suppose $\psi(r) = \psi(s)$ \\
+\quad $r,s \in R$, so $\begin{aligned} & \quad \\ 
+  & \varphi(a) = r \\ 
+  & \varphi(b) = s \end{aligned}$ \quad as $\varphi$ isomorphism.  
+
+\[
+\psi \varphi(a) = a = \psi(\varphi(b)) = b
+\]
+$a=b$ so $r=s$ by $\varphi$.  $\psi$ injective.  
+
+$\psi$ bijective. $\psi $ isomorphism.  
+  \item[(ii)]
+  \item[(iii)]
+\end{enumerate}
+
+
+
+
+
+\exercisehead{3.41}
+
+Suppose $I \bigcap J =0$ \\
+Consider $ \begin{aligned} & \quad \\ 
+  & i \in I \\
+  & j \in J \end{aligned}$ 
+
+Clearly $i-j \neq 0$ and $i-j \in R$ \\
+Let $r\neq 0$, \, $r\in R$ 
+
+$r (i-j)  \neq 0$ by Prop. 3.5.
+
+Let $r=i$ as $I\subset R$ 
+
+\[
+i(i-j) = i^2  - ij
+\]
+
+But, as a commutative ring and $I$ an ideal, \\
+\quad $i(i-j) \in I$.  so that $i^2 - ij \in I$.  So $-ij \in I$.  \\
+\quad \quad But as $-i \in I \subset R$, $-ij \in J$, \, $ij \neq 0$.  Contradiction.  
+
+
+
+\section{ Fields }
+
+
+
+
+\section{ Groups II }
+
+\subsection{}
+
+\subsection{}
+\subsection{}
+\subsection{}
+
+\subsection{Presentations}
+
+``How can we describe a group?'' (Rotman)
+
+Motivation: describe groups as being generated subject to certain relations.  EY: useful for ``large groups'' instead of enumerating all possible elements.  
+
+\begin{definition}
+  group of \textbf{generalized quaternions} $\mathbb{Q}_n$, $n\geq 3$, $|\mathbf{Q}_n|=2^n$ (group of order $2^n$), generated by 2 elements $a,b$ s.t. 
+\[
+a^{2^{n-1}} = 1, \, bab^{-1} = a^{-1} \text{ and } b^2 = a^{2^{n-2}}
+\]
+\end{definition}
+
+\begin{definition}
+If $X$ subset of group $F$, \\
+then $F$ \textbf{free group} with basis $X$ if  \\
+$\forall \, $ group $G$, $\forall \, f: X \to G$, $\exists \, !$ homomorphism $\begin{aligned} & \quad \\
+  & \varphi : F \to G \\
+  & \varphi(x) = f(x) \, \forall \, x \in X \end{aligned}$
+
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex]
+{
+F   &   \\
+X  & G \\};
+\path[->,font=\scriptsize]
+(m-1-1) edge [dashed] node[auto]{$\varphi$} (m-2-2)
+(m-2-1) edge node[auto]{$i\equiv \text{inclusion}$} (m-1-1) 
+ edge node[auto]{$f$} (m-2-2)
+;
+\end{tikzpicture} 
+
+\end{definition}
+
+Note: modeled on Thm. 3.9.2 Rotman or 
+
+
+\begin{theorem}
+  Let $X=v_1 \dots v_n$ basis of vector space $V$.   \\
+If $W$ vector space and $u_1 \dots u_n$ list in $W$, then $\exists \, !$ linear transformation $T:V\to W$, s.t. $T(v_i)=u_i $ \quad \, $\forall \, i$
+
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex]
+{
+V   &   \\
+X  & W \\};
+\path[->,font=\scriptsize]
+(m-1-1) edge [dashed] node[auto]{$T$} (m-2-2)
+(m-2-1) edge node[auto]{$$} (m-1-1) 
+ edge node[auto]{$f$} (m-2-2)
+;
+\end{tikzpicture} 
+
+\end{theorem}
+
+
+
+
+\begin{definition}
+  if $X$ subset of group $F$, \\
+then $F$ free group with basis $X$ if \\
+$\forall \, $ group $G$, $\forall \, f: X\to G$, $\exists \, !$ homomorphism $\begin{aligned} & \quad \\
+  & \varphi : F \to G \\
+  & \varphi(x) = f(x) \quad \, \forall \, x \in X \end{aligned}$
+
+
+
+\end{definition}
+
+
+\begin{definition}
+  Let $A,B$ be words on $X$, possibly $A,B$ empty, i.e. $A=1$ or $B=1$.  Let $w=AB$.  \\
+An \textbf{elementary} operation is either an \textbf{insertion} or \textbf{deletion}.   \\
+\qquad \, insertion, change $w=AB \mapsto Aaa^{-1} B$ for some $a\in X \bigcup X^{-1}$ \\
+\qquad \, deletion of a subword of $w$ of form $aa^{-1}$, changing $w= Aaa^{-1}B \mapsto AB$
+\end{definition}
+
+\begin{definition}
+  $w\to w'$ denote $w'$ arising from $w$ by elementary operation.  \\
+words $u,v$ on $X$ are equivalent, denoted by $u\sim v$, if $\exists \, $ words $u=w_1,w_2 \dots w_n = v$ and elementary operations
+\[
+u=w_1 \to w_2 \to \dots \to w_n =v
+\]
+denote equivalence class of word $w$ by $[w]$
+\end{definition}
+Note $xx^{-1} \sim 1$, $[xx^{-1}] = [1] = [x^{-1}x]$ \\
+\phantom{Note} $x^{-1}x\sim 1$.  
+
+\begin{definition}
+  \textbf{semigroup} is set having associative operation.  \\
+\textbf{monoid} is semigroup $S$ having identity $q$.  \\
+\qquad \, homomorphism (semigroups) $f:S\to S'$ s.t. $f(xy) = f(x)f(y)$  \\
+\qquad \, homomorphism (monoids) $f:S\to S'$ s.t. $f(xy) = f(x)f(y)$ and $f(1)=1$  
+\end{definition}
+
+cf. Rotman, \textbf{Advanced Modern Algebra} Thm. 5.72 
+\begin{theorem}
+If $X$ set, then set $F$ of all equivalence classes of words on $X$ with operation $[u][v] = [uv]$ is free group with basis $\lbrace [x] | x \in X \rbrace$.  \\
+Moreover, $\forall \, [v] \in F$ has normal form: $\forall \, [u] \in F$, $\exists \, !$ reduced word $w$ s.t. $[u]= [w]$
+\end{theorem}
+
+cf. Rotman, \textbf{Advanced Modern Algebra} Prop. 5.73 
+\begin{proposition}
+  \begin{enumerate}
+\item Let $\begin{aligned} & \quad \\ 
+  & X_1 \text{ basis of free group } F_1 \\
+  & X_2 \text{ basis of free group } F_2 \end{aligned}$.  If $\exists \, $ bijection $f:X_1 \to X_2$, then $\exists \, $ isomorphism $\varphi : F_1 \to F_2$.  
+\item If $F$ free group with basis $X$, then $F$ generated by $X$.  
+\end{enumerate}
+\end{proposition}
+
+
+
+
+\begin{proposition}
+  $\forall \, $ group $G$, is a quotient of a free group.  
+\end{proposition}
+
+\begin{proof}
+  Let $X$ set s.t. $\exists \, $ bijection $f:X \to G$ (e.g. take $X$ underlying set of $G$, and $f=1_G$).  \\
+Let $F$ free group with basis $X$.  
+
+$\exists \, $ homomorphism $\varphi :F\to G$.   Thus, from definition of a free group
+
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex]
+{
+F   &   \\
+X  & G \\};
+\path[->,font=\scriptsize]
+(m-1-1) edge [dashed] node[auto]{$\varphi$} (m-2-2)
+(m-2-1) edge node[auto]{$i$} (m-1-1) 
+ edge node[auto]{$f$} (m-2-2)
+;
+\end{tikzpicture} 
+
+
+$\varphi$ surjective because $f$ i.e. 
+
+$\forall \, g \in G$, $g=f(x)$ and $\varphi([x_i]) = \varphi(i(x_i)) = f(x_i)=g$, i.e.
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex]
+{
+[x_i]   &   \\
+x_i  & f(x_i)=g_i = \varphi([x_i]) \\};
+\path[->,font=\scriptsize]
+(m-1-1) edge [dashed] node[auto]{$\varphi$} (m-2-2)
+(m-2-1) edge node[auto]{$i$} (m-1-1) 
+ edge node[auto]{$f$} (m-2-2)
+;
+\end{tikzpicture} 
+
+Thus $G \cong F/\text{ker}\varphi$.  
+
+\end{proof}
+
+
+\begin{definition}
+  \textbf{presentation} of group $G \equiv G \equiv (X|R)$, set $X$, set of words on $X \equiv R$, $G=F/N$; $F$ free group with basis $X$, $N$ normal subgroup generated by $R$, i.e. subgroup generated by all conjugates of elements of $R$.  
+
+set $X$ called \textbf{generators}, set $R$ \textbf{relations}.   
+\end{definition}
+
+
+\begin{definition}
+  group $G$ \textbf{finitely generated} if it has presentation $(X|R)$ with $X$ finite \\
+  group $G$ \textbf{finitely presented} if it has presentation $(X|R)$ with both $X,R$ finite
+\end{definition}
+
+
+
+\section{ Commutative Rings II }
+
+
+
+\section{Modules and Categories }
+
+\subsection{Modules}
+
+\begin{definition}
+  $R$-module is (additive) abelian group $M$, \\
+equipped with scalar multiplication $\begin{aligned} & \quad \\
+  & R \times M \to M \\
+  & (r,m) \mapsto rm \end{aligned}$ 
+
+s.t. $\forall \, m,m' \in M$, $\forall \, r,r',1 \in R$
+\begin{enumerate}
+  \item[(i)] $r(m+m')=rm+rm'$
+  \item[(ii)] $(r+r')m = rm+r'm$
+  \item[(iii)] $(rr')m = r(r'm)$
+  \item[(iv)] $1m = m$
+\end{enumerate}
+\end{definition}
+
+Example 7.1 \begin{enumerate}
+\item[(i)]
+\item[(ii)]
+\item[(iii)]
+\item[(iv)]
+\item[(v)] Let linear $T:V \to V$, $V$ finite-dim. vector space over field $k$.  
+
+Recall $k[x] \equiv $ set of polynomials with coefficients in $k$.  
+
+Define $\begin{aligned} & \quad \\
+  & k[x] \times V \to V \\
+  & f(x)v =\left(\sum_{i=0}^m c_i x^i\right)v =\sum_{i=0}^m c_iT^i(v) \end{aligned}$ \quad \, $\forall \, f(x) = \sum_{i=0}^m c_ix^i \in k[x]$
+
+$\Longrightarrow $ denote $k[x]$-module $V^T$.  
+
+Special case: Let $A \in \text{Mat}_k(n,n)$, let linear $\begin{aligned} & \quad \\
+  & T :k^n \to k^n \\
+  & T(w) = Aw \end{aligned}$.  
+
+vector space $k^n$ is $k[x]$-module if we define scalar multiplication $\begin{aligned} & \quad \\
+  & k[x] \times k^n \to k^n \\
+  & f(x)w = \left( \sum_{i=0}^m c_ix^i \right)w = \sum_{i=0}^m c_i A^i w \end{aligned}$ \quad \, $\forall \, f(x) = \sum_{i=0}^m c_ix^i \in k[x]$
+
+In $(k^n)^T$, $xw = T(w)$ \\
+In $(k^n)^A$, $xw = Ax $ \\
+$T(w) = Ax$ and so $(k^n)^T = (k^n)^A$  (EY : 20151015 because of induction?)
+\end{enumerate}
+
+\begin{definition}
+if ring $R$, $R$-modules $M,N$, then function $f:M\to N$ is $R$-homomorphism (or $R$-map) if $\forall \, m,m' \in M$, $\forall \, r \in R$, 
+\begin{enumerate}
+  \item[(i)] $f(m+m') = f(m)+f(m')$
+  \item[(ii)] $f(rm)=rf(m)$
+\end{enumerate}
+\end{definition}
+EY : 20151015 isn't this just a homomorphism that is linear in $R$? 
+
+Example 7.2.  
+
+\begin{enumerate}
+  \item[(i)]
+  \item[(ii)]
+  \item[(iii)]
+  \item[(iv)]
+  \item[(v)] Let linear $T:V \to V$, let $v_1 \dots v_n$ be basis of $V$, let $A$ be matrix of $T$ relative to this basis.  
+
+Let $e_1 \dots e_n$ be standard basis of $k^n$.  \\
+Define $\begin{aligned} & \quad \\
+  & \varphi : V \to k^n \\
+  & \varphi(v_i) = e_i \end{aligned}$
+
+\[
+\begin{aligned}
+  & \varphi(xv_i) = \varphi(T(v_i)) = \varphi(v_j a_{ji} ) = a_{ji} \varphi(v_j) = a_{ji}e_j \\
+  & x\varphi(v_i) = A\varphi(v_i) = Ae_i
+\end{aligned}
+\]
+$\Longrightarrow \varphi(xv) = x\varphi(v) \quad \, \forall \, v \in V$
+
+By induction on $\text{deg}(f)$, $\varphi(f(x)v) = f(x) \varphi(v)$ \quad \, $\forall \, f(x) \in k[x]$ \quad \, $\forall \, v \in V$ 
+
+$\Longrightarrow \varphi$ is $k[x]$-map \\
+$\Longrightarrow \varphi$ is $k[x]$-isomorphism of $V^T$ and $(k^n)^A$.  
+
+\end{enumerate}
+
+
+\begin{proposition}[7.3]
+Let vector space over field $k$, $V$, let linear $T,S : V \to V$ \\
+Then $k[x]$-modules $V^T, V^S$ are $k[x]$-isomorphic iff $\exists \, $ vector space isomorphism $\varphi : V \to V$ s.t. $S = \varphi T \varphi^{-1}$.  
+\end{proposition}
+
+\begin{proof}
+If $\varphi:V^T \to V^S$is a $k[x]$-isomorphism, 
+\[
+\varphi(f(x)v) = f(x)\varphi(v) \quad \, \forall \, v \in V , \, \forall \, f(x) \in k[x]
+\]
+if $f(x)=x$, then $\varphi(xv) = x\varphi(v)$
+\[
+\begin{aligned}
+  & xv = T(v) \\ 
+  & x\varphi(v) = S(\varphi(v)) \\ 
+ \Longrightarrow & \varphi \circ T(v) = S \circ \varphi(v) \Longrightarrow \varphi \circ T = S \circ \varphi 
+\end{aligned}
+\]
+$\varphi$ isomorphism, so $S = \varphi \circ T \circ \varphi^{-1}$
+
+Conversely, if given isomorphism $\varphi: V \to V$ s.t. $S = \varphi T \varphi^{-1}$, then $S\varphi = \varphi T$.  
+\[
+S\varphi(v) = \varphi T(v) = \varphi(xv) = x\varphi(v)
+\]
+Then by induction, $\varphi(x^nv) = x^n\varphi(v)$ (for $S^n\varphi(v) = x^n\varphi(v) = (\varphi T \varphi^{-1})^n \varphi(v) = \varphi T^n v = \varphi(x^nv)$).  \\
+By induction on $\text{deg}(f)$, $\varphi(f(x)v) = f(x)\varphi(v)$.  
+
+
+\end{proof}
+
+\begin{definition}
+  if $R$-module $M$, the submodule $N$ of $M$, denoted $N\subseteq M$, is additive subgroup $N$ of $M$, \\
+closed under scalar multiplication $rn \in N$ whenever $n\in N$, $r\in R$
+\end{definition}
+
+Example 7.7 
+\begin{enumerate}
+  \item[(i)]
+  \item[(ii)]
+  \item[(iii)]
+  \item[(iv)] submodule of $W$ of $V^T$, $k[x]$-module $V^T$, where linear $T$, is subspace $W$ of $V$, s.t. $T(W) \subseteq W$.  
+
+\begin{proof}
+  if given submodule $W$, $\forall \, w \in W$, $xw = T(w) \in W$ $\Longrightarrow T(W) \subseteq W$ \\
+ig given subspace $W$ of $V$, $W$ additive subgroup $W$ of $V^T$.  
+\[
+\forall \, w \in W , \quad \, f(x)w = \sum_{i=0}^m c_ix^iw = \sum_{i=0}^m c_iT^iw \in W
+\]
+since $T(W) \subseteq W$ and $c_iT^i(w) \in W$
+\end{proof}
+$\Longrightarrow $ \textbf{invariant subspace } $W$, is submodule $W$ of $V^T$ s.t. $T(W) \subseteq W$
+\end{enumerate}
+
+
+\begin{theorem}[First Isomorphism Theorem]
+  If $f:M\to N$ $R$-map of modules (i.e. homomorphism linear in $R$), \\
+then $\exists \, $ $R$-isomorphism $\begin{aligned} & \quad \\
+  & \varphi : M / \text{ker}{f} \to \text{im}{f} \\
+  & \varphi : m + \text{ker}{f} \mapsto f(m) \end{aligned}$
+
+
+\end{theorem}
+
+\begin{proof}
+Let $[m] \in M/\text{ker}{f}$ \\
+\phantom{Let } $\varphi([m]) = f(m)$
+
+Now 
+\[
+\begin{aligned}
+  & \varphi^{-1} : \text{im}f \to M/\text{ker}f \\ 
+  & \varphi^{-1}: y = f(m) \mapsto [m]
+\end{aligned}
+\]
+and $\varphi^{-1}$ is well-defined on domain $\text{im}{f}$, since $\forall \, y \in \text{im}{f}$, $\exists \, m \in M$, s.t. $f(m)=y$.  
+
+Now
+\[
+\varphi^{-1}\varphi([m]) = [m]
+\]
+This is well defined, since 
+\[
+\varphi^{-1}\varphi(m+v_0) = \varphi^{-1}(f(m)) = [m]
+\]
+
+Also
+\[
+\varphi \varphi^{-1}(y) = \varphi[m] = f(m) = y
+\]
+\end{proof}
+
+\begin{definition}
+  \textbf{exact sequence} if $\text{im}f_{n+1} = \text{ker}f_n$ \, $\forall \, n$, for sequence of $R$-maps (i.e. homomorphisms linear in $R$) and $R$-modules 
+\[
+\dots \to M_{n+1} \xrightarrow{ f_{n+1}} M_n \xrightarrow{ f_n} M_{n-1} \to \dots
+\]
+\end{definition}
+
+\begin{proposition}[7.20]
+  \begin{enumerate}
+    \item[(i)] $0 \to A \xrightarrow{f} B$ exact iff $f$ injective 
+    \item[(ii)] $B \xrightarrow{g} C \to 0$ exact iff $g$ surjective 
+    \item[(iii)] $0 \to A \xrightarrow{h} B \to 0$ exact iff $h$ isomorphism
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{enumerate}
+    \item[(i)] $\text{im}(0\to A) =0$ 
+if assume $0 \to A \xrightarrow{f} B$ exact, $\text{ker}{f} =0$, and so $f$ injective
+
+Conversely, if $f$ injective, $\text{ker}f=0$ and $\text{im}(0\to A)=0 = \text{ker}f$.  So sequence is exact.  
+    \item[(ii)] $\text{ker}(C\to 0) = C$ \\
+if $B\xrightarrow{g} C \to 0$ exact, $\text{im}g = C$ and so $g$ surjective.  
+
+Conversely, given $g: B \to C$, \\
+\phantom{Conversely} $\exists \, $ exact sequence $B \xrightarrow{g} C \to C/\text{im}g$ (cf. Exercise 7.13) since
+\[
+\text{ker}(C\to C/\text{im}g) = \text{im}g
+\]
+if $g$ surjective, $\text{im}g =C$, and so $B\xrightarrow{g}C \to 0$ exact.
+    \item[(iii)] from (i), $0 \to A \xrightarrow{h} B$ exact iff $h$ injective \\
+from (ii), $A \xrightarrow{h} B \to 0$ exact iff $h$ surjective.  \\
+$\Longrightarrow  h$ isomorphism iff $0 \to A \xrightarrow{h} B \to 0$
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+  \textbf{short exact sequence } $0 \to A \xrightarrow{f} B \xrightarrow{g} C \to 0$ is exact sequence. 
+\end{definition}
+
+\begin{proposition}[7.21]
+  \begin{enumerate}
+\item[(i)] If $0 \to A \xrightarrow{f} B \xrightarrow{g} C \to 0$ short exact sequence, then \\
+$A \cong \text{im}f$ and $B/\text{im}f \cong C$
+\item[(ii)]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{enumerate}
+    \item[(i)] $f$ injective, so $A \to \text{im}f$ isomorphism.  
+
+By first isomorphism thm., $B/\text{ker}g \cong \text{im}g$.  \\
+$\text{im}g = C$ since $g$ surjective \\
+$\text{im}f = \text{ker}g$ by exactness.  
+
+$\Longrightarrow B/\text{im}f \cong C$  
+\item[(ii)]
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+  short exact sequence $0 \to A \xrightarrow{i} B \xrightarrow{p} C \to 0$ \emph{split} if $\exists \, $ map $j: C \to B$, s.t. $pj=1_C$
+\end{definition}
+
+\begin{proposition}[7.22]
+  if exact sequence $0 \to A \xrightarrow{i} B \xrightarrow{p} C \to 0$ split, then $B \cong A \oplus C$  
+\end{proposition}
+
+\begin{proof}
+  if $b \in B$, then $p(b) \in C$ \\
+$b - j(p(b)) \in \text{ker}p$.  Since $p(b-j(p(b))) = p(b) - pj(p(b)) = p(b) -1_C(p(b)) = 0$ since $pj=1_C$.  
+
+By exactness, $\text{ker}p = \text{im}i$, $\exists \, a \in A$ s.t. $i(a) = b-j(p(b))$
+
+Then $\forall \, b \in B$, $b=i(a) + j(p(b))$ \\
+\phantom{Then} Note that $p$ surjective by exactness, and so $C = \text{im}p$ \\
+Thus $B = \text{im}i + \text{im}j$
+
+If $ia=x=jc$, then $p(x) = pia=0$, since $pi =0$ for $\text{im}i = \text{ker}p$ \\
+\phantom{if} $px=pjc =c$ since $pj=1_C$.  \\
+Thus $x=jc = j(0) =0$.  \\
+So $B \cong A\oplus C$
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{definition}
+If $f: M \to N$, define \textbf{cokernel}, denoted $\text{coker}f$, 
+\begin{equation}
+  \text{coker}f := N/ \text{im}f
+\end{equation}
+\end{definition}
+
+\exercisehead{7.13} 
+\begin{enumerate}
+\item[(i)] if $f:M \to N$ surjective, $\text{im}f =N$.  $\forall \, n \in N$, $n=f(m)$ for some $m\in M$.  \\
+For $[n] \in N/\text{im}f$, then $n+f(m) \in [n]$.  \\
+\phantom{For } Then $n-f(m) = f(m) -f(m) = 0 \in [n]$
+\[
+\text{coker}f = N/\text{im}f = 0
+\]
+if $\text{coker}f =0$, $\text{coker}f = N/\text{im}f =0$, then $N=\text{im}f$ and so $f$ surjective.  
+
+Thus, $f:M\to N$ surjective iff $\text{coker}f=0$
+\item[(ii)] If $f:M\to N$, 
+
+$\text{ker}(\text{ker}f \to M) = 0 = \text{im}(0\to \text{ker}f)$ since $\text{ker}f \to M$ is inclusion \\
+$\text{im}(\text{ker}f\to M) = \text{ker}f$ (by inclusion) \\
+$\text{ker}(N\to \text{coker}f) = \text{ker}(N\to N/\text{im}f) = \text{im}f$ \\
+$\text{im}(N\to \text{coker}f) = \text{coker}f$ \\
+$\text{ker}(\text{coker}f\to 0)=\text{coker}f$ $\Longrightarrow \text{im}(N\to \text{coker}f) = \text{ker}(\text{coker}f \to 0)$
+\end{enumerate}
+
+
+\exercisehead{7.17} 
+
+If given a short exact sequence $0 \to A \xrightarrow{i} B \xrightarrow{p} C \to 0$ that splits, then $B \cong A\oplus C$, i.e. $B = \text{im}i \oplus \text{im}j$ where $j:C\to B$ s.t. $pj=1_C$ (by definition of a short exact sequence that splits).  
+
+Thus $\forall \, b \in B$, $b = i(a) + j(c)$.  
+
+Define $q$ to be the projection onto $A$: 
+\[
+\begin{aligned}
+  & q: B \to A \\ 
+  & q(b) = a \text{ s.t. } qj =0
+\end{aligned}
+\]
+Notice this analogy, with this case where the short exact sequence splits:
+\[
+\begin{aligned}
+  & \text{im}i = \text{ker}p \\ 
+  &  \text{im}j = \text{ker}q
+\end{aligned}
+\]
+Now $qi(a) = a \Longrightarrow qi = 1_A$.  
+
+Conversely, if $\exists \, q : B \to A$ with $qi = 1_A$, 
+
+
+
+Thus,
+
+if short exact sequence $0 \to A \xrightarrow{i} B \xrightarrow{p} C \to 0$ splits iff $\exists \, q:B \to A$ with $qi=1_A$.  
+
+
+
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=4em, column sep=4em, text height=1.5ex, text depth=0.25ex]
+{
+0   &  A & B & C & 0  \\
+0   &  A & A\oplus C & C & 0  \\
+};
+\path[->,font=\scriptsize]
+(m-1-1) edge node [auto] {$$} (m-1-2)
+(m-1-2) edge node [auto] {$i$} (m-1-3)
+        edge node [auto] {$1$} (m-2-2)
+(m-1-3) edge node [auto] {$p$} (m-1-4)
+        edge node [auto] {$(q,p)$} (m-2-3)
+        edge [bend left=30] node [auto] {$q$} (m-1-2) 
+(m-1-4) edge node [auto] {$$} (m-1-5)
+        edge node [auto] {$1$} (m-2-4)
+(m-2-1) edge node [auto] {$$} (m-2-2)
+(m-2-2) edge node [below] {$(1,p\circ i)$} (m-2-3)
+(m-2-3) edge node [auto] {$$} (m-2-4)
+(m-2-4) edge node [auto] {$$} (m-2-5)
+;
+\end{tikzpicture} \quad \quad \, \\
+\begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=4em, column sep=4em, text height=1.5ex, text depth=0.25ex]
+{
+0   &  a & i(a)=b & pi(a)=0=p(b) & 0  \\
+0   &  a & (q(b),p(b))=(a,c) & p(b) & 0  \\
+};
+\path[|->,font=\scriptsize]
+(m-1-1) edge node [auto] {$$} (m-1-2)
+(m-1-2) edge node [auto] {$i$} (m-1-3)
+        edge node [auto] {$1$} (m-2-2)
+(m-1-3) edge node [auto] {$p$} (m-1-4)
+        edge node [auto] {$(q,p)$} (m-2-3)
+        edge [bend left=30] node [auto] {$q$} (m-1-2) 
+(m-1-4) edge node [auto] {$$} (m-1-5)
+        edge node [auto] {$1$} (m-2-4)
+(m-2-1) edge node [auto] {$$} (m-2-2)
+(m-2-2) edge node [below] {$(1,p\circ i)$} (m-2-3)
+(m-2-3) edge node [auto] {$$} (m-2-4)
+(m-2-4) edge node [auto] {$$} (m-2-5)
+;
+\end{tikzpicture}
+
+
+\section{Algebras }
+
+\subsection{}
+
+\subsection{Chain Conditions}
+
+\begin{definition}
+  if $k$ commutative ring, then \\
+  ring $R$ is \textbf{$k$-algebra} \\
+if $R$ is a $k$-module and if \\
+$\forall \, a \in k$, $\forall \, r,s \in R$ \\
+$a(rs) = (ar)s = r(as)$ \\
+scalars $a \in k$ commute with everything in $R \ni r,s,$  
+\end{definition}
+
+if $R,S$ $k$-algebras, ring homomorphism $f:R \to S$ is \\
+$k$-\textbf{algebra} map if 
+\[
+f(ar) = af(r) \quad \, \forall \, a \in k , \, \forall \, r \in R
+\]
+
+\subsection{Semisimple Rings}
+
+\begin{definition}
+  $k$-\textbf{representation} of group $G$ is homomorphism
+\[
+\sigma : G \to GL(V) 
+\]
+where $V$ is vector space over field $k$
+\end{definition}
+
+
+
+\section{ Advanced Linear Algebra }
+
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{Graded Algebras}
+
+\begin{definition}
+  $R$-algebra $A$ is graded $R$-algebra if $\exists \, R$-submmodules $A^p$ \, $\forall \, p \geq 0$, s.t. 
+\begin{enumerate}
+  \item[(i)] $A = \sum_{p\geq 0 } A^p$
+\item[(ii)] $\forall \, p ,q \geq 0$, if $\begin{aligned} & \quad \\
+  & x \in A^p \\
+  & y \in A^q \end{aligned}$, then $xy \in A^{p+q}$, i.e. $A^p A^q \subseteq A^{p+q}$ \\
+\end{enumerate}
+\end{definition}
+$x\in A^p$ is called \textbf{homogeneous} of \textbf{degree} $p$
+
+Example 9.94 
+\begin{enumerate}
+\item[(i)] polynomial ring $A = R[x]$, graded $R$-algebra if we define 
+\[
+A^p = \lbrace rx^p | r\in R \rbrace
+\]
+\item[(ii)] polynomial ring $A = R[x_1, x_2, \dots x_n ]$ is graded $R$-algebra if we define
+\[
+A^p = \lbrace rx_1^{e_1}x_2^{e_2} \dots x_n^{e_n} | r \in R \text{ and } \sum e_i = p \rbrace
+\]
+i.e. $A^p$ consists of all monomials of total degree $p$
+\item[(iii)] in algebraic topology, assign sequence of (abelian) cohomology groups $H^p(X,R)$ to space $X$, $R$ commutative ring, $p\geq 0$, \\
+define multiplication on $\sum_{ p \geq 0} H^p(X,R)$ cup product, making it a graded $R$-algebra
+\end{enumerate}
+
+\section{ Homology }
+
+
+
+\section{ Commutative Rings III}
+
+
+
+\end{multicols*}
+
+
+\begin{thebibliography}{9}
+\bibitem{JRotman2010}
+Joseph J. Rotman, \textbf{Advanced Modern Algebra} (Graduate Studies in Mathematics) 2nd Edition, American Mathematical Society; 2 edition (August 10, 2010), ISBN-13: 978-0821847411
+
+EY : Note that I used the first edition.  
+
+\bibitem{TJudsonRBeezer2015}
+Thomas W. Judson, \textbf{Abstract Algebra Theory and Applications}; Robert A. Beezer, \textbf{Sage Exercises for Abstract Algebra}, August 12, 2015; \url{http://abstract.ups.edu/download/aata-20150812-sage-6.8.pdf}
+\end{thebibliography}
+\end{document}
+
