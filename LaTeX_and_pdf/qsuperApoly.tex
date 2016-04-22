@@ -1529,7 +1529,7 @@ dual $\pi^*$ of $\pi$ is a representation.
 
 \section{Vector bundles}
 
-Ballmann has a lucid and straightforward and useful exposition on vector bundles and connections \cite{WBallmann1999} \footnote{Werner Ballmann. ``Vector bundles and connections'', \url{http://people.mpim-bonn.mpg.de/hwbllmnn/archiv/conncurv1999.pdf}}.  
+Ballmann has a lucid and straightforward and useful exposition on vector bundles and connections \cite{WBallmann2002}   \footnote{Werner Ballmann. ``Vector bundles and connections'', \url{http://people.mpim-bonn.mpg.de/hwbllmnn/archiv/conncurv1999.pdf}}.  
 
   $\mathbb{K} \in \lbrace \mathbb{R},\mathbb{C} \rbrace$
 \begin{definition}
@@ -2219,7 +2219,7 @@ and define the transition functions for our (associated) vector bundle $P\times_
 \]
   If given section $\sigma \in \Gamma(P\times_{\rho}V)$, $\exists \, $ smooth map $\sigma^P:P\to V$ s.t. $\sigma^P(pg^{-1}) = \rho(g)\sigma^P(p)$
 \end{claim}
-cf. Taubes (2001), Subsec. 11.4.1 Part 1
+cf. Taubes (2011), Subsec. 11.4.1 Part 1
 
 \begin{proof}
   If given $\sigma^P: P \to V$ s.t. $\sigma^P(pg^{-1}) = \rho(g)\sigma^P(p)$, let 
@@ -2234,7 +2234,7 @@ since $\pi(pg^{-1})=x$.  Since $\pi(pg^{-1})=x$ \, $\forall \, g\in G$, then ind
   
 \end{proof}
 
-\begin{proposition}[cf. Taubes (2001) Subsection 11.4.3 \cite{CTaubes2011}]
+\begin{proposition}[cf. Taubes (2011) Subsection 11.4.3 \cite{CTaubes2011}]
 $\forall \, $ principal $G$-bundle $\pi:P \to M$, $\exists \, $ short exact sequence of vector bundle homomorphims
 \begin{equation}
 \begin{tikzpicture}
@@ -2721,6 +2721,43 @@ $B= -i \vec{*} E$
 
 From Baez and Muniain (1994) \cite{JBaezJMuniain1994}: 
 
+\part{Supersymmetry}
+
+
+\begin{itemize}
+  \item [\textbf{Readings}]
+  \item Guillemin and Sternberg (1999) \cite{GS1999}
+\end{itemize}
+
+I will follow Guillemin and Sternberg (1999) \cite{GS1999}.  
+
+\begin{equation}
+  \begin{aligned}
+    & i_{\xi } i_{\eta} + i_{\eta} i_{\xi} = 0  \qquad \, & \lbrace i_{\xi} ,  i_{\eta} \rbrace =0  \\
+    & L_{\xi} i_{\eta} - i_{\eta} L_{\xi} = i_{[\xi, \eta] } & \\
+    & L_{\xi} L_{\eta} - L_{\eta} L_{\xi} = L_{[\xi, \eta] } & \\
+    & d i_{\xi} + i_{\xi} d = L_{\xi } & \lbrace d,i_{\xi} \rbrace = L_{\xi} \\
+    & dL_{\xi}  -  L_{\xi}d = 0 &  [d, L_{\xi} ] = 0 \\ 
+    & d^2 = 0 & \\
+    & \rho_a \circ L_{\xi} \circ \rho_a^{-1} = L_{\text{Ad}_a\xi}  & \\ 
+    & \rho_a \circ i_{\xi} \circ \rho_a^{-1} = i_{\text{Ad}_a\xi}  & 
+\end{aligned}
+\end{equation}
+$\text{Ad}$ denotes adjoint representation of $G$ on $\mathfrak{g}$.  
+
+$L_j \equiv L_{\xi_j}$, $i_j \equiv i_{\xi_j}$ in terms of basis for $\mathfrak{g}$.  
+
+\textbf{supervector space} - vector space $V$ with $\mathbb{Z}/2\mathbb{Z}$ gradation: $V =V_0 \oplus V_1$, where $\mathbb{Z}/2\mathbb{Z} = \lbrace 0 ,1 \rbrace$.  \\
+most of the time, our vector spaces come equipped with $\mathbb{Z}$-gradation $V = \oplus_{i\in \mathbb{Z}}V_i$, $V_0 := \oplus V_{2j}$ even; $V_1 := \oplus V_{2j+1}$ odd.  \\
+\qquad \, an element of $V_i$ have degree $i$.  
+
+superalgebra is supervector space $A$ with multiplication satisfying $A_i \cdot A_j \subset A_{i+j}$ if $A$ is $\mathbb{Z}$-graded.  
+
+e.g. if $V$ supervector space, then $\text{End}V$ superalgebra where 
+\[
+(\text{End} V)_i := \lbrace A \in \text{End}V | A:V_j \to V_{j+1} \rbrace
+\]
+in $\mathbb{Z}$-graded case, if only finitely many $V_i\neq \lbrace 0 \rbrace$.  
 
 
 
@@ -3719,7 +3756,383 @@ cf. \url{http://www.math.uic.edu/t3m/SnapPy/installing.html\#sage}.  It should s
 \end{enumerate}
 
 
+\part{BPS Spectra}
 
+Gukov, Nawata, Saberi, Stosic, Su\l kowski (2015) \cite{GNSSS2015}
+
+
+\part{Cold Neutrons and Topological Knots}
+
+\section{Curvature}
+
+Consider a principal-$G$ bundle with Lie group $G$, $P\xrightarrow{ \pi } M$.  Note that an associated bundle, a vector bundle, can be constructed from principal $G$-bundle $P$, through representation $\rho : G \to Gl(n;\mathbb{K})$ (cf. 10.9 Associated vector bundles of Taubes (2011) \cite{CTaubes2011}), in that 
+\[
+\begin{gathered}
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P  \\
+M  \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$\pi$} (m-2-1)
+  ;
+\end{tikzpicture} \xrightarrow{ \rho : G \to \text{Gl}(n;\mathbb{K})} P \times_{\rho} \mathbb{K}^n \equiv P\times \mathbb{K}^n/(p,v)\sim (pg^{-1}, \rho(g)v) \quad \, \forall \, g \in G
+\end{gathered}
+\]
+for $\mathbb{K} = \mathbb{R} \text{ or } \mathbb{C}$ and $\mathbb{K}^n$ being a vector space of dimension $n$ over field $\mathbb{K}$. 
+
+Recall the exterior covariant derivative $D$ s.t.
+\[
+\begin{aligned}
+  & D: \Omega^p(M;E) \to \Omega^{p+1}(M;E) \\ 
+  & D(\theta \otimes s) = d\theta \otimes s + (-1)^p \theta \wedge \nabla s = d\theta \otimes s + \nabla s \wedge \theta
+\end{aligned}
+\]
+with $E \xrightarrow{\pi} M$ being a vector bundle (from which one can construct the principal $G$ bundle, if so desired).  
+
+
+\begin{proposition}
+  For exterior covariant derivative $D: \Omega^p(M;E) \to \Omega^{p+1}(M;E)$, $\forall \, \eta \in \Omega^p(M;E)$, 
+\[
+D^2 \eta \equiv D\circ D \eta = F\wedge \eta
+\]
+where $F \in \Omega^p(M; \text{End}(E))$, and $F$ \emph{unique}
+\end{proposition}
+
+\begin{proof}
+$\forall \, \eta \in \Omega^p(M;E)$, of the form $\eta = \theta \otimes s$, where $\theta \in \Omega^p(M)$, $s\in \Gamma(E)$, 
+\[
+\begin{gathered}
+  D\eta = d\theta \otimes s + (-1)^p \theta \wedge \nabla s = d\theta \otimes s + (-1)^p \theta \wedge (ds + \omega^k_{ \; \; i } s^i e_k) = d\theta \otimes s + ds \wedge \theta + \omega^k_{ \; \; i} s^i \wedge \theta \otimes e_k = \\
+  = (s^k d\theta + ds^k \wedge \theta + \omega^k_{ \; \; i } s^i \wedge \theta ) \otimes e_k 
+\end{gathered}
+\]
+\[
+\begin{gathered}
+  D\circ D \eta \equiv DD\eta = (ds^k \wedge d\theta + (-1)ds^k \wedge d\theta + ds^i \wedge \omega^k_{ \; \; i} \wedge \theta + s^i d\omega^k_{ \; \; i } \wedge \theta + (-1) \omega^k_{ \; \; i} s^i \wedge d\theta ) \otimes e_k +\\
+  + (-1)^{p+1}(s^k d\theta + ds^k \wedge \theta + \omega^k_{ \; \; i} s^i \wedge \theta ) \otimes \wedge \omega^l_{ \; \; k} e_l = \\
+  = (ds^i \wedge \omega^l_{ \; \; i} \wedge \theta + s^i d\omega^l_{ \; \; i} \wedge \theta + (-1) \omega^l_{ \; \; i} s^i \wedge d\theta ) \otimes e_l + \\
+  + (s^k \omega^l_{ \; \; k} \wedge d\theta + \omega^l_{ \; \; k } \wedge ds^k \wedge \theta + \omega^l_{ \; \; k} \wedge \omega^k_{ \; \; i } s^i \wedge \theta ) e_l = \\
+  = (d\omega^l_{ \; \; i} + \omega^l_{ \; \; k } \wedge \omega^k_{ \; \; i} )s^i \wedge \theta e_l
+\end{gathered}
+\]
+If you're following at home (i.e. independent study), one only needs to be careful with factors of $(-1)$ when ``commuting through'' the wedge product $\wedge$.  
+
+I (still) find it a near miracle that terms cancel such that $F$ takes this form (with, simply a change of notation, $\omega \equiv A$):
+\[
+F = dA + A\wedge A \in \Omega^p(M;\text{End}E)
+\]
+By Lemma 11.1 of Sec. 11.2 the space of covariant derivatives of Taubes (2011) \cite{CTaubes2011}, this $F$ is \emph{unique}.  
+
+Thus
+\[
+D^2 \eta = F \wedge \eta 
+\]
+for, notice that for, locally (in components)
+\[
+A = A^k_{ \; \; ij} dx^j \otimes (e_k \otimes e^i)
+\]
+\[
+\begin{gathered}
+  F = dA + A \wedge A = \frac{ \partial A^k_{ \; \; lj} }{  \partial x^i } dx^i \wedge dx^j \otimes (e_k \otimes e^l) + A^k_{  \; \; mi } A^m_{ \; \; lj } dx^i \wedge dx^j \otimes (e_k \otimes e^l) = \\
+  = \left( \frac{ \partial A^k_{ \; \; lj} }{ \partial x^i} + A^k_{ \; \; mi} A^m_{ \; \; lj } \right) dx^i \wedge dx^j \otimes (e_k \otimes e^l )
+\end{gathered}
+\]
+and so
+\[
+F\wedge \eta = \left( \frac{ \partial A^k_{ \; \; lj} }{ \partial x^i } + A^k_{ \; \; mi} A^m_{ \; \; lj } \right) dx^i \wedge dx^j \wedge \theta \otimes e_k s^l
+\]
+\end{proof}
+
+\subsubsection{Alternative form of curvature $F$ in terms of commutators}
+cf. Subsection 12.6 Curvature and commutators of Taubes (2011) \cite{CTaubes2011}.  
+
+Consider $\forall \, U,V \in \mathfrak{X}(M)$, $X\in \Gamma(E)$,
+\[
+\nabla_U X = U^j \left( \frac{ \partial X}{ \partial x^j} + A^k_{ \; \; ij} X^i \right) = U^j \left( \frac{ \partial }{ \partial x^j } + A_j \right) X \in \Gamma(E)
+\]
+and so clearly 
+\[
+\nabla_U \in \Gamma(\text{End}(E))
+\]
+Also recall the commutator for vector fields, in component form (locally):
+\[
+[U,V] = \left( U^i \frac{ \partial }{ \partial x^i} V^j -  V^i \frac{ \partial }{ \partial x^i} U^j \right) \frac{ \partial }{ \partial x^j} \in \mathfrak{X}(M)
+\]
+and so 
+\[
+\nabla_{[U,V]} = \left( U^i \frac{ \partial }{ \partial x^i } V^j - V^i \frac{ \partial }{ \partial x^i } U^j \right) \left( \frac{ \partial }{ \partial x^j } + A_j \right)
+\]
+Consider that 
+\[
+\begin{gathered}
+\nabla_U \nabla_V = \\
+ = U^i \left[ \left( \frac{ \partial }{ \partial x^i } + A_i \right) V^j \left( \frac{ \partial }{ \partial x^j} + A_j \right) \right] = \\
+  = U^i \left[  \frac{ \partial V^j}{ \partial x^i} \left( \frac{ \partial }{ \partial x^j} + A_j \right) + V^j \left( \frac{ \partial^2}{ \partial x^i \partial x^j } + \frac{ \partial A_j }{ \partial x^i } + A_j \frac{ \partial }{ \partial x^i } \right) + A_i V^j \frac{ \partial }{ \partial x^j} + A_i V^j A_j \right]
+\end{gathered}
+\]
+Then by canceling out matching terms, 
+\[
+\begin{gathered}
+  [ \nabla_U, \nabla_V ] - \nabla_{[U,V] } = U^i V^j \frac{ \partial A_j}{ \partial x^i} - V^i U^j \frac{ \partial A_j}{ \partial x^i} + U^i V^j A_i A_j - V^i U^j A_i A_j = \\
+  = \left( \left( \frac{ \partial A_j }{ \partial x^i } - \frac{ \partial A_i}{ \partial x^j} \right) + [A_i, A_j] \right) U^i V^j = F(U,V)
+\end{gathered}
+\]
+and so we have this form for the curvature $F(U,V) \in \Gamma(\text{End}(E))$, $\forall \, U,V \in \mathfrak{X}(M)$, 
+\[
+F(U,V) = \left( \left( \frac{ \partial A_j}{ \partial x^i } - \frac{ \partial A_i}{ \partial x^j } \right) + [A_i,A_j] \right)U^i V^j
+\]
+but I think that one should keep in mind that this is just one form that $F$ could take, if it is applied to $U,V$ beforehand.  
+
+\subsubsection{deRham cohomology}
+
+I'm going to now follow Section 12.2 Closed forms, exact forms, diffeomorphisms and De Rham cohomology of Taubes (2011) \cite{CTaubes2011}.  
+
+Recall the definition of \emph{deRham cohomology}:
+\begin{equation}
+  H^p_{\text{deRham}}(M) := \text{ker}d/\text{im}d \qquad \, \left( = \lbrace \omega | d\omega = 0 \rbrace / \lbrace \theta | \theta = d\alpha \text{ for } \alpha \in \Omega^{p-1}(M) \rbrace \right)
+\end{equation}
+
+If $M,N$ smooth manifolds, smooth map $f: M \to N$, $\forall \, \alpha \in \Omega^{p-1}(N)$, then
+\begin{equation}
+  f^*(d\alpha ) =d(f^*\alpha) \text{ or } f^* d = df^*
+\end{equation}
+i.e.
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\Omega^p(M) & \Omega^p(N)  \\
+\Omega^{p-1}(M) & \Omega^{p-1}(N)  \\
+M & N   \\
+};
+  \path[->]
+  (m-1-2) edge node [auto] {$f^*$} (m-1-1)
+  (m-2-1) edge node [auto] {$d$} (m-1-1)
+  (m-2-2) edge node [auto] {$d$} (m-1-2)
+  edge node [auto] {$f^*$} (m-2-1)
+  (m-3-1) edge node [auto] {$$} (m-2-1)
+  edge node [auto] {$f$} (m-3-2)
+  (m-3-2) edge node [auto] {$$} (m-2-2)
+  ;
+\end{tikzpicture}
+\begin{proof}
+Indeed, this can be shown, by considering local expressions: locally, $\alpha_I dy^I \in \Omega^{p-1}_y(N)$ where $I \equiv (i_1, i_2 \dots i_{p-1})$ s.t. $i_1 < i_2 < \dots < i_{p-1}$, and consider, with $f(x)=y$:
+\[
+\begin{gathered}
+  \begin{aligned}
+    & d\alpha = \frac{ \partial \alpha_I}{ \partial y^i} dy^i \wedge dy^I = \frac{ \partial \alpha_I}{\partial y^i} \epsilon^{iI }_J dy^J \text{ since there's only 1 way to permute $iI$ into $J=(j_1 \dots j_p)$ s.t. $j_1 < \dots < j_p$ } \\ 
+    & f^*d\alpha = \frac{ \partial \alpha_I}{ \partial y^i} \epsilon^{iI}_J \frac{ \partial y^J}{ \partial x^k} dx^k \\ 
+    & f^*\alpha = \alpha_I \frac{ \partial y^I}{ \partial x^J} dx^J = \frac{ \partial \alpha_I}{ \partial y^i} \frac{ \partial y^i }{ \partial x^j} \frac{ \partial y^I}{ \partial x^J} \epsilon^{jJ}_K dx^K
+\end{aligned}
+\end{gathered}
+\]
+Now
+\[
+\begin{gathered}
+  df^* \alpha = \left( \frac{ \partial \alpha_I}{ \partial x^i} \frac{ \partial y^I}{ \partial x^j} + \alpha_I \frac{ \partial^2 y^I }{ \partial x^i \partial x^J} \right) dx^i \wedge dx^J = \left( \frac{ \partial \alpha_I}{ \partial x^i} \frac{ \partial y^I}{ \partial x^J} + \alpha_I \frac{ \partial^2 y^I}{ \partial x^i \partial x^J} \right) \epsilon^{iJ}_K dx^K = \\
+  = \frac{ \partial \alpha_I}{ \partial y^i} \frac{ \partial y^i}{ \partial x^j} \frac{ \partial y^I}{ \partial x^J} \epsilon^{jJ}_K dx^K + \alpha_I  \frac{ \partial^2 y^J}{ \partial x^i  \partial x^J} \epsilon^{iJ}_K dx^K =  \frac{ \partial \alpha_I}{ \partial y^i} \frac{ \partial y^i}{ \partial x^j} \frac{ \partial y^I}{ \partial x^J} \epsilon^{jJ}_K dx^K + 0 = f^*d\alpha
+\end{gathered}
+\]
+\end{proof}
+
+
+
+
+Consider this homotopy: for smooth maps $\begin{aligned} & \quad \\
+  & f_0: M \to N \\
+  & f_1: M\to N \end{aligned}$, $\exists \,$ smooth map $\begin{aligned} & \quad \\
+  & \psi : [0,1] \times M \to N \\
+  & \psi(0, \cdot ) = f_0 \\
+  & \psi(1,\cdot ) = f_1 \end{aligned}$
+
+Let closed form $\omega \in \Omega^p(N)$; $d\omega= 0$.  Then $f_0^*\omega$, $f_1^* \omega$ closed form.  
+
+Now consider $\mathbb{R} \times M$, and that 
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+T^*(\mathbb{R} \times M) = \mathbb{R} \oplus T^*M \\
+\mathbb{R} \times M \\
+};
+  \path[->]
+  (m-2-1) edge node [auto] {$$} (m-1-1)
+  ;
+\end{tikzpicture} \text{ in that } 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\alpha = \alpha_0 dt + \alpha_M = \alpha_0 dt + (\alpha_M)_i dx^i \\
+(t,x)  \\
+};
+  \path[->]
+  (m-2-1) edge node [auto] {$$} (m-1-1)
+  ;
+\end{tikzpicture}
+\]
+in that $i$ runs through the indices for (some) local chart of $M$ \emph{only}, i.e. $i=1,2, \dots \text{dim}M=d$.  
+
+Likewise, $\Omega^p(\mathbb{R} \times M) = \Omega^{p-1}(M) \oplus \Omega^p(M)$, in that 
+\[
+\begin{gathered}
+ \forall \,  \alpha \in \Omega^p(\mathbb{R} \times M) \text{ then for $\mu = 0, 1, 2, \dots d$, $0$ standing in for $t\in \mathbb{R}$ of $\mathbb{R}\times M$, }\\ 
+\alpha = \alpha_M dx^M = dt \wedge \alpha_I dx^I + \alpha_J dx^J \text{ where } \begin{aligned} & M = (\mu_1 \dots \mu_p) \quad & \mu_{\mu} = 0,1 \dots d \quad & \mu_1 < \dots < \mu_p \\
+  & I = (i_1 \dots i_{p-1}) \quad & i_i = 1 \dots d \quad & i_1 < \dots < i_{p-1} \\
+  & J = (j_1 \dots j_{p}) \quad & j_j = 1 \dots d \quad & j_1 < \dots < j_{p} 
+\end{aligned} 
+\end{gathered}
+\]
+and so, naming these components of $\alpha$ as 
+\[
+\begin{aligned}
+  & \alpha^{p-1} \equiv \alpha_I dx^I \in \Omega^{p-1}(M) \\ 
+  & \alpha^{p} \equiv \alpha_J dx^J \in \Omega^{p}(M) 
+\end{aligned}
+\]
+Then $\forall \, \alpha \in \Omega^p(\mathbb{R} \times M)$, 
+\begin{equation}\label{Eq:p-form}
+\alpha = dt \wedge \alpha^{p-1} + \alpha^p
+\end{equation}.  Taking $d$ on both sides to obtain $d\alpha \in \Omega^{p+1}(\mathbb{R} \times M)$, and $d\alpha$, being a $p+1$-form, taking the form of Eq. \ref{Eq:p-form}, then
+\[
+\begin{gathered}
+  d\alpha = dt \wedge (d\alpha)^p + (d\alpha)^{p+1} = -dt \wedge d^{\perp} \alpha^{p-1} + \frac{ \partial \alpha^p_J}{ \partial t} dt \wedge dx^J + d^{\perp}\alpha^p
+\end{gathered}
+\]
+where $d\alpha^p = \frac{ \partial \alpha^p_J}{ \partial x^{\mu }} dx^{\mu} \wedge dx^J = \frac{ \partial \alpha^p_J}{\partial t} dt \wedge dx^J + \frac{ \partial \alpha_J^p}{ \partial x^i} dx^i \wedge dx^J = \frac{ \partial \alpha_J^p }{ \partial t} dt \wedge dx^J + d^{\perp}\alpha^p$, and so $d^{\perp}$ signifies that this exterior derivative only ``acts'' on the (local) coordinates of $M$.  
+
+Thus
+\[
+\begin{aligned}
+  & (d\alpha)^p = -d^{\perp} \alpha^{p-1}  + \frac{ \partial \alpha^p }{ \partial t} \\ 
+  &  (d\alpha)^{p+1} = d^{\perp}\alpha^p
+\end{aligned}
+\]
+
+Suppose $\alpha = \psi^* \omega$; $\omega \in \Omega^p(N)$; $\psi : [0,1] \times M \to N$.  \\
+If $\omega$ closed ($d\omega =0$), then $\psi^*\omega$ closed ($d\psi^* \omega = \psi^* d\omega =0$).  
+
+So using the above facts shown for $\alpha = \psi^* \omega$,
+\[
+\begin{gathered}
+\begin{aligned}
+  & \alpha = dt \wedge \alpha^{p-1} + \alpha^p \xrightarrow{ \alpha = \psi^* \omega } \psi^* \omega = dt \wedge (\psi^* \omega)^{p-1} + (\psi^* \omega)^p \\ 
+  &  d\psi^* \omega = \psi^* d\omega = 0 = dt \wedge (d\psi^* \omega)^p + (d\psi^* \omega)^{p+1}
+\end{aligned} \\
+\begin{aligned}
+  &  (d\psi^* \omega)^{p+1} =0 = d^{\perp}(\psi^* \omega)^p \\ 
+  & (d\psi^* \omega)^p = 0 = -d^{\perp}(\psi^* \omega)^{p-1} + \frac{ \partial ( \psi^* \omega)^p }{ \partial t} \xrightarrow{ \int_0^1 dt } \left. (\psi^* \omega)^p \right|_{t=1} - \left. (\psi^* \omega)^p \right|_{t=0} = d^{\perp} \int(\psi^* \omega)^{p-1} \text{ or } 
+\end{aligned} \\
+f_1^* \omega - f_0^* \omega = d^{\perp} \int (\psi^* \omega)^{p-1}
+\end{gathered}
+\]
+
+So $f_1^* \omega$ differ from $f_0^* \omega$ by an exact form, $d^{\perp} \int(\psi^* \omega)^{p-1}$.  
+\[
+\Longrightarrow [f_1^* \omega] = [f_0^* \omega]
+\]
+Thus deRham cohomology classes are invariant under homotopy (homotopy invariant!).  
+
+Consider 1-form connection on principal $G$-bundle $A=A(x) \in \Omega^1(M;\mathbf{g})$, $\forall \, x \in M$, $\mathfrak{g}$ Lie algebra of $G$ (Recall $\mathbf{g} = T_1G$).  \\
+Consider 1-form connection over $[0,1] \times U$, open $U \subset M$, $A'=A'(t,x)$ in that
+\[
+A' = \mathbf{g}^{-1}d\mathbf{g} + t\mathbf{g}^{-1} A \mathbf{g} = A'(t,x)
+\]
+Note that $\mathbf{g} \in \mathfrak{g}$.  
+
+$A'$ interpolates between a flat connection $A'(0,x) = \left. A' \right|_{t=0} = \mathbf{g}^{-1} d\mathbf{g}$, the connection 1-form for product principal bundle $P=M\times G$ and $A'(1,x) = \left. A'\right|_{t=1} = \mathbf{g}^{-1} d\mathbf{g} + \mathbf{g}^{-1} A \mathbf{g}$.  I think that this could be interpreted as turning off and turning on the gauge field, respectively.  
+
+Now, doing the calculation out explicitly,
+\[
+\begin{gathered}
+F_{A'} = (d+A')^2 = dA' + A'\wedge A' = d\mathbf{g}^{-1} \wedge d\mathbf{g} + dt \wedge \mathbf{g}^{-1} A \mathbf{g} + t(d\mathbf{g}^{-1} \wedge A \mathbf{g} + \mathbf{g}^{-1} dA \mathbf{g} + \mathbf{g}^{-1} A \wedge d\mathbf{g} + \\
+ + t(\mathbf{g}^{-1} d\mathbf{g} \wedge \mathbf{g}^{-1} A \mathbf{g} + \mathbf{g}^{-1} A \mathbf{g} \wedge \mathbf{g}^{-1} d\mathbf{g} ) + t^2 \mathbf{g}^{-1} A \wedge A \mathbf{g}
+\end{gathered}
+\]
+Using this identity:
+\[
+\begin{gathered}
+  \mathbf{g}^{-1} \mathbf{g} = 1 \\ 
+  \Longrightarrow d( \mathbf{g}^{-1} \mathbf{g} ) = d\mathbf{g}^{-1} \mathbf{g} + \mathbf{g}^{-1} d\mathbf{g} = 0 
+\end{gathered}
+\]
+and ``commuting'' or ``moving through'' differential forms ``through the wedge product'', then
+\[
+F_{A'} = tdA + dt \wedge A + t^2 A \wedge A
+\]
+
+Now consider $\text{tr}(F_{A'} \wedge F_{A'} ) \in \Omega^4([0,1]\times U)$.  
+
+$\text{tr}(F_{A'} \wedge F_{A'})$ is closed, since $\text{dim}M = 4$.  
+
+Now recall that $\forall \, p$-form on $[0,1] \times U$, $\alpha \in \Omega^p([0,1]\times U)$, $\alpha = dt \wedge \alpha^{p-1} + \alpha^p$; with $\begin{aligned} & \quad \\ 
+  & \alpha^{p-1} \in \Omega^{p-1}(U) \\
+  & \alpha^p \in \Omega^p(U) \end{aligned}$
+
+Thus, in our case currently, 
+\[
+\text{tr}(F_{A'} \wedge F_{A'}) = dt \wedge \alpha^3 + \alpha^4
+\]
+Calculating out $F_{A'} \wedge F_{A'}$ explicitly,
+\[
+\begin{gathered}
+  F_{A'} \wedge F_{A'} = dt \wedge A \wedge tdA + t^3 A \wedge A \wedge dA + tdA \wedge dt \wedge A + t^2 dt \wedge A \wedge A \wedge A + tdA \wedge A \wedge A + t^2 dt \wedge A \wedge A \wedge A =  \\
+   = 2dt \wedge tA \wedge dA + 2 t^2 dt \wedge A \wedge A \wedge A + (t^3 + t) A\wedge A \wedge dA
+\end{gathered}
+\]
+and so 
+\[
+\alpha^3 = 2\text{Tr}(tA \wedge dA + t^2 A \wedge A \wedge A)
+\]
+
+Since $\text{tr}(F_{A'} \wedge F_{A'})$ closed, $0 = 0 - dt \wedge d\alpha^3 + d\alpha^4$, and ``applying'' $\frac{ \partial }{ \partial t}$ to this expression (i.e. this 4-form ``acts'' on $\frac{ \partial }{ \partial t}$, then 
+\[
+\begin{gathered}
+  \frac{ \partial \alpha^4}{ \partial t} = d\alpha^3 \\ 
+\xrightarrow{ \int dt } \int \frac{ \partial \alpha^4}{ \partial t} = \int d\alpha^3 = \text{tr}(F_{A'(1)} \wedge F_{A'(1)} ) - \text{tr}(F_{A'(0)} \wedge F_{A'(0) } ) = d\text{tr}(A\wedge dA + \frac{2}{3} A \wedge A \wedge A)
+\end{gathered}
+\]
+Explicitly,
+\[
+\begin{gathered}
+  d(\text{tr}(F_{A'} \wedge F_{A'}) ) = -dt \wedge d\alpha^3 + d\alpha^4 \\ 
+  \xrightarrow{ \left( \frac{ \partial }{ \partial t} , \cdot, \cdot, \cdot \right) } \frac{ \partial ( \text{tr}(F_{A'} \wedge F_{A'} ) ) }{ \partial t} = - d\alpha^3 \xrightarrow{ \int_0^1 dt } \int_0^1 dt \frac{ \partial \text{tr}( F_{A'} \wedge F_{A'})}{ \partial t} = \int_0^1 dt ( -d\alpha^3)
+\end{gathered}
+\]
+and so for $\text{tr}(F\wedge F) \in \Omega^4(M)$, $\text{tr}(A \wedge dA + \frac{2}{3} A \wedge A \wedge A) \in \Omega^3(M)$
+\[
+\Longrightarrow \text{tr}(F_A \wedge F_A) \equiv \text{tr}(F\wedge F) = d\text{tr}(A \wedge dA + \frac{2}{3} A \wedge A \wedge A )
+\]
+For oriented smooth $M$; $\text{dim}M=4$
+\[
+\int_M \text{tr}(F\wedge F)= \int_M d\text{tr}(A \wedge dA + \frac{2}{3} A \wedge A \wedge A ) = \int_{\partial M} \text{tr}(A \wedge dA + \frac{2}{3} A \wedge A \wedge A)
+\]
+
+
+
+
+Let us follow Hickerson (2013) to understand the number of approaches and models for ultracold neutrons \cite{Hick2013}.  
+
+Consider the term
+\[
+\mathcal{L}_{\theta} = \frac{ \theta g^2}{ 8 \pi^2 } \text{tr}(F\wedge F) = \frac{ \theta g^2}{8 \pi^2} d\text{tr}( A \wedge dA + \frac{2}{3} A \wedge A \wedge A)
+\]
+
+knot $K$ is an embedding $f: S^1 \to S^3$
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+S^1 & S^3 & \partial M & M \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$f$} (m-1-2)
+  (m-1-2) edge node [auto] {$\cong $} (m-1-3)
+  ;
+  \path[right hook->]
+  (m-1-3) edge node [auto] {$i$} (m-1-4)
+  ;
+\end{tikzpicture}
 
 
 
@@ -3766,6 +4179,10 @@ Clifford Henry Taubes, \textbf{Differential Geometry: Bundles, Connections, Metr
 \bibitem{JJost2011}
 J\"{u}rgen Jost. \textbf{Riemannian Geometry and Geometric Analysis (Universitext)}. 6th ed. 2011 Edition.  Springer; 6th ed. 2011 edition (August 9, 2011).  ISBN-13: 978-3642212970
 
+\bibitem{GS1999}
+Victor W Guillemin, Shlomo Sternberg.  \textbf{Supersymmetry and Equivariant de Rham Theory}.  Springer; 1999 edition (June 11, 1999).  ISBN-13: 978-3540647973
+
+
 \bibitem{LTsui}
 Lokman Tsui.  ``Applications of Chern-Simons Theory in knot theory.'' \url{http://ms.mcmaster.ca/~boden/students/Tsui-MSc.pdf}
 
@@ -3774,6 +4191,14 @@ Werner Ballmann. ``Vector bundles and connections'', \url{http://people.mpim-bon
 
 \bibitem{JLee2009}
 Jeffrey M. Lee. \textbf{Manifolds and Differential Geometry}, \emph{Graduate Studies in Mathematics} Volume: 107, American Mathematical Society, 2009. ISBN-13: 978-0-8218-4815-9
+
+
+\bibitem{GNSSS2015}
+Sergei Gukov, Satoshi Nawata, Ingmar Saberi, Marko Stosic, Piotr Su\l kowski.  \emph{Sequencing BPS Spectra}.  2015.  \href{http://arxiv.org/abs/1512.07883v2}{arXiv:1512.07883v2} [hep-th]
+
+
+
+
 
 \bibitem{HWilfDZeilberger1992}
 H.S. Wilf and D. Zeilberger, \emph{An algorithmic proof theory for hypergeometric (ordinary and “q”) multisum/integral identities}, Invent. Math., \textbf{108} (1992), 575–633.  \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.443.4980&rep=rep1&type=pdf}
@@ -3801,6 +4226,14 @@ Dror Bar-Natan. ``On Khovanov’s categorification of the Jones polynomial.'' \t
   doi:10.1007/BF01217730
   %%CITATION = doi:10.1007/BF01217730;%%
   %2286 citations counted in INSPIRE as of 24 Feb 2016
+
+
+\bibitem{GW2011}
+Davide Gaiotto, Edward Witten. \emph{Knot Invariants from Four-Dimensional Gauge Theory}. 2011.   \href{http://arxiv.org/abs/1106.4789}{arXiv:1106.4789 [hep-th]}
+
+
+\bibitem{Hick2013}
+Kevin Peter Hickerson.  \emph{The physics of ultracold neutrons and Fierz interference in beta decay.}  Dissertation (Ph.D.), California Institute of Technology. 2013.  \url{http://resolver.caltech.edu/CaltechTHESIS:11022012-135115177}
 
 
 
