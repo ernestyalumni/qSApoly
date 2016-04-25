@@ -74,6 +74,9 @@
 \theoremstyle{remark}
 \newtheorem*{notation}{Notation}
 
+\newtheorem{remark}{Remark}
+
+
 %\numberwithin{equation}{section}
 
 %This defines a new command \questionhead which takes one argument and
@@ -172,8 +175,8 @@ proper classes examples:
 class $\text{Ob}$, $\text{Ob}$ collection, whose members are objects, $A,B,C \in \text{Ob}$, \\
 $\forall \, (A,B)$, $A,B \in \text{Ob}$, $\text{hom}(A,B)$ collection of morphisms/arrows \\
 $\forall \, f \in \text{hom}(A,B)$, $f:A\to B$ \\
-$\forall \, A \in \text{Ob}$, $\exists \, $ identity morphism/arrow, $1_A : A \to A$ s.t.
-
+$\forall \, A \in \text{Ob}$, $\exists \, $ identity morphism/arrow, $1_A : A \to A$, \\
+\emph{composition law} s.t. 
 \begin{enumerate}
   \item[(a)] \emph{composition} : $\forall \, A,B,C \in \text{Ob}$, $\begin{aligned} & \quad \\
     & f:A \to B \\
@@ -187,20 +190,108 @@ $\forall \, A \in \text{Ob}$, $\exists \, $ identity morphism/arrow, $1_A : A \t
 
 In my notation,
 
-category $\mathbf{A}$ is quadruple $\mathbf{A} = (\text{Obj}(\mathbf{A}), \text{Mor}\mathbf{A}, 1,\circ)$ s.t.
+category $\mathbf{A}$ is quadruple $\mathbf{A} = (\text{Obj}(\mathbf{A}), \text{Mor}\mathbf{A}, 1,\circ)$ 
+\[
+\mathbf{A} = (\text{Obj}(\mathbf{A}), \text{Mor}\mathbf{A}, 1,\circ)
+\]
+s.t.
 \begin{enumerate}
   \item $A \in \text{Obj}(\mathbf{A})$ is called an \emph{object}
-  \item $\text{Mor}\mathbf{A} = \bigcup_{ \text{Hom}(A,B) \in \mathbf{A}} \text{Hom}(A,B)$, $f: A \to B \in \text{Hom}(A,B)$ is a \emph{morphism}
+  \item $\text{Mor}\mathbf{A} = \bigcup_{ \text{Hom}(A,B) \in \mathbf{A}} \text{Hom}(A,B)$, $f: A \to B \in \text{Hom}(A,B)$ is a \emph{morphism}, i.e.
+
+$A,B \in \text{Obj}\mathbf{A}$, $f\in \text{Hom}_{\mathbf{A}}(A,B)$
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A & B  \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  ;
+\end{tikzpicture}
+\]
+
   \item $\forall \, A \in \text{Obj}(\mathbf{A})$, $\exists \, 1_A : A \to A$
-  \item $\forall \, \begin{aligned} & \quad \\
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A & A  \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$1_A$} (m-1-2)
+  ;
+\end{tikzpicture} \text{ or } \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A   \\
+};
+  \path[->]
+  (m-1-1) edge [loop left] node [above] {$f$} (m-1-1)
+  ;
+\end{tikzpicture}
+\]
+  \item 
+$\forall \, A,B,C \in \text{Obj}\mathbf{A}$, 
+
+$\forall \, \begin{aligned} & \quad \\
     & f: A \to B \in \text{Hom}(A,B) \\
-    & g:B\to C \in \text{Hom}(B,C) \end{aligned}$, \qquad \, $g\circ f : A \to C \in \text{Hom}(A,C)$ s.t. 
+    & g:B\to C \in \text{Hom}(B,C) \end{aligned}$, i.e. $f,g \in \text{Mor}\mathbf{A}$, \qquad \, then $g\circ f : A \to C \in \text{Hom}(A,C)$, $g\circ f \in \text{Mor}\mathbf{A}$ i.e. 
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A & B & C  \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  (m-1-2) edge node [above] {$g$} (m-1-3)
+  (m-1-1) edge [bend right=30] node [below] {$g\circ f$} (m-1-3) 
+  ;
+\end{tikzpicture}
+\]
+s.t. 
 \begin{enumerate}
   \item \emph{associativity} $\forall \, \begin{aligned} & \quad \\
     & f: A \to B \\
     & g: B \to C \\
-    & h: C \to D \end{aligned}$, $h\circ (g\circ f) = (h\circ g) \circ f $ 
-\item $\forall \, f:A \to B \in \text{Hom}(A,B)$, $1_B \circ f = f $ and $f\circ 1_A = f$ 
+    & h: C \to D \end{aligned}$, $h\circ (g\circ f) = (h\circ g) \circ f $ i.e.
+
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A & B & C  & D \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  (m-1-2) edge node [above] {$g$} (m-1-3)
+  (m-1-3) edge node [above] {$h$} (m-1-4)
+  (m-1-1) edge [bend right=30] node [below] {$g\circ f$} (m-1-3) 
+          edge [bend right=45] node [below] {$h \circ (g\circ f)$} (m-1-4)
+  (m-1-2) edge [bend left=30] node [above] {$h\circ g$} (m-1-4) 
+  (m-1-1)        edge [bend left=45] node [above] {$(h \circ g)\circ f$} (m-1-4)
+  ;
+\end{tikzpicture}
+\]
+
+\item $\forall \, f:A \to B \in \text{Hom}(A,B)$, $1_B \circ f = f $ and $f\circ 1_A = f$ i.e.
+
+$\forall \, f \in \text{Hom}_{\mathbf{A}}(A,B)$,
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A & B  \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$f$} (m-1-2)
+  edge [loop left] node [left] {$1_A$} (m-1-1)
+  (m-1-2) edge [loop right] node [right] {$1_B$} (m-1-2)
+  ;
+\end{tikzpicture}
+\]
 \item $\text{Hom}(A,B) \in \text{Mor}\mathbf{A}$ pairwise disjoint (i.e. $\text{Hom}(A,B) \bigcap \text{Hom}(C,D) \neq \emptyset$ if $C\neq A$ or $D\neq B$)
 \end{enumerate}
 \end{enumerate}
@@ -362,7 +453,7 @@ B & C \\
 };
   \path[->]
   (m-1-1) edge node [above] {$f$} (m-1-2);
-\end{tikzpicture} $\Longrightarrow $
+\end{tikzpicture} $\xrightarrow{F} $
 \begin{tikzpicture}
   \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
   {
@@ -383,7 +474,7 @@ A & B & C \\
   (m-1-2) edge node [above] {$g$} (m-1-3)
 ;
 \end{tikzpicture} 
-$\Longrightarrow$ \begin{tikzpicture}
+$\xrightarrow{F}$ \begin{tikzpicture}
   \matrix (m) [matrix of math nodes, row sep=1.8em, column sep=1.8em, minimum width=1.2em]
   {
 F(A) & F(B) & F(C) \\
@@ -482,10 +573,63 @@ g & f\circ g \\
   (m-2-1) edge node [above] {$$} (m-2-2)
 ;
 \end{tikzpicture} 
-with $g\in \text{hom}(A,X)$
+with $g\in \text{hom}(A,X)$ i.e. (20160424 EY)
+
+$\forall \, $ category $\mathbf{A}$, $\forall \, A \in \text{Obj}\mathbf{A}$, \\
+$\exists \, $ \textbf{covariant hom-functor }
+\[
+\begin{gathered}
+  \text{hom}(A,-):\mathbf{A} \to \mathbf{\text{Set}} \text{ defined by , }  \, \forall \, f \in \text{Hom}(B,C) \subset \text{Mor}\mathbf{A} \\
+  \text{hom}(A,-)(B\xrightarrow{f} C) = \text{Hom}(A,B) \xrightarrow{ \text{hom}(A,f)} \text{Hom}(A,C) \\ 
+  \text{hom}(A,f)(g) = f\circ g
+\end{gathered}
+\]
+
+
 
 
 $M$-set is a covariant hom-functor on a monoid $\mathbf{C}(M,\cdot,e) \equiv \mathbf{C}(M)$, $M$ a monoid, i.e. the category that is the domain that the covariant hom-functor maps from is a monoid (category).  
+
+\begin{definition}[contravariant hom-functor]
+$\forall \, $ category $\mathbf{A}$, $\forall \, A \in \text{Obj}\mathbf{A}$, \\
+$\exists \, $ \textbf{contravariant hom-functor}, 
+\[
+\begin{gathered}
+  \text{hom}(-,A): \mathbf{A}^{\text{op}} \to \mathbf{\text{Set}} \text{ defined by,  } \, \forall \, f \in \text{Hom}_{\mathbf{A}^{\text{op}}}(B,C) \subset \text{Mor}\mathbf{A}^{\text{op}} \text{ i.e. } B \xrightarrow{f} C \\
+  \text{hom}(-,A)(B\xrightarrow{f}C) = \text{Hom}_{\mathbf{A}}(B,A) \xrightarrow{ \text{hom}(f,A)} \text{Hom}_{\mathbf{A}}(C,A) \\ 
+  \text{hom}(f,A)(g) = g\circ f \equiv g\circ_{\mathbf{A}} f
+\end{gathered}
+\]
+i.e.
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  \\ 
+B  &  C   \\
+};
+  \path[->]
+  (m-2-2) edge node [below] {$f$} (m-2-1)
+          edge node [right] {$g\circ f$} (m-1-1)
+  (m-2-1) edge node [left] {$g$} (m-1-1)
+;
+\end{tikzpicture} \quad \quad \quad \, 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ A &  \\ 
+B  &  C   \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$g^{\text{op}}$} (m-2-1)
+          edge node [right] {$f\circ^{\text{op}} g$} (m-2-2)
+  (m-2-1) edge node [below] {$f^{\text{op}}$} (m-2-2)
+;
+\end{tikzpicture} 
+\]
+\end{definition}
+
+
 
 \begin{definition}[forgetful functor]
 $\forall \, $ constructs (i.e. categories)
@@ -570,14 +714,18 @@ W^* & V^* \\
 \begin{enumerate}
   \item $F$ \textbf{embedding } if $F$ is injective on morphisms ($\forall \, \begin{aligned} & \quad \\
     & f \in \text{Mor}\mathbf{A} \\
-    & g \in \text{Mor}\mathbf{B} \end{aligned}$, if $F(f) = F(g)$, then $f=g$) 
+    & g \in \text{Mor}\mathbf{A} \end{aligned}$, if $F(f) = F(g)$, then $f=g$) 
 \item $F$ \textbf{faithful } if $\forall \,$ hom-set restrictions, 
 \[
 F: \text{Hom}_{\mathbf{A}}(A,A') \to \text{Hom}_{\mathbf{B}}(FA,FA')
 \]
-are injective
+are injective, i.e. 
+
+for hom-set restriction $F: \text{Hom}_{\mathbf{A}}(A,A') \to \text{Hom}_{\mathbf{B}}(FA,FA')$, \\
+if $F(f) = F(f')$, then $f=f'$.  
+
 \item $F$ \textbf{full} if all hom-set restrictions are surjective 
-\item $F$ \textbf{amnestic} if $Ff=1_{\mathbf{B}}$, then $\mathbf{A}$-ismorphism $f=1_{\mathbf{A}}$
+\item $F$ \textbf{amnestic} if $Ff=1_{\mathbf{B}}$, then $\mathbf{A}$-isomorphism $f=1_{\mathbf{A}}$
 \end{enumerate}
 So
 \begin{enumerate}
@@ -588,6 +736,17 @@ So
 \end{definition}
 
 
+cf. Def. 3.33 of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004} (note that, again, I base these notes heavily on Ad\'{a}mek, Herrlich, and Strecker (2004) and take definitions, propositions, theorems, etc. liberally from there): 
+\begin{definition}[equivalence]
+  functor $F: \mathbf{A} \to \mathbf{B}$ is an \textbf{equivalence} if $F$ full, faithful, isomorphism-dense (meaning $\forall \, B \in \text{Obj}\mathbf{B}$, $\exists \, $ some $A \in \text{Obj}\mathbf{A}$, s.t. $F(A)$ isomorphic to $B$, i.e. 
+\begin{enumerate}
+  \item faithful: $\forall \, F:\text{Hom}_{\mathbf{A}}(A,A') \to \text{Hom}_{\mathbf{B}}(FA,FA')$, if $F(f) = F(f')$, $f=f'$ 
+  \item full: $\forall \, g \in \text{Hom}_{\mathbf{B}}(FA,FA')$, $FA \xrightarrow{g} FA'$, $\exists \, f \in \text{Hom}_{\mathbf{A}}(A,A')$, $A\xrightarrow{f} A'$ s.t. $g=Ff$
+  \item isomorphism-dense: $\forall \, B \in \text{Obj}\mathbf{B}$, $\exists \, A \in \text{Obj}\mathbf{A}$ s.t. $F(A) \xrightarrow{ \cong}B$
+\end{enumerate}
+
+$\mathbf{A}$, $\mathbf{B}$ are \textbf{equivalent} if $\exists \, $ equivalence $F$, $F:\mathbf{A}\to \mathbf{B}$.  
+\end{definition}
 
 
 \subsection{Natural Transformation}
@@ -755,6 +914,166 @@ F(C_1) & F(C_2) \\
 \end{tikzpicture} 
 
 
+\section{Subcategories}
+
+\begin{definition}
+  category $\mathbf{A}$ \textbf{subcategory} of category $\mathbf{B}$, ($\equiv $ \quad \, $A\subset B$) if
+\begin{enumerate}
+  \item $\text{Obj}\mathbf{A} \subseteq \text{Obj}\mathbf{B}$ 
+  \item $\forall \, A,A' \in \text{Obj}\mathbf{A}$, $\text{Hom}_{\mathbf{A}}(A,A') \subseteq \text{Hom}_{\mathbf{B}}(A,A')$ 
+  \item $\forall \, A \in \text{Obj}\mathbf{A}$, $1_{A\in \text{Obj}\mathbf{A}} = 1_{A \in \text{Obj}\mathbf{B}}$
+  \item $\forall \, A,B, C \in \text{Obj}\mathbf{A}$, $\begin{aligned} & \quad \\
+    & \forall \, f \in \text{Hom}_{\mathbf{A}}(A,B) \\ 
+& \forall \, g \in \text{Hom}_{\mathbf{A}}(B,C)  \end{aligned}$, \, $g\circ f: A \to C$, then $g\circ f = g'\circ f'$, $\begin{aligned} & \quad \\
+    & \forall \, f' \in \text{Hom}_{\mathbf{B}}(A,B) \\ 
+& \forall \, g' \in \text{Hom}_{\mathbf{B}}(B,C)  \end{aligned}$, i.e. 
+
+composition law in $\mathbf{A}$ is restriction of composition law in $\mathbf{B}$ to morphisms of $\mathbf{A}$.  
+\end{enumerate}
+
+\textbf{full subcategory} of $\mathbf{B}$, $\mathbf{A}$, if, in addition, $\forall \, A,A' \in \text{Obj}\mathbf{A}$, $\text{Hom}_{\mathbf{A}}(A,A') = \text{Hom}_{\mathbf{B}}(A,A')$
+\end{definition}
+
+\begin{remark}
+$\forall \, $ subcategory $\mathbf{A}$ of category $\mathbf{B}$, $\exists \, $ naturally associated inclusion functor $E: \mathbf{A} \hookrightarrow \mathbf{B}$.  \\
+Moreover, such inclusion $E$ is s.t.
+\begin{enumerate}
+  \item $E$ an embedding (i.e. $E$ injective on morphisms, i.e. if $E(f) = E(g)$, then $f=g$, $\forall \, f,g \in \text{Hom}_{\mathbf{A}}(A,A')$, \, $\forall \, A,A' \in \text{Obj}\mathbf{A}$)
+  \item $E$ full functor iff $\mathbf{A}$ full subcategory of $\mathbf{B}$, i.e. full if all hom-set restrictions surjective, i.e. if $g: EA \to EA'$, then $g=E(f)$ \, for some $f:A\to A' \in \text{Hom}_{\mathbf{A}}(A,A')$, i.e. 
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.5em, column sep=3em, minimum width=1em]
+  {
+A   &   EA  \\ 
+\quad     &   \quad     \\
+A'  &   EA'  \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$f$} (m-3-1)
+  (m-1-2) edge node [right] {$g=E(f)$} (m-3-2)
+;
+\path[right hook->]
+  (m-1-1) edge  node [auto] {$E$} (m-1-2)
+  (m-3-1) edge  node [auto] {$E$} (m-3-2)
+  (m-2-1) edge  node [auto] {$E$} (m-2-2)
+;
+\end{tikzpicture} 
+\]
+\end{enumerate}
+\end{remark}
+
+cf. Prop 4.5 of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}
+\begin{proposition}
+\begin{enumerate}
+  \item functor $F:\mathbf{A} \to \mathbf{B}$ (full) embedding iff $\exists $ (full) subcategory $\mathbf{C} \subset \mathbf{B}$ with inclusion functor $E: \mathbf{C} \to \mathbf{B}$ and isomorphism $G: \mathbf{A} \to \mathbf{C}$ with $F = E\circ G$, i.e.
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=1.5em, column sep=3em, minimum width=1em]
+  {
+\mathbf{A}   &   \mathbf{B}  \\ 
+\mathbf{C}  &     \\
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$F$} (m-1-2)
+   edge node [left] {$\mathbf{C}$} (m-2-1)
+;
+\path[right hook->]
+  (m-2-1) edge  node [below] {$E$} (m-1-2)
+;
+\end{tikzpicture} 
+\]
+  \item 
+ functor $F:\mathbf{A} \to \mathbf{B}$ faithful iff $\exists \, $ embeddings $\begin{aligned} & \quad \\
+  & E_1 : \mathbf{D} \to \mathbf{B} \\
+  & E_2 : \mathbf{A} \to \mathbf{C} \end{aligned}$, equivalence $G: \mathbf{C} \to \mathbf{D}$ s.t. 
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=5em, minimum width=2em]
+  {
+\mathbf{A} & \mathbf{B} \\
+\mathbf{C} & \mathbf{D} \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$F$} (m-1-2)
+  edge node [auto] {$E_2$} (m-2-1)
+  (m-2-2) edge node [auto] {$E_1$} (m-1-2)
+  (m-2-1) edge node [auto] {$G$} (m-2-2);
+\end{tikzpicture}
+i.e. $G(C\xrightarrow{g}C') = FC \xrightarrow{g} FC'$
+
+
+
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+\begin{enumerate}
+\item
+\item Let $E_1 : \mathbf{D} \to \mathbf{B}$ be inclusion $E_1: \mathbf{D} \hookleftarrow \mathbf{B}$, and let $\mathbf{D} $ be full subcategory of $\mathbf{B}$.  
+
+Let $\text{Obj}\mathbf{D} = F(\text{Obj}\mathbf{A}) = \lbrace B | B = F(A) \quad \, \forall \, A \in \text{Obj}\mathbf{A} \rbrace = \lbrace FA | \forall \, A \in \text{Obj}\mathbf{A} \rbrace = $ all images (under $F$) of $\text{Obj}\mathbf{A}$.  
+
+Let category $\mathbf{C}$ s.t. $\text{Obj}\mathbf{C} = \text{Obj}\mathbf{A}$, and \\
+\phantom{ Let category $\mathbf{C}$ } $\text{Hom}_{\mathbf{C}}(A,A') = \text{Hom}_{\mathbf{B}}(FA,FA')$
+\end{enumerate}
+\end{proof}
+
+
+\begin{definition}
+  full subcategory $\mathbf{A}$ of category $\mathbf{B}$ is 
+\begin{enumerate}
+  \item \textbf{isomorphism-closed} if $\forall \, B \in \text{Obj}\mathbf{B}$ s.t. $B$ isomorphic to some $A \in \text{Obj}\mathbf{A}$, $B\in \text{Obj}\mathbf{A}$ 
+  \item \textbf{isomorphism-dense} if $\forall \, B \in \text{Obj}\mathbf{B}$, $B$ isomorphic to some $A\in \text{Obj}\mathbf{A}$
+\end{enumerate}
+\end{definition}
+
+\subsubsection{Example} cf. Example 4.11 of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}:
+
+full subcategory of $\mathbf{\text{Set}}$, but consisting of (only) single object $\mathbb{N}$ \\
+\phantom{ \quad \, } is neither isomorphism-closed nor isomorphism dense in $\mathbf{\text{Set}}$.  \\
+\phantom{ \quad \quad \, } This category is equivalent to isomorphism closed full subcategory of $\mathbf{\text{Set}}$ consisting of all countable infinite sets.  
+
+``There are instances when one wishes to consider full subcategories in which different objects can't be isomorphic.'' -Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}
+
+\begin{definition}
+  \textbf{skeleton} of category is full, isomorphism-dense subcategory in which no 2 distinct objects are isomorphic.  
+\end{definition}
+
+\subsubsection{Examples} cf. Example 4.13 of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}.
+\begin{enumerate}
+\item full subcategory of all cardinal numbers is skeleton for $\mathbf{\text{Set}}$ 
+\item full subcategory determined by the powers $\mathbb{R}^m$, where $m\in $ all cardinal numbers, is skeleton for $\mathbf{\text{Vec}}$
+\end{enumerate}
+
+\begin{proposition}
+  \begin{enumerate}
+\item $\forall \, $ category has a skeleton
+\item $\forall \, $ 2 skeletons of a category, they're isomorphic (the 2 skeletons)
+\item $\forall \, $ skeleton of category $\mathbf{C}$ is equivalent to $\mathbf{C}$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+  \item from Axiom of Choice [cf. 2.3(4) of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}], applied to equivalence relation ``is isomorphic to'' on class of objects of the category
+  \item Let $\mathbf{A}$, $\mathbf{B}$ be skeletons of $\mathbf{C}$
+Then $\forall \, A \in \text{Obj}\mathbf{A}$ is isomorphic in $\mathbf{C}$ to unique $B\in \text{Obj}\mathbf{B}$
+\[
+A \xrightarrow{ \cong} B = F(A)
+\]
+Choose $\forall \, A \in \text{Obj}\mathbf{A}$, $\mathbf{C}$-isomorphism $f_A: A \to F(A)$.  \\
+Then functor $F:\mathbf{A} \to \mathbf{B}$,
+\[
+F(A\xrightarrow{h} A') = FA \xrightarrow{ f_A^{-1} }A \xrightarrow{h} A' \xrightarrow{f_{A'}} FA'
+\]
+is an isomorphism.  
+  \item The inclusion of skeleton of $\mathbf{C}$ into $\mathbf{C}$ is an equivalence.  
+\end{enumerate}
+\end{proof}
+
+\begin{corollary}
+2 categories equivalent iff they have isomorphic skeletons.  
+\end{corollary}
+
 \section{Limits}
 
 %I will follow Chapter 5 of Leinster (2014) \cite{Lein2014} now.
@@ -919,7 +1238,7 @@ C\xrightarrow{ \langle f, g \rangle } A\times B \\
   \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
   {
 & A  \\ 
-A_j  & \prod_{i\in I} A_i   \\
+A_j  & \coprod_{i\in I} A_i   \\
 };
   \path[->]
   (m-2-1) edge node [above] {$f_j$} (m-1-2)
@@ -1748,6 +2067,11 @@ Now note that $F(\rho), F(\sigma), F(\tau) \in \text{Ob}_{\mathbf{\text{Set}}}$ 
 
 
 
+\section{Decorators}
+
+Lutz (2009) \cite{Lutz2009}
+
+
 \end{multicols*}
 
 
@@ -1769,6 +2093,14 @@ Daniele Turi. \textbf{Category Theory Lecture Notes}.  September 1996 – Decemb
 
 \bibitem{AHS2004}
 Ji\v{r}\'{i} Ad\'{a}mek, Horst Herrlich, George E. Strecker.   \textbf{Abstract and Concrete Categories The Joy of Cats}. 2004.   
+
+\bibitem{Lutz2009}
+Mark Lutz.  \textbf{Learning Python}, 4th Edition. O'Reilly Media. 2009.  
+
+EY: There's a 5th edition, 2013, but I don't have a copy of the 5th edition; I only have the 4th.  
+
+
+
 
 \end{thebibliography}
 
