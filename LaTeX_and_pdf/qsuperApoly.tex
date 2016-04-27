@@ -12,7 +12,13 @@
 \pdfoutput=1
 \usepackage{mathtools,amssymb,lipsum,caption}
 
+
+%\usepackage{feynmp}
+
 \usepackage{graphicx}
+
+%\DeclareGraphicsRule{*}{mps}{*}{} % cf. http://www.desy.de/~alvoigt/feynmf.xhtml and http://tex.stackexchange.com/questions/51807/feynmf-with-pdflatex
+
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
@@ -22,6 +28,8 @@
 \usetikzlibrary{matrix,arrows}
 
 \usepackage{multicol}
+
+
 
 \hypersetup{colorlinks=true,citecolor=[rgb]{0,0.4,0}}
 
@@ -4167,17 +4175,53 @@ S^1 & S^3 & \partial M & M \\
 \end{tikzpicture}
 
 
+%\[
+%\begin{fmffile}{simple}
+%    \begin{fmfgraph}(150,60)
+       % Note that the size is given in normal parentheses
+       % instead of curly brackets.
+       % Define external vertices from bottom to top
+%        \fmfleft{i1,i2}
+%        \fmfright{o1,o2}
+%        \fmf{fermion}{i1,v1,o1}
+%        \fmf{fermion}{i2,v2,o2}
+%        \fmf{photon}{v1,v2}
+%   \end{fmfgraph}
+%\end{fmffile}
+%\]
+
+% \begin{fmffile}{simple}
+%  \begin{fmfgraph}(150,60)
+    
+    % Define external vertices from bottom to top
+
+
+%    \fmfleft{i1}
+%    \fmfright{o1,o2}
+
+%    \fmf{fermion}{i1,v1}
+%    \fmf{gluon}{v1,v2}
+%    \fmf{gluon}{v2,v3}
+%    \fmf{gluon}{v3,v1}
+%    \fmf{fermion}{v2,o1}
+%    \fmf{fermion}{v3,o2}
+
+%    \fmfdot{v1}
+%    \fmfdot{v2}
+%    \fmfdot{v3}
+
+%  \end{fmfgraph}
+%\end{fmffile}
+
+
+
+\section{End Game; Desires}
+
+\subsection{Spin Structures, Fermions (fermionic field) }
 
 
 
 
-%\begin{figure}[b]
-%  \centering
-%  \includegraphics[width=\columnwidth]{../eps/Nielsen2011RBB_qualitative_report_topicsentiment}
-%  \caption{Web service screenshot with text from Wikipedia
-%    article ``Lundbeck''.}
-%  \label{fig:topicsentiment}
-%\end{figure}
 
 
 
