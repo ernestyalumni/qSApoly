@@ -395,6 +395,99 @@ U & V & W \\
 \end{itemize}
 
 
+\subsection{Initial and Terminal Objects}
+cf. Chapter 2 Objects and Morphisms in Abstract Categories, Sec. 7 Objects and morphisms of Ad\'{a}mek, Herrlich, and Strecker (2004).  
+
+\begin{definition}[initial object]
+\textbf{initial object} $A$ is object $A$ if $\forall \, $ object $B$, $\exists \, $ exactly 1 morphism from $A$ to $B$.
+\end{definition}
+
+\subsubsection{Examples (of initial object)}
+\begin{enumerate}
+\item $\emptyset \to X$; $\emptyset$ unique initial object for $\mathbf{\text{Set}}$, ($\mathbf{\text{Pos}}, \mathbf{\text{Top}}$)
+\item $\forall \, G \in \text{ObjGrp}$ s.t. $|G|=1$, i.e. $G=\lbrace 1 \rbrace$, $\lbrace 1 \rbrace \to G \in \text{Obj}\text{Grp}$ is initial object for $\mathbf{\text{Grp}}$; likewise for $\mathbf{\text{Vec}}$.  
+\end{enumerate}
+
+cf. Prop. 7.3 of Ad\'{a}mek, Herrlich, and Strecker (2004):
+\begin{proposition}
+  initial objects essentially unique, i.e. 
+\begin{enumerate}
+  \item if $A,B$ initial objects, then $A,B$ isomorphic 
+  \item if $A$ initial object, then $\forall \, $ object $B$ s.t. $B\cong A$ (i.e. isomorphic), then $B$ also initial object
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item By def. of initial object,
+\[
+\begin{aligned}
+& \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A &  B  \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$k$} (m-1-2)
+;
+\end{tikzpicture} \\
+& \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+B &  A  \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$h$} (m-1-2)
+;
+\end{tikzpicture} 
+\end{aligned}
+\]
+$h\circ k$ unique (since $h$ unique, and $k$ unique), so $h\circ k = 1_A$, and likewise $k\circ h = 1_B$ $\Longrightarrow  k$ isomorphism.
+\item Let $k:A'\to A$ isomorphism.  $\forall \, $ object $B$, $\exists \, ! \, f:A\to B$ (def.)
+\[
+ \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3em, column sep=4em, minimum width=2em]
+  {
+A' &    \\
+A & B \\
+};
+  \path[->]
+  (m-1-1) edge node [above] {$k$} (m-2-1)
+  edge node [above] {$f\circ k$} (m-2-2)
+;
+  \path[dashed] 
+  (m-2-1) edge node [above] {$f$} (m-2-2)
+;
+\end{tikzpicture} 
+\]
+$f\circ k : A' \to B$ morphism.  If $g:A'\to B$, $g\circ k' = f$ ($f$ unique), so $f\circ k$ unique, and $g=f \circ k$, $A'$ initial.  
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[terminal object]
+  \textbf{terminal object} $A$ is object $A$ if $\forall \, $ object $B$, $\exists \, $ exactly 1 morphism from $B$ to $A$.
+\end{definition}
+Terminal objects dual to initial objects, i.e. $A$ terminal in $\mathbf{A}$ iff $A$ initial in $\mathbf{A}^{\text{op}}$.  
+
+Every singleton set is a terminal object for set.  
+
+\subsubsection{Examples (of terminal objects)}
+
+e.g. singleton set $\lbrace 0 \rbrace$ is terminal object for $\mathbf{\text{Vec}}, \mathbf{\text{Pos}}, \mathbf{\text{Grp}}, \mathbf{\text{Top}}$.  
+
+\begin{definition}
+  zero object if object both initial and terminal object.  zero object self dual.  
+\end{definition}
+
+\subsubsection{Examples (of zero objects)}
+\begin{enumerate}
+\item 
+\item $\mathbf{\text{Vec}}, \mathbf{\text{Ban}}, \mathbf{\text{Ban}}_b, \mathbf{\text{TopVec}}, \mathbf{\text{Mon}}$ have zero objects, but $\mathbf{\text{Sgr}}$ doesn't.  
+\item $\mathbf{\text{Ab}}$ and $\mathbf{\text{Grp}}$ have $0$ objects, $\mathbf{\text{Ring}}$.  
+\end{enumerate}
+
+
+
 \section{Functors}
 
 \begin{definition}[Functors]
@@ -1339,6 +1432,66 @@ D(I)  &  D(J)   \\
   (m-2-1) edge node [below] {$Du$} (m-2-2)
 ;
 \end{tikzpicture} 
+
+20160502 EY: I still wasn't clear about the meaning, and so from wikipedia, ``Limit (category theory)'', 
+
+\textbf{diagram} of type $J$ in $\mathbf{C}$ is functor $F$
+\[
+F:J\to C \text{ or } J \xrightarrow{ f} C
+\]
+$J,C \in \mathbf{\text{Cat}}$.  
+
+One's mostly interested in small or even finite.  
+
+\textbf{Cone} to $F$ is $N \in \text{Obj}\mathbf{C}$ and family $\psi_X: N \to F(X)$, $ \, \psi_X \in \text{Mor}\mathbf{C}$, $X \in \text{Obj}J$ s.t. \\
+$\forall \, f:X \to Y, \, f\in \text{Mor}J$
+\[
+F(f) \circ \psi_X = \psi_Y
+\]
+i.e.
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+ N &  \\ 
+F(X)  &  F(Y)   \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$\psi_X$} (m-2-1)
+          edge node [right] {$\psi_Y$} (m-2-2)
+  (m-2-1) edge node [below] {$F(f)$} (m-2-2)
+;
+\end{tikzpicture} 
+\]
+Comparing with the previous definition for \emph{cone}, then in this notation, $N \equiv $ vertex of cone, and 
+\[
+(N\xrightarrow{ \psi_X} F(X) )_{X \in \text{Obj}J }
+\]
+s.t. $\forall \, X \xrightarrow{f} Y$, $f\in \text{Hom}_J(X;Y)$.  
+
+In other words, 
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=2em, column sep=4em, minimum width=1.3em]
+  {
+  & J & C    & \\
+  &   & N    & \\
+X & Y & F(X) & F(Y) \\
+};
+  \path[->]
+  (m-1-2) edge node [above] {$F$} (m-1-3)
+  (m-2-3) edge node [auto] {$\psi_X$} (m-3-3) 
+  edge node [right] {$\psi_Y$} (m-3-4)
+  (m-3-3) edge node [below] {$F(f)$} (m-3-4)
+  (m-3-1) edge[bend right=35] node [below] {$F$} (m-3-3)
+  edge node [above] {$f$} (m-3-2)
+  (m-3-2) edge[bend right=35] node [below] {$F$} (m-3-4)
+  
+;
+\end{tikzpicture} 
+\]
+
+
 \end{definition}
 
 \begin{definition}
@@ -1359,6 +1512,8 @@ i.e. this commutes:
 ;
 \end{tikzpicture} 
 \end{definition}
+
+EY : 20160502 An \emph{important} example of a limit is the \emph{product} - the product $C_1 \times C_2$ or $\prod_i C_i$ is the vertex of this cone and $\pi_1, \pi_2$ or $( \pi_i )_i$ are the family of morphisms.  
 
 \begin{definition}
 Let diagram (functor) $D: \mathbf{I} \to \mathbf{A}$.  \\
@@ -1591,7 +1746,7 @@ $\forall \, B\in \text{Obj}\mathbf{B}$, $\exists \, (f,A)$ with domain $B$ s.t. 
 ;
 \end{tikzpicture} 
 
-
+Also called \emph{right} adjoint.
 \end{definition}
 
 \begin{definition}[co-adjoint]
@@ -1611,6 +1766,7 @@ $\forall \, B\in \text{Obj}\mathbf{B}$, $\exists \, (A,f)$ with codomain $B$ s.t
 ;
 \end{tikzpicture} 
 
+Also called \emph{left} adjoint.
 \end{definition}
 
 In section 19 Adjoint situations of Ad\'{a}mek, Herrlich, and Strecker (2004) \cite{AHS2004}, their Theorem 19.1 is the same as Exercise 3.1 and Theorem 3.1 on pp. 11 of Turi \cite{Turi2001}, which Turi says is ``Important!''
@@ -1956,6 +2112,12 @@ commutes.
 
 
 \end{proof}
+
+EY: 20160502 Wikipedia ``Adjoint functors'' says ``any limit functor is right adjoint to a corresponding diagonal functor.''  I found this pdf, \url{https://www.andrew.cmu.edu/course/80-413-713/notes/chap09.pdf}, to be useful.
+
+
+
+
 
 
 \section{Monad}
