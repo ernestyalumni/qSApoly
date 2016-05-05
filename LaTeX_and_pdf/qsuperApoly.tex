@@ -29,7 +29,7 @@
 
 \usepackage{multicol}
 
-
+\usepackage{cancel} % for Feynman slash notation
 
 \hypersetup{colorlinks=true,citecolor=[rgb]{0,0.4,0}}
 
@@ -105,10 +105,11 @@
 %\lstlistoflistings
 
 \maketitle
+\begin{multicols*}{2}
 
 \tableofcontents
 
-\begin{multicols*}{2}
+
 
 \begin{abstract}
 Everything about quantum super-A-polynomials.  
@@ -1528,6 +1529,98 @@ $\forall \, g \in G$, $\xi \in E^*$, $x\in E$, set $\langle \pi^*(g)(\xi), x \ra
 since this is true, $\forall \, x \in E$, $\forall \, \xi \in E^*$, $\pi^*(gh) = \pi^*(g)\pi^*(h)$.  
 
 dual $\pi^*$ of $\pi$ is a representation.  
+
+
+\subsection{Adjoint Representation}
+
+I will first follow Sec. 7.3 The Adjoint Representation of Ch. 4 Lie Groups and Lie Algebras of Kosmann-Schwarzbach (201) \cite{YKosmann-Schwarzbach2010}).  
+
+The \emph{conjugation action} $\mathcal{C}_g:G\to G$ is defined as 
+\[
+\begin{aligned}
+  & \mathcal{C}_g:G\to G \\
+  &  \mathcal{C}_g: h \mapsto ghg^{-1}
+\end{aligned}
+\]
+So 
+\[
+\begin{aligned}
+  & \mathcal{C}: G \to \text{Aut}(G) \\ 
+  & \mathcal{C}g = \mathcal{C}_g
+\end{aligned}
+\]
+Now define the \emph{adjoint action} of $g$ as the differential or push forward of $\mathcal{C}_g$:
+\[
+\text{Ad}_g := D_1 \mathcal{C}_g \equiv (\mathcal{C}_g)_{*1} \equiv \left. (\mathcal{C}_g )_* \right|_{g=1}  \qquad \, (\text{adjoint action of $g$})
+\]
+Now $\text{Ad}_g: \mathfrak{g} \to \mathfrak{g}$, so $\begin{aligned} & \quad \\
+   & \text{Ad}:G \to \text{End}(\mathfrak{g}) \\
+  & \text{Ad}(g) \equiv \text{Ad}_g \end{aligned}$
+
+Note $\mathcal{C}_{gg'} = \mathcal{C}_g \mathcal{C}_{g'} \equiv \mathcal{C}(gg') = \mathcal{C}(g)\circ \mathcal{C}(g')$ and so 
+\[
+\xrightarrow{ D_1} \text{Ad}_{gg'} = \text{Ad}_g \circ \text{Ad}_{g'}
+\]
+
+Kosmann-Schwarzbach (201) \cite{YKosmann-Schwarzbach2010}) claims, because $\text{Ad}_g = 1_{\mathfrak{g}}$ when $g=1$, 
+
+$\begin{aligned} & \quad \\
+  & \text{Ad}:G \to GL(\mathfrak{g}) \\
+  & \text{Ad}:g\mapsto \text{Ad}_g\end{aligned}$ is a representation of $G$ on $\mathfrak{g}$.   (EY : 20160505 ???)
+
+\begin{definition}
+  representation $\text{Ad}$ of $G$ on $V=\mathfrak{g}$ is called adjoint representation of Lie group $G$.  
+\end{definition}
+
+Denote adjoint representation of Lie algebra $\mathfrak{g}$, $\text{ad}$.  
+
+By definition, $\text{Ad}_{\text{exp}(tX)} = \exp{ (t\text{ad}_X)}$
+
+cf. Prop. 7.8 of Kosmann-Schwarzbach (201) \cite{YKosmann-Schwarzbach2010})
+\begin{proposition}
+  \begin{enumerate}
+\item Let $A$ invertible matrix, $A \in $ Lie group $G$.  \\
+Let $X$ matrix s.t. $X \in \mathfrak{g}$.  Then
+\[
+\text{Ad}_A(X) = AXA^{-1}
+\]
+\item Let $X,Y \in \mathfrak{g}$.  Then 
+\[
+\text{ad}_X(Y) = [X,Y]
+\]
+\item Let $X,Y \in \mathfrak{g}$.  Then 
+\[
+\text{ad}_{[X,Y]} = [ \text{ad}_X, \text{ad}_Y ]
+\]
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+  \begin{enumerate}
+\item By def., $\forall \, B \in G$, $\mathcal{C}_A(B) = ABA^{-1}$, and thus
+\[
+\text{Ad}_A(X) = \left. \frac{d}{dt} A\exp{ (tX)  }A^{-1} \right|_{t=0} = AXA^{-1}
+\]
+\item \[
+\begin{gathered}
+  \text{ad}_X(Y) = \left. \frac{d}{dt} \text{Ad}_{\exp{(tX)}}(Y) \right|_{t=0} = \left. \frac{d}{dt} \exp{(tX)} Y \exp{(tX)} \right|_{t=0} = \\
+  = XY - YX = [X,Y] 
+\end{gathered}
+\]
+\item Use Jacobi identity: 
+\[
+\begin{gathered}
+  [A,[B,C]] +  [B,[C,A]] +  [C,[A,B]] = 0 \text{ or } \\ 
+  [[A,B],C] = [A,[B,C]] - [B,[A,C]]
+\end{gathered}
+\] 
+\[
+\begin{gathered}
+  \text{ad}_{[X,Y]}C = [[X,Y],C] = [X,[Y,C]] - [Y,[X,C]] = [X,\text{ad}_YC] - [Y,\text{ad}_XC] \text{ and that } \\ 
+  \text{ad}_X\text{ad}_Y C = [X,[Y,C]] \Longrightarrow \text{ad}_{[X,Y]}C = [\text{ad}_X,\text{ad}_Y ] C
+\end{gathered}
+\]
+\end{enumerate}
+\end{proof}
 
 
 \part{Bundles}
@@ -4214,12 +4307,284 @@ S^1 & S^3 & \partial M & M \\
 %\end{fmffile}
 
 
+\subsection{Reviewing Witten's Quantum Field Theory and the Jones Polynomial}
+
+Let's review Witten's seminal paper (of which he won a Fields medal for, and is, as of 20160503, the only physicist to have won the Fields medal) (cf. Witten (1988) \cite{Witten:1988hf}).  
+
+Note that this is \emph{not} a perturbative theory, i.e. no \emph{perturbations} were used.  This is a non-perturbative theory yielding \emph{exact} solutions, exact topological solutions, i.e. with deal relation to topology.  \textbf{Conformal Field Theory} was employed in the quantization.  Thus, tools from conformal field theory are needed and maybe very unfamiliar to someone that was raised in the usual quantum field theory class with Feynman diagrams.  Thus, a generous amount of time will be taken to understand \emph{conformal field theory}.  
+
+
+\subsubsection{Framing}
+
+
+
+
+
+
+
+
+
+\section{Standard Model}
+
+From \emph{Wikipedia}, on ``Standard Model (mathematical formulation)'', (cf. \url{https://en.wikipedia.org/wiki/Standard_Model_(mathematical_formulation)}), they have a nice and neat chart of the field content of the standard model (SM) and I'll reproduce the gauge fields table:
+
+%\begin{table}
+%\centering
+\begin{tabular}{l c c c r }
+\multicolumn{5}{c}{Field content of the standard model (SM)} \\
+\multicolumn{5}{c}{Spin 1 - gauge fields } \\
+Symbol & Associated charge & Group & Coupling & Representation \\ 
+$B$ & Weak hypercharge & $U(1)_Y$ & $g'$ & $( \mathbf{1}, \mathbf{1}, 0)$ \\
+$W$ & Weak isospin & $SU(2)_L$ & $g_w$   & $(\mathbf{1}, \mathbf{3} , 0 )$ \\ 
+$G$ & Color & $SU(3)_C$ & $g_s$ & $(\mathbf{8}, \mathbf{1}, 0)$  \\
+\end{tabular}
+%\end{table}
+
+\subsubsection{Representation for SM}
+
+As a warmup, consider the group $GL(N,\mathbb{C})$:
+\[
+GL(N;\mathbb{C}) = \lbrace X | X \in \text{Mat}_{\mathbb{C}}(N,N), \text{det}X \neq 0 \rbrace
+\]
+where $\text{Mat}_{\mathbb{C}}(N,N)$ denotes the space (not group) of all $N\times N$ matrices with complex numbers in (all of) its entries.
+
+Clearly, 
+\[
+\begin{aligned}
+  & \text{dim}_{\mathbb{C}}GL(N;\mathbb{C}) = N^2 \\ 
+  & \text{dim}_{\mathbb{R}}GL(N;\mathbb{C}) = 2*N^2 = 2N^2 \quad \, (\text{for the 2 real numbers for \emph{each} complex entry})
+\end{aligned}
+\]
+where I denote whether we're talking about \emph{complex} dimensions (i.e. in using complex numbers) or dimension with real numbers; hence the subscript under $\text{dim}$.  
+
+Consider 
+\[
+U(N) = \lbrace U \in GL(N,\mathbb{C} | UU^{\dag} = 1\rbrace
+\]
+Now
+\begin{proposition}
+  \[
+\begin{aligned}
+& \text{dim}_{\mathbb{R}}U(N) = N^2
+& \text{dim}_{\mathbb{R}}SU(N) = N^2 -1
+\end{aligned}
+\]
+\end{proposition}
+\begin{proof}
+A great way to calculate this is found in \url{http://www.phys.nthu.edu.tw/~class/Group_theory/Chap%207.pdf}, pp. 112, Chapter 7 Classical Lie Groups.  
+
+Each row of $\forall \, U \in U(N)$ has unit norm (analogous to $O(N)$), and different rows are ``orthogonal'', with respect to some inner product.  
+
+First row determined by $N$ complex numbers (parameters), or $2N$ real numbers.  \\
+\phantom{First} subtract 1 for unit norm condition.  $2N-1$.  
+
+2nd row determined by $N-1$ complex numbers; orthgonality determined by one of the complex numbers (parameters).  So $2N-2$ real numbers. \\
+\phantom{First} subtract 1 for unit norm condition: $2N-3$.  
+
+Thus,
+\[
+\sum_{j=1}^N 2N - (2j - 1) = 2N^2 - 2\left( \frac{N(N+1)}{2} \right)  + N = N^2
+\]
+For $SU(N)$, $\text{det}SU(N) =1$.  This fixes the overall phase of $\text{det}X$, $X\in SU(N)$ (since $\text{det}(UU^{\dag}) = \text{det}U \text{det}U^{\dag} = 1$ and so $\text{det}U$ has norm $1$, i.e. $|\text{det}U|=1$, $\forall \, U \in U(N)$, already).  So that costs another \emph{real} number (parameter).  So for $SU(N)$, $N^2-1$ \emph{real} number parameters are independent.  
+
+\end{proof}
+
+Recall that an automorphism is an isomorphism from a mathematical object to itself.  Denote $\text{Aut}(V)$ to be the space of all possible automorphisms on mathematical object $V$ (prominent example is vector space $V$).  
+
+
+From L\"{o}h's notes on representation theory of Lie algebra (cf. Clara L\"{o}h ``Representation theory of Lie algebra.''  \url{http://deferentialgeometry.org/papers/Loeh%20-%20Representation%20Theory%20of%20Lie%20Algebras.pdf}), 
+
+if (given) $\phi : G \to \text{Aut}(V)$ is a representation of $G$, then $T_1 \phi : \mathfrak{g} \to \text{End}(V)$ is a representation of the Lie algebra, i.e. making
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\mathfrak{g} = T_1 G  & \text{End}(V) = \mathfrak{gl}(V) \\ 
+G & \text{Aut}(V) \\ 
+};
+  \path[->]
+  (m-1-1) edge node [auto] {$T_1\phi$} (m-1-2)
+  edge node [auto] {$\exp $ } (m-2-1)
+  (m-1-2) edge node [auto] {$\exp $} (m-2-2)
+  (m-2-1) edge node [auto] {$\phi$ } (m-2-2)
+;
+\end{tikzpicture}
+\]
+Since $SU(N)$ is simply connected (recall, $\text{det}A =1 \, \forall \, A \in SU(N)$, by definition, and so $\text{det}:SU(N) \to \mathbb{C}$, being a continuous function, and with the preimage of $\lbrace 1 \rbrace$, $\text{det}^{-1}(\lbrace 1 \rbrace)$, being the entire $SU(N)$, and $\lbrace 1 \rbrace$, clearly a closed set, then $SU(N)$ simply connected).  Note that $U(N)$ is not simply connected.  Note that this has a good chart of simply connected vs. not simply connected: \href{http://www.google.com/url?q=http://www.springer.com/cda/content/document/cda_downloaddocument/9780387401225-c1.pdf%3FSGWID%3D0-0-45-164608-p7110377&sa=U&ved=0ahUKEwix0ZbriMLMAhUD62MKHbcJCvcQFggUMAA&usg=AFQjCNEK0TttSALM_ecQrQfNRQeoC2WwSw}{1 Matrix Lie Groups - Springer}, we can go the other way, in that 
+
+given representation of Lie algebra $\mathfrak{g}$, say $\rho : \mathfrak{g} \to Gl(V)$, $\exists \, \exp{(\rho)}:G \to \text{Aut}(V)$ group representation.  
+
+Ciaran Hughes makes the poignant remark/observation in distinguishing the \emph{representation space} (cf. \href{http://www.damtp.cam.ac.uk/user/ch558/pdf/Representations.pdf}{A brief discussion on representations}.  While 
+\[
+\begin{aligned}
+  \text{dim}(SU(N)) = N^2 - 1 &   \text{dim}(\mathfrak{su}(N)) = N^2 - 1 \\
+  \text{dim}(SU(2)) = 3       &   \text{dim}(\mathfrak{su}(2)) = 3 \\
+  \text{dim}(SU(3)) = 8       &   \text{dim}(\mathfrak{su}(3)) = 8 
+\end{aligned}
+\]
+so the dimensions of $SU(N)$ and corresponding $\mathfrak{su}(N)$ \emph{look} equal, but they were arrived at from entirely different conditions (they are definitely not equal mathematical objects: by definition $\mathfrak{su}(N)$, as a Lie algebra, is a \emph{vector space}, equipped with Lie bracket, i.e. commutator).  
+
+The (3) generators (a basis) for $\mathfrak{su}(2)$ are the celebrated Pauli matrices $\sigma^1, \sigma^2, \sigma^3$.  There are 8 generators for $\mathfrak{su}(3)$; we can denote them as $T^a$, obeying a ``structure equation'': $[T^a,T^b] = f^{ab}_{ \; \; c}T^c$.  
+
+Note to take care that mathematicians work with anti-Hermitian generators and physicists work with Hermitian generators (!!!).  
+
+The vector space $V$ I've been using is called the \emph{representation space} (a good name) by Hughes in \href{http://www.damtp.cam.ac.uk/user/ch558/pdf/Representations.pdf}{A brief discussion on representations} in the context of representations: a representation $\rho$ of group $G$ is a homomorphism, s.t.
+\[
+\rho : G \to GL(V)
+\]
+So $\forall \, g \in G$, $\rho(g) \in GL(V)$, and so $\rho(g)$ itself is a $\text{dim}V\times \text{dim}V$ \emph{matrix}.  
+
+This representation $\rho(g)$ of element $g\in G$ \emph{acts} on this vector space $V$ which Hugehes calls the \emph{representation space} $\mathcal{V}_{\text{rep}}$ (I'll use $V$ as my notation; they mean the same thing):
+\[
+\rho(g) : V \to V
+\]
+
+A representation $\rho$ of a Lie algebra $\mathfrak{g}$ is s.t.
+\[
+\rho : \mathfrak{g} \to \mathfrak{gl}(V)
+\]
+s.t. $\forall \, A \in \mathfrak{g}$, $\rho(A) \in \mathfrak{gl}(V)$ is a $\text{dim}V \times \text{dim}V$ \emph{matrix}.  
+
+Now, as Hughes noted \emph{``Different representations can act on different spaces''} (emphasis mine).  
+
+For the example of $SU(2)$,
+
+In $\rho :G\to GL(V)$, label irreducible representation (irrep) $\rho$ by $j$ for ``spin'' $V\to V_j$.  
+
+$T^a = J^a$, $J^1, J^2,J^3$ are the ``usual'' angular momentum generators (of quantum mechanics).  
+
+Hughes provides this useful table: 
+
+\begin{tabular}{l | c | c | r }
+$j$   & basis for $V_j$  &  $\text{dim}V_j$  & $T^a = J^a$  \\
+$j=0$  & $ |0,0\rangle$   &  $1$              & $T^a =0$ so that it doesn't transform under $SU(2)$  \\
+$j=1$  & $ |\frac{1}{2} , m \rangle$ (i.e. $\lbrace |\frac{1}{2}, \frac{1}{2} \rangle, |\frac{1}{2} , \frac{-1}{2} \rangle \rbrace$) & 2 & $T^a = \sigma^a /2$ \\ 
+$j=2$  & $ |1 , m \rangle$ (i.e. $\lbrace | 1, 1 \rangle, | 1 , 0 \rangle , | 1,-1\rangle \rbrace$) & 3 & $T^a = \sigma^a $ are $3\times 3$ matrices \\ 
+$j$  & $ |j , m \rangle$, $m=-j,-j+1,\dots , j-1, j$  & 2j+1 & $T^a$ are $2j+1 \times 2j+1$ matrices \\ 
+\end{tabular}
+  
+Consider this Lagrangian, as does Hughes:
+\[
+\mathcal{L} = \overline{\Psi} (i \gamma^{\mu} D_{\mu} - m ) \Psi = \overline{\Psi} (i \cancel{D} - m ) \Psi
+\]
+with \\
+field $\Psi$ is in a representation space $V=V_j$ of gauge group $G$,  \\
+$D_{\mu}$ is covariant derivative.
+
+$D_{\mu}$ defined to transform under an element of the representation $U$ of gauge group as 
+\[
+D_{\mu} \Psi \to U D_{\mu} \Psi = (UD_{\mu} D^{-1})(U\Psi)
+\]
+Keeping in mind that when we write $U$, we really mean the \emph{representation} of $U \in G$, \\
+i.e. $U=\rho(U)$, $U\in G$.
+
+This transformation property is called by Hughes the \emph{adjoint action} of group on the Lie algebra.  
+
+So $D_{\mu} \to UD_{\mu} U^{-1}$, i.e. the covariant derivative transform in the adjoint action, or just adjointly.  
+
+$D_{\mu} = \partial_{\mu} - igA_{\mu}(x)$, where $A_{\mu}(x)$ is element of representation of the Lie algebra i.e. $A_{\mu}(x) \in \rho(\mathfrak{g})$.  
+
+So $A_{\mu}(x) = A_{\mu}^a(x)T^a$, $T^a\in \rho(\mathfrak{g})$.  
+
+Now, globally,
+\[
+A_{\mu}(x) \to U(x) A_{\mu}U(x)^{\dag} - \frac{1}{e} (\partial_{\mu} U(x))U^{\dag}(x)
+\]
+
+Consider now infinitesimal transformations.  
+
+Let $U=\exp{ (\lambda_a T^a)} = 1 + \lambda_aT^a + O((\lambda_a)^2)$.  Denote $\lambda = \lambda_aT^a$.  
+\[
+\begin{gathered}
+  A_{\mu}(x) \to UA_{\mu} U^{-1} - \frac{1}{e} (\partial_{\mu} U) U^{-1} \simeq (1+\lambda)A_{\mu}(1-\lambda) - \frac{1}{e} (\partial_{\mu} \lambda) (1-\lambda) = \\
+  = A_{\mu} - \frac{1}{e} \lbrace  \partial_{\mu} \lambda + e[A_{\mu}, \lambda] \rbrace = A_{\mu} - \frac{1}{e} D_{\mu} \lambda
+\end{gathered}
+\]
+Call $[A_{\mu}, \lambda]$ the adjoint action of the Lie algebra itself.  
+At this point, I will change up notation because if $T^a$'s are generators of Lie algebra $\mathfrak{g}$ and $\mathfrak{g}$ is a \emph{vector space}, then go to this notation, $T_a$, for the generators.  Then the components of vectors have superscripts.  
+\[
+\begin{gathered}
+  D_{\mu} \lambda = \partial_{\mu} \lambda + e[A_{\mu},\lambda ] = \partial_{\mu} \lambda^a T_a + eA^a_{ \; \; \mu} \lambda^b[T_a,T_b] = \\
+  = \partial_{\mu} \lambda^a T_a + eA^a_{ \; \; \mu} \lambda^b f_{ab}^{ \; \; c} T_c \qquad \, \text{ using } [T_a,T_b] = f_{ab}^c T_c
+\end{gathered}
+\]
+
+Let's try to connect this with what mathematicians, mathematical physicists, and theorists say about vector bundles and principal-$G$ bundles.  
+
+Consider a vector bundle $E\xrightarrow{\pi} M$.  The covariant derivative $D_j:E\to E$ involves a connection 1-form on $E$:
+\[
+D_jX = \partial_j X + A^k_{ \; \; ij} X^i e_k \qquad \, \forall \, X \in E, \, e_k \text{ a (local) frame over $M$ }
+\]
+Now consider principal-$G$ bundle $P \xrightarrow{ \pi } M$ with $\lambda \in P$:
+\[
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+P & \\
+M & \\
+};
+  \path[->]
+  (m-1-1) edge node [left] {$\pi$} (m-2-1)
+;
+\end{tikzpicture}
+\qquad \, 
+\begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=3.8em, column sep=4.8em, minimum width=2.2em]
+  {
+\pi^{-1}(U) & U\times \mathfrak{g} \\
+U \subset M  & \\
+};
+  \path[->]
+  (m-2-1) edge node [left] {$\pi^{-1}$} (m-1-1)
+  (m-1-1) edge node [auto] {$\varphi_U$} (m-1-2) 
+  (m-1-2) edge node [auto] {$$} (m-2-1)
+;
+\end{tikzpicture}
+\]
+Then for covariant derivative $D_{\mu} :P\to P$,
+\[
+D_{\mu} \lambda = \partial_{\mu} \lambda + A^c_{ \; \; b\mu} \lambda^b e_c
+\]
+with $A^c_{\; \; b\mu} (e_c \otimes e^b) dx^{\mu} \in \Omega^1(M;\text{End}(\mathfrak{g}))$, a connection 1-form, in which it (a connection) is a $\text{End}(\mathfrak{g})$-valued 1-form.  
+
+Compare this expression with the one from physics:
+\[
+D_{\mu} \lambda = \partial_{\mu} \lambda + A^c_{ \; \; b\mu} \lambda^b e_c = \partial_{\mu} \lambda^a T_a + (eA^a_{ \; \; \mu} f_{ab}^{ \; \; c} ) \lambda^b T_c
+\]
+Thus, what I'll need to check myself more thoroughly, what theorists call the connection 1-form on the principal-$G$ bundle, $A$, is related to what physicists call the gauge field, but in its \emph{adjoint representation}; the clue to why this is the adjoint representation is the $f_{ab}^{ \; \; c}$ factors in $eA^a_{ \; \; \mu} f_{ab}^{ \; \; c}$.  Also, it is unclear to me at least, how to scale or deal with the $e$ numerical factors, which is in the theory.  
+
+\subsubsection{Certain Types of Representations (cf. Hughes, Sec. 6)}
+
+\begin{itemize}
+  \item \textbf{trivial representation}: $\rho(g) =0$ \, $\forall \, g\in G$ or $\mathfrak{g}$; $T^a =0$.  $\text{dim}V=1$.  \item \textbf{fundamental representation}: $\rho(g) =g$ \, $\forall \, g\in G$ or $\mathfrak{g}$.  Then $\text{dim}V=N$,  for $g\in \text{Mat}(N,N)$ if $G$ is a ``matrix Lie group'' (similar with $\mathfrak{g}$)   
+\item \emph{adjoint representation}: Hughes mentions that $f_{ab}^{ \; \; c}$ are the components of the representation.  Recall that $[T_a,T_b] = f_{ab}^{ \; \; c} T_c$, where $f_{ab}^{ \; \; c}$ are the antisymmetric \emph{structure constants}.  Now $T_a, T_b\in \mathfrak{g}$.  $[T_a,T_b]\in \mathfrak{g}$ ($\mathfrak{g}$ is a Lie algebra, equipped with Lie bracket, by definition).  
+
+So $f_{ab}^{ \; \; c} \in \mathbb{K}$, field $\mathbb{K}$ over which $\mathfrak{g}$ is over with ($\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ usually).  
+
+
+\end{itemize}
+
+
+
+
+Redi and Sato (2016) \cite{RS1602} gives a good overall review of the current status of axions in a theory context.
+
+
+
+\section{Spin Structures, Fermions (fermionic field) }
+
+The clearest, most lucid, explanation of Spin Geometry is, in my opinion, from Salamon (1996) \cite{Sala1996}: I will interpolate between Salamon (1996) and Jost (2011) \cite{JJost2011}, in particular, Jost's Chapter 2 Lie Groups, Section 2.4 Spin Structures.  
+
+Salamon (1996) \cite{Sala1996} uses $C(V)$ to denote the Clifford Algebra generated by $V$; Jost and Wikipedia uses $Cl(V)$; I'm going to use $Cl(V)$ to stand in for $C(V)$.  
+
+\subsection{Clifford Algebra}
+
+
+\section{Seiberg-Witten}
+
+$\mathcal{A}$
 
 \section{End Game; Desires}
-
-\subsection{Spin Structures, Fermions (fermionic field) }
-
-
 
 
 
@@ -4316,6 +4681,24 @@ Kevin Peter Hickerson.  \emph{The physics of ultracold neutrons and Fierz interf
 Sergei Gukov.  ``Gauge theory and knot homologies.''  Fortschr. Phys. \textbf{55}, No. 5 – 7, 473 – 490 (2007) / \textbf{DOI} 10.1002/prop.200610385  \url{http://www.maths.ed.ac.uk/~aar/papers/gukov2.pdf}
 
 
+\bibitem{Sala1996}
+Dietmar Salamon.  ``Spin Geometry and Seiberg–Witten Invariants.''  1996.  \url{https://people.math.ethz.ch/~salamon/PREPRINTS/witsei.pdf}
+
+
+
+
+%@MISC{Salamon96spingeometry,
+%    author = {Dietmar Salamon},
+%    title = {Spin Geometry and Seiberg–Witten Invariants},
+%    year = {1996}
+%}
+
+
+\bibitem{RS1602}
+Michele Redi, Ryosuke Sato. \emph{Composite Accidental Axions}. \href{arXiv:1602.05427 [hep-ph]}{arXiv:1602.05427} [hep-ph]
+
+\url{http://arxiv.org/abs/1602.05427}
+
 
 \end{thebibliography}
 % There is a Third Edition of T. Frankel's \textbf{The Geometry of Physics} \cite{TFrankel2004}, but I don't have the funds to purchase the book (about \$ 71 US dollars, with sales tax). It would be nice to have the hardcopy text to see new updates and to use for research, as the second edition allowed me to formulate fluid mechanics and elasticity in a covariant manner.  Please help me out and donate at \url{ernestyalumni.tilt.com}.  
@@ -4323,38 +4706,38 @@ Sergei Gukov.  ``Gauge theory and knot homologies.''  Fortschr. Phys. \textbf{55
 
 
 
-\clearpage
-\onecolumn
+% \clearpage
+%\onecolumn
 
-\section{Code listings}
+%\section{Code listings}
 
-\definecolor{darkgreen}{rgb}{0, 0.4, 0}
-\lstset{language=Python,
-  numbers=left,
-  frame=bottomline,
-  basicstyle=\scriptsize,
-  identifierstyle=\color{blue},
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=\color{red},
-  literate={Ö}{{\"O}}1 {é}{{\'e}}1 {Å}{{\AA}}1,
-}
-\lstlistoflistings
+%\definecolor{darkgreen}{rgb}{0, 0.4, 0}
+%\lstset{language=Python,
+%  numbers=left,
+%  frame=bottomline,
+%  basicstyle=\scriptsize,
+%  identifierstyle=\color{blue},
+%  keywordstyle=\bfseries,
+%  commentstyle=\color{darkgreen},
+%  stringstyle=\color{red},
+%  literate={Ö}{{\"O}}1 {é}{{\'e}}1 {Å}{{\AA}}1,
+%}
+%\lstlistoflistings
 
 
 %\label{listing:brede_str_nmf}\lstinputlisting{../../matlab/brede/python/brede_str_nmf}
 
 
-\newpage
-\section{Automatic generation of documentation}
+% \newpage
+%\section{Automatic generation of documentation}
 
-Demontration using epydoc:
-\begin{verbatim}
-epydoc --pdf -o /home/fnielsen/tmp/epydoc/ --name RBBase wikipedia/api.py
-\end{verbatim}
-This example does not use \verb!brede_str_nmf! but another more
-well-documented module called {\tt api.py} that are used to download
-material from Wikipedia. 
+%Demontration using epydoc:
+%\begin{verbatim}
+%epydoc --pdf -o /home/fnielsen/tmp/epydoc/ --name RBBase wikipedia/api.py
+%\end{verbatim}
+%This example does not use \verb!brede_str_nmf! but another more
+%well-documented module called {\tt api.py} that are used to download
+%material from Wikipedia. 
 
 %\includepdf[pages={-}]{/home/fnielsen/tmp/epydoc/api.pdf}
 
