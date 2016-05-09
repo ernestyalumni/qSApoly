@@ -27,6 +27,8 @@
 \usepackage{tikz}
 \usetikzlibrary{matrix,arrows}
 
+% \usepackage{breqn} % for dmath
+
 \usepackage{multicol}
 
 \usepackage{cancel} % for Feynman slash notation
@@ -4236,7 +4238,7 @@ Let's count dimensions.
 \[
 \text{dim} \partial M  = \text{dim} \mathbb{D}^3(t^+) + \text{dim}\mathbb{S}^2 + 1 
 \]
-Now $\text{dim}\mathbb{S}^2 =2$.  So do we have more dimensions than alloted?  
+Now $\text{dim}\mathbb{S}^2 =2$.  So do we have more dimensions than allowed?  
 
 Let's account for the various setups for a 4-dimensional topological gauge theory that involves knot polynomials (i.e. knot homologies).  It appears that Gaiotto and Witten (2011) \cite{GW2011} likes to include Riemann surfaces in $\partial M$, so there setup could be
 \[
@@ -4323,15 +4325,253 @@ then the following Lagrangian was considered
 \mathcal{L} = \frac{k}{4\pi} \int_M \text{tr}(A \wedge dA + \frac{2}{3} A \wedge A \wedge A ) \equiv \frac{k}{4\pi } \int_M \text{tr}(AdA + \frac{2}{3}A^3)
 \]
 
-Witten then references that the \emph{quantization law} was first discussed in Des
+Witten then references that the \emph{quantization law} was first discussed in Deser, Jackiw, Templeton (1982) \cite{DJT1982}.
+
+Because group $\widehat{G}$ of cont. maps $M \to G$ not connected, $\widehat{G} = \mathcal{C}^1(M;G)$  \\
+\phantom{\qquad} then at least $\pi_3(G) \simeq \mathbb{Z}$\, $\forall \, $ compact simple (again, meaning no nontrivial ideals) group $G$.  
+
+$\mathcal{L} = \frac{k}{4\pi } \int_M \text{tr}(AdA + \frac{2}{3} A^3)$ invariant under component of gauge group that contains identity, $(T_eG \equiv T_1G \equiv \mathfrak{g}$), \\
+
+$\mathcal{L}$ is not invariant under gauge transformations associated with nonzero elements of $\pi_3(G)$ (nonzero ``winding number'') (???)
+\[
+\mathcal{L} \mapsto \mathcal{L} + \text{const.}m
+\]
+As in Dirac's famous work in magnetic monopoles, QFT requires  single-valuedness of $\exp{(i\mathcal{L})} \mapsto \exp{(i(\mathcal{L} + 2\pi k )) }$ (quantization condition on $k$ in $\mathcal{L}$)
+
+We have $G=SU(N)$, and trace over representations
+\[
+\text{tr}(A^3) \equiv \text{tr}(A\wedge A \wedge A) = A^a_{\; \; bi } A^{b \; \; cj} A^c_{ \; \; ak} dx^i \wedge dx^j \wedge dx^k
+\]
+Witten considered the entire time that $A$ is in the \emph{fundamental representation} of \emph{$N$ dimensions}.
+
+Recall that the fundamental representation is a homomorphism $\begin{aligned} & \quad \\
+  & \rho : G \to G \\ & \rho(g)=g \end{aligned}$
+and it happens to be in this case, with $G=SU(N)$, that $G$ is also an endomorphism on vector space $V$, $G=\text{End}V$ with $\text{dim}V=N$, where $V$ is called by some the ``representation space.''  For the $N=2$ case, then $\rho(g)=g$ are the usual $2\times 2$ special unitary matrices, $\forall \, g \in SU(2)$, which act on the 2-dim. vector space $V_2$ of basis spin-up and spin-down vectors (``doublets'').  It maybe interesting to extend this to other ``spin'' representations i.e. $\rho:G \to \text{End}(V)$ with $\text{dim}V > N$, or clarify what the adjoint representation means to this case.
+
+Nevertheless, keeping in mind that the fundamental representation is only considered, \\
+$k$ is very closely related to the central charge in the highest weight representations of affine Lie algebras (promised later in the paper)
+
+We wish to pick a suitable class of gauge invariant observables that \emph{also} are ``topologically invariant'' or ``generally covariant'' or ``manifestly covariant'' (they mean the same thing).  \\
+$\Longrightarrow $ Wilson line $W$.  
+
+Let $R$ be irrep (irreducible representation) of $G$.  Let $K \equiv $ knot, i.e. embedding of $S^1$ in $M^3$; knot $K$ can be a circle $S^1$, in this case it's called the ``unknot''.
+\[
+W_R(K) := \text{tr}_R P\exp{ \int_K A}
+\]
+link $L := \coprod_{i=1}^r K_i $; $K_i$ oriented and non-intersecting knot.
+
+Calculate Feynman path integral $\int \mathcal{D}\mathcal{A} \exp{ (i\mathcal{L})} \coprod_{i=1}^r W_{R_i}(K_i) = \langle \coprod_{i=1}^r W_{R_i}(K_i) \rangle$, \\
+  with $\int D\mathcal{A} \equiv $ Feynman's integral over all gauge orbits i.e. over $\mathcal{A}/\mathcal{G}$ i.e. equivalence classes of connections modulo gauge transformations.
+
+So now we get a partition function:
+  \[
+\langle \prod_{i=1}^r W_{R_i}(K_i) \rangle \equiv Z(M; K_i , R_i) \equiv Z(M;L)
+\]
+
+In Witten's second point, (2), for his intuition that this is the correct form, is this: considering reverse orientation of $1$ $K_i$, simultaneously exchange representation $R_i$ with complex conjugate $\overline{R}_i$, $Z(M;K_i,R_i)$ invariant.  \\
+``charge conjugation'' reverse orientation $\forall \l K_i $ of $L \Longrightarrow $ involution of $\mathfrak{g}$, exchange all representation $R_i$ with their conjugates.
+
+Now
+\[
+Z = \int \mathcal{D}\mathcal{A} \exp{ \left( \frac{ik}{4\pi } \int_{M^3} \text{tr}(AdA + \frac{2}{3} A^3) \right) }
+\]
+wildly oscillates (due to $k$).
+
+Stationary pts. of Chern-Simons action are (``flat connections''), $F\in \Omega^2(M;\mathfrak{g})$, $F\equiv F_A(x) = 0$.
+
+From Witten, referencing ref. [18], Ray-Singer analytic torsion of flat connection $A^{(\alpha)}$ is topological invariant, and so is $\mu(A^{(\alpha)})$ in $Z=\sum_{\alpha} \mu(A^{(\alpha)}$ (for large $k$).
+
+(to be continued)
+  
+
+  
 
 
 \subsubsection{Framing}
 
+(to be continued)
 
 
+Witten introduces in Eq. (4.21) \cite{Witten:1988hf} the parameter $q$
+\[
+q = \exp{ \left( \frac{2\pi i }{ N + k } \right) }
+\]
+(still in consideration of $S^3$).
+
+For $G=SU(2)$, integrable representations of level $k$ are those of spin $n/2$, $n=0 \dots k$
+\[
+S_{mn} = \sqrt{ \frac{2}{k+2} } \sin{\left( \frac{ (m+1)(n+1)\pi }{ k+2} \right) }
+\]
+For spin $0$, $n=0$, $S_{m0} = \sqrt{ \frac{2}{k+2} } \sin{ \left( \frac{ (m+1) \pi  }{ k+2} \right) }$  \\
+For spin $1/2$, $n=1$, $S_{m1} = \sqrt{ \frac{2}{k+2} } \sin{ \left( \frac{ (m+1) 2\pi  }{ k+2} \right) }$  \\
+For spin $1$, $n=2$, $S_{m2} = \sqrt{ \frac{2}{k+2} } \sin{ \left( \frac{ (m+1) 3\pi  }{ k+2} \right) }$
+
+From pp. 362, ``Some Examples'' subsection of Sec. 2 of Witten \cite{Witten:1988hf}, $Z(S^2 \times S^1) =1$ \, $\forall \, G, \, \forall k$.
+\[
+Z(S^3)=\sqrt{ \frac{2}{k+2} } \sin{ \left( \frac{ \pi}{k+2} \right)} = S_{00}; \, m,n=0
+\]
 
 
+\section{Calculations (so far)}
+
+Consider the action
+\begin{equation}
+  %  S = \exp{ (i \mathcal{L}_{KE} + i \mathcal{L}_{\theta} ) } = \exp{ (i\mathcal{L}_{KE})} \exp{ (i\mathcal{L}_{\theta} ) }
+  S = \exp{ (i L_{KE} + i L_{\theta} ) } = \exp{ (i L_{KE})} \exp{ (i L_{\theta} ) }
+\end{equation}
+Suppose
+\[
+L_{KE} = \int_{M^4} \text{tr}(F\wedge * F)
+\]
+where $M^4$ is a 4-manifold, $\text{dim}M^4=4$ and $M^4$ is a smooth, Lorentzian manifold.  
+
+For the $L_{\theta}$ term,
+\[
+\begin{gathered}
+  L_{\theta} = \int_{M^4} \frac{ \theta g^2}{8\pi^2} \text{tr}(F\wedge F) = \int_{M^4} \frac{ \theta g^2}{8 \pi^2} d\text{tr}(A\wedge dA + \frac{2}{3} A \wedge A \wedge A ) = \int_{M^3 = \partial M^4} \frac{ \theta g^2}{8 \pi^2} \text{tr}(A\wedge dA + \frac{2}{3} A\wedge A \wedge A )
+  \end{gathered}
+\]
+
+How do we deal with the ``foliation'' of $M^4$ to a 3-manifold for the boundary of $M^4$, $M^3 = \partial M^4$?  Possibly, one could ``choose a gauge'' s.t. $A_0 =0$.  So if we want our knots to propagate in time $t=x^0$, then $M^3 = \partial M^4$ is the ``physical'' space of spacetime, our usual 3-dimensions of space.  However, it appears that Witten \cite{Witten:1988hf} treats a $2+1$-dim. Yang-Mills theory, and so $M^3$ 3-manifold has time mixed up in it.  Also, are we considering Wilson loops being trajectories of fermions over time?  Or Wilson loops through 3-dimension physical space and see how the knots evolve over time?  I'm still not clear about which way to go.
+
+If we proceed with
+\begin{equation}
+\begin{gathered}
+  L_{\theta} = \int_{M^3 = \partial M^4} \frac{ \theta g^2}{8 \pi^2} \text{tr}(A\wedge dA + \frac{2}{3} A\wedge A \wedge A ) \\ 
+  S = \exp{ i L_{\theta}}
+  \end{gathered}
+\end{equation}
+In light of the quantization condition, this imposes conditions on $L_{\theta}$:
+\[
+L_{\theta} \mapsto L_{\theta} + \text{const.} \cdot m
+\]
+then we can identify the level $k$ in such a way:
+\[
+\frac{k}{4\pi} = \frac{\theta g^2}{ 8\pi^2} \Longrightarrow k = \frac{\theta g^2}{2\pi}
+\]
+We can calculate the expectation values of Wilson lines of various torus knots (which, keep in mind, are denoted as partition functions, $Z$) (EY: 20160508 I'll have to check the normalization over the partition function of the unknot i.e. the expectation value of the Wilson line of the unknot, $Z(S^1)$).  I myself, using the Khovanov homology package  \verb|knotkh|, or one can use SnapPy, and I've implemented with SnapPy as well, so you can use SnapPy in equal manner for only the Jones polynomial, have calculated the Jones polynomial, with Khovanov homology, for torus knots of less than 14 crossings (I can do more, but my MacBook Air ``crapped'' out), 9 of them:
+\[
+\begin{aligned}
+  & T(2,1) \\ 
+  & T(2,3) \\ 
+  & T(2,5) \\ 
+  & T(2,7) \\ 
+  & T(2,9) \\ 
+  & T(2,11) \\ 
+  & T(2,13) \\ 
+  & T(3,4) \\ 
+  & T(3,5) 
+  \end{aligned}
+\]
+Let me show examples for $T(2,1)$, $T(2,3)$, % $T(2,5)$.
+
+The respective Jones polynomial for $T(2,1)$, $T(2,3)$, $T(2,5)$, which, on the quantum field theory side, Chern-Simons on 3-manifold for $SU(N)$ gauge group, in the fundamental representation, is the expectation value of the Wilson line or partition function, $Z(T(2,1))$, $Z(T(2,3))$, $Z(T(2,5))$,
+\[
+\begin{aligned}
+  & Z(T(2,1)) = \frac{q^{2} + 1}{q}    \\
+  & Z(T(2,3)) = q^{9}  + q^{7}  + q^{7}  + q^{5}  + q^{3} + q \\  
+  & Z(T(2,5)) = q^{15}  + q^{13}  + q^{13}  + q^{11}  + q^{11}  + q^{9}  + q^{9}  + q^{7}  + q^{5} + q^{3}  
+\end{aligned}
+\]
+I should remark that these Jones polynomials are simply the special case of when $t=1$ in the Khovanov homology:
+\[
+\begin{aligned}
+  & Z(T(2,1);q,t) = \frac{q^{2} + 1}{q}    \\
+  & Z(T(2,3);q,t) = q^{9} t^{3} + q^{7} t^{3} + q^{7} t^{2} + q^{5} t^{2} + q^{3} + q \\  
+  & Z(T(2,5);q,t) = q^{15} t^{5} + q^{13} t^{5} + q^{13} t^{4} + q^{11} t^{4} + q^{11} t^{3} + q^{9} t^{3} + q^{9} t^{2} + q^{7} t^{2} + q^{5} + q^{3}  
+\end{aligned}
+\]
+For level $k = \frac{\theta g^2}{2\pi}$, and from Witten's introduction \cite{Witten:1988hf} of $q$, $q = \exp{ \left( \frac{2\pi i}{ N+k} \right)}$, then for $SU(2)$ (i.e. $N=2$),
+
+for $Z(T(2,1);q,t)$,
+\[
+Z(T(2,1);q,t) = {\left(e^{\left(\frac{8 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + 1\right)} e^{\left(-\frac{4 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)}
+\]
+and for the real part:
+\[
+\begin{gathered}
+\Re Z(T(2,1);q,t) =   \cos\left(\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \cos\left(-\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)
+  \end{gathered}
+\]
+and for the imaginary part:
+\[
+\begin{gathered}
+  \Im Z(T(2,1);q,t) = \sin\left(\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \sin\left(-\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)
+  \end{gathered}
+\]
+
+For $Z(T(2,3);q,t)$,
+\[
+Z(T(2,3);q,t) = t^{3} e^{\left(\frac{36 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + t^{3} e^{\left(\frac{28 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + t^{2} e^{\left(\frac{28 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + t^{2} e^{\left(\frac{20 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + e^{\left(\frac{12 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + e^{\left(\frac{4 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)}
+\]
+and for the real part:
+
+
+  \end{multicols}
+
+\newpage
+
+\begin{multicols}{1}
+\[
+\begin{gathered}
+  \Re Z(T(2,3);q,t) = \\
+\end{gathered}
+\]
+  \begin{multline}
+  -3 \, \cos\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right)^{2} \Re \left( t \right) - 3 \, \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right)^{2} \Re \left( t \right) + \cos\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Re \left( t \right)^{3} + \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Re \left( t \right)^{3} + \Im \left( t \right)^{3} \sin\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) - 3 \, \Im \left( t \right) \Re \left( t \right)^{2} \sin\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \Im \left( t \right)^{3} \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) - 3 \, \Im \left( t \right) \Re \left( t \right)^{2} \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) - \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right)^{2} - \cos\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right)^{2} + \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Re \left( t \right)^{2} + \cos\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Re \left( t \right)^{2} - 2 \, \Im \left( t \right) \Re \left( t \right) \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) - 2 \, \Im \left( t \right) \Re \left( t \right) \sin\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \cos\left(\frac{12 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \cos\left(\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)
+\end{multline}
+
+\quad \\ 
+  
+
+\quad \\
+and for the imaginary part: 
+
+\quad \\ 
+
+\[
+\begin{gathered}
+  \Im Z(T(2,3);q,t) = \\
+\end{gathered}
+\]
+  \begin{multline}  -\cos\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right)^{3} - \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right)^{3} + 3 \, \cos\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right) \Re \left( t \right)^{2} + 3 \, \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right) \Re \left( t \right)^{2} - 3 \, \Im \left( t \right)^{2} \Re \left( t \right) \sin\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \Re \left( t \right)^{3} \sin\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) - 3 \, \Im \left( t \right)^{2} \Re \left( t \right) \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \Re \left( t \right)^{3} \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + 2 \, \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right) \Re \left( t \right) + 2 \, \cos\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) \Im \left( t \right) \Re \left( t \right) - \Im \left( t \right)^{2} \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \Re \left( t \right)^{2} \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) - \Im \left( t \right)^{2} \sin\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \Re \left( t \right)^{2} \sin\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \sin\left(\frac{12 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \sin\left(\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)
+  \end{multline}
+
+  (Breaking up multiple line latex output from Sage Math is a pain and for some reason, the latex environment dmath isn't working here; at this point, and in general, I would go to the \url{https://github.com/ernestyalumni/qSApoly/blob/master/JonesPoly\_and\_KH/JonesPolyetKH\_sage.ipynb}
+
+  %{\verb|JonesPolyetKH_sage.ipynb|}
+
+  jupyter notebook and see that it's all there. 
+  
+\end{multicols}
+\quad \\ 
+
+\newpage
+
+\begin{multicols}{2}
+
+  If one substitutes in $t=1$ for $Z(T(2,3);q,t)$, then
+  \[
+\begin{gathered}
+  Z(T(2,3);q,t=1) = \\
+e^{\left(\frac{36 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + 2 \, e^{\left(\frac{28 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + e^{\left(\frac{20 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + e^{\left(\frac{12 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)} + e^{\left(\frac{4 i \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)}
+\end{gathered}
+\]
+and for the real part,
+\[
+\begin{gathered}
+  \cos\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + 2 \, \cos\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \cos\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \cos\left(\frac{12 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \cos\left(\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)
+  \end{gathered}
+\]
+and for the imaginary part,
+\[
+\begin{gathered}
+\sin\left(\frac{36 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + 2 \, \sin\left(\frac{28 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \sin\left(\frac{20 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \sin\left(\frac{12 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right) + \sin\left(\frac{4 \, \pi}{\frac{g^{2} \theta}{\pi} + 4}\right)
+  \end{gathered}
+\]
+Again, all the calculations, and further full expressions are in the jupyter notebook page (which requires Sage Math), with all the symbolic computations, called \url{https://github.com/ernestyalumni/qSApoly/blob/master/JonesPoly_and_KH/JonesPolyetKH\_sage.ipynb}
+
+%{\verb|JonesPoly \_ and_KH.ipynb|}.  
 
 
 
@@ -4680,7 +4920,13 @@ Dror Bar-Natan. ``On Khovanov’s categorification of the Jones polynomial.'' \t
   %%CITATION = doi:10.1007/BF01217730;%%
   %2286 citations counted in INSPIRE as of 24 Feb 2016
 
+\bibitem{DJT1982}
+  Deser, S., and R. Jackiw and S. Templeton. \emph{Three-Dimensional Massive Gauge Theories}. \textbf{Phys. Rev. Lett.} \textbf{48}:975.  1982.
 
+  S. Deser, R. Jackiw, and S. Templeton.  ``Three-Dimensional Massive Gauge Theory.'' \textbf{Physical Review Letters}. Volume \textbf{48}, Number 15, 975-978.  12 April 1982.  
+
+
+  
 \bibitem{GW2011}
 Davide Gaiotto, Edward Witten. \emph{Knot Invariants from Four-Dimensional Gauge Theory}. 2011.   \href{http://arxiv.org/abs/1106.4789}{arXiv:1106.4789 [hep-th]}
 
@@ -4691,6 +4937,9 @@ Kevin Peter Hickerson.  \emph{The physics of ultracold neutrons and Fierz interf
 
 \bibitem{Guko2007}
 Sergei Gukov.  ``Gauge theory and knot homologies.''  Fortschr. Phys. \textbf{55}, No. 5 – 7, 473 – 490 (2007) / \textbf{DOI} 10.1002/prop.200610385  \url{http://www.maths.ed.ac.uk/~aar/papers/gukov2.pdf}
+
+\bibitem{RS1602}
+Michele Redi, Ryosuke Sato. \emph{Composite Accidental Axions}. \href{arXiv:1602.05427 [hep-ph]}{arXiv:1602.05427} [hep-ph].  \url{http://arxiv.org/abs/1602.05427}
 
 
 \bibitem{Sala1996}
