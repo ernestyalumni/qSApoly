@@ -1138,6 +1138,14 @@ cf. \url{http://www.cs.virginia.edu/~krw7c/Burnsides.pdf}
 \end{enumerate}
 \end{definition}
 
+To reiterate, abelian group under addition $R$ (is defined as)
+\begin{enumerate}
+\item associative $\forall \, x , y ,z \in R$, $x + (y+z) = (x+y)+z$ 
+\item $\exists \, 0 \in R$, $0+x = x + 0$, \, $\forall \, x \in R$ 
+\item $\forall \, x \in R$, $\exists \, (-x) \in R$ s.t. $x+(-x) = 0 = (-x) + x$
+  \end{enumerate}
+abelian, if commutativity: $x+y=y+x$.  
+
 Example 3.1 
 \begin{enumerate}
 \item[(i)] $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{R}$, $\mathbb{C}$
@@ -1174,7 +1182,7 @@ True
 \end{lstlisting}
 
 \verb|Integers(5)| is $\mathbb{Z}_5 \equiv \mathbb{Z}/5\mathbb{Z}$.  
-\item[(iii)]
+\item[(iii)]  ring of \textbf{Gaussian integers} $\mathbb{Z}[i] := \lbrace a  +bi \in \mathbb{C} | a,b \in \mathbb{Z}, \, i^2 = -1 \rbrace$
 \end{enumerate}
 
 \begin{proposition}[3.2]
@@ -1260,6 +1268,18 @@ Suppose $1=0$.  $1a = a$, \, $\forall \, a \in R$.  $0a =a=0$.  But then $R$ zer
 Then $1\neq 0$
 \end{proof}
 
+\begin{proposition}[3.6]
+  commutative ring $\mathbb{I}_m \equiv \mathbb{Z}/m\mathbb{Z}$ domain iff $m$ prime.
+  \end{proposition}
+
+\begin{proof}
+  If $m=ab$, where $1<a,b<m$, \\
+  then $[a],[b]\neq [0]$ in $\mathbb{I}_m \equiv \mathbb{Z}/m\mathbb{Z}$, but $[a][b] = [m]=[0]$.  If $\mathbb{I}_m \equiv \mathbb{Z}/m\mathbb{Z}$ domain, on prime (number).
+
+  If $m$ prime, $[a][b]=[ab] =[0]$, then $m | ab$, and Euclid's Lemma gives $m|a$ or $m|b$.
+
+  
+  \end{proof}
 
 Example 3.7. 
 \begin{enumerate}
@@ -1356,6 +1376,27 @@ f(x) = \begin{cases} 1 & \text{ if } x \geq b \\ 0 & \text{ if } a \leq x \leq b
 $f^2 = f$ \, $\forall \, x \in \mathbb{R}$, pointwise, but $a,b \in \mathbb{R}$ arbitrary.  
 \end{enumerate}
 
+\exercisehead{3.8}
+
+\begin{enumerate}
+\item[(i)] Suppose $a,b,c \in S$ and $ca= cb$ for $c\neq 0$.  Since $a,b,c \in S$, $a,b,c \in R$ and $ca,cb \in S \subset R$, so $a=b$.
+
+  Since $1\in S$, $1-1=0 \in S$.  Since $1,0 \in S \subset R$ and $1\neq 0$ since $R$ domain.
+
+  $\Longrightarrow $ If $R$ domain, $S$ subring of $R$, then $S$ domain (commutative ring, $1\neq 0$, and cancellation).  
+\item[(ii)]
+  Clearly $1\neq 0$ for $\mathbb{C}$.  If $za=zb$, $\forall \, z \neq 0$, $\exists \, z^{-1} = \frac{1}{ x+iy}$, for $z = x+iy$, so $a=b$.  $\mathbb{C}$ domain.
+
+  Now $1\in \mathbb{Z}[i]$.
+  \[
+\begin{aligned}
+  & \forall \, a,b \in \mathbb{Z}[i], \,  a = a_1 + a_2 i, \, b = b_1 + b_2 i , \, a-b = a_1 - b_1 + (a_2 - b_2) i \in \mathbb{Z}[i] \\ 
+  &  \forall \, a,b \in \mathbb{Z}[i], \, ab = a_1 b_1 -a_2b_2 + (a_1b_2 + a_2 b_1) i \in \mathbb{Z}[i]  
+  \end{aligned}
+\]
+$\mathbb{Z}[i]$ subring of $\mathbb{C}$.  So $\mathbb{Z}[i]$ domain.  
+  \end{enumerate}
+
 
 \subsection{ Polynomials }
 
@@ -1434,6 +1475,36 @@ $R \subset R[x]$ since polynomials of degree $0$ are $R$.
 
 \end{proof}
 
+(standard) notation
+\[
+f(x) = s_0 + s_1 x + s_2 x^2 + \dots + s_n x^n
+\]
+
+\begin{definition}
+  Let field $k$.  fraction field $k[x]$, $k(x)$, is called \textbf{field of rational functions over $k$}
+  \end{definition}
+
+\begin{proposition}[3.19]
+  If field $k$, elements of $k(x)$ have form $f(x)/g(x)$, where $f(x),g(x) \in k[x]$; $g(x) \neq 0$
+  \end{proposition}
+
+\begin{proof}
+  Recall Thm. 3.13.  If $R$ domain, then $\exists \, $ field $F$ containing $R$ as a subring; moreover $F$ chosen s.t. $\forall \, f \in F$, $\exists \, a,b \in R$ with $b\neq 0$ and $f=ab^{-1}$.
+
+  $0,1 \in k[x]$ and clearly $0\neq 1$
+
+  If $ca=cb$ and $c\neq 0$, then $a=b$ since
+  \[
+\begin{gathered}
+  \left( \sum_{i=0}^{p_c} c_ix^i \right) \left( \sum_{j=0}^{p_a} a_jx^j \right) = \left( \sum_{i=0}^{p_c} c_ix^i \right) \left( \sum_{j=0}^{p_b} b_j x^j \right) = \sum_{i=0}^{p_c} \sum_{j=0}^{p_a} c_i a_jx^{i+j} = \sum_{i=0}^{p_c} \sum_{j=0}^{p_b} c_ib_j x^{i+j} \\
+ \Longrightarrow \sum_{i=0}^{p_c} c_ix^i \left( \sum_{j=0}^{p_a} a_jx^j - \sum_{j=0}^{p_b} b_jx^j \right) = 0 \Longrightarrow a=b
+  \end{gathered}
+\]
+$k[x]$ domain if $k$ field.  
+
+field $k(x) = \frac{f(x)}{g(x)}$, where $f(x),g(x) \in k[x]$; $g(x)\neq 0$.  
+  \end{proof}
+
 \subsubsection*{Exercises}
 
 \exercisehead{3.21}
@@ -1451,6 +1522,39 @@ True
 \end{lstlisting}
 \end{enumerate}
 
+
+\exercisehead{3.24} Let $R$ be commutative ring; let $f(x) \in R[x]$.
+
+\begin{enumerate}
+\item[(i)] Given $(x-a)^2 | f(x)$; $f(x) = (g)\cdot (x-a)^2 \equiv g(x) (x-a)^2$,
+  \begin{enumerate}
+  \item  we can try to strategy of ``term-by-term'' comparision: if
+    \[
+f(x) = \sum_{i=0}^n s_ix^i ; \qquad \, f'(x) = \sum_{j=1}^n js_j x^{j-1} 
+\]
+\[
+\begin{gathered}
+  g(x) = \sum_{i=0}^m b_ix^i \\
+  g(x)(x-a) = \sum_{i=0}^m (b_i x^{i+1} - ab_i x^i ) = -ab_0 + \sum_{i=1}^m (b_{i-1} - ab_i) x^i + b_m x^{m+1} = \sum_{i=0}^{m+1} s_i x^i
+\end{gathered}
+\]
+\item Better yet, if we can treat polynomials as polynomials, after proving that even if $R$ is only a commutative ring (not necessarily a field), then this differentiation operation obeys the so-called product rule and then
+  \[
+f'(x) = g'(x) (x-a)^2 + g(x) 2(x-a) = (x-a) (g'(x)(-a) + 2g(x)) \Longrightarrow \boxed{ x-a | f'(x) }
+  \]
+\end{enumerate}
+\item[(ii)] Given $\begin{aligned} & \quad \\
+  & x - a | f(x) \\
+  & x-a | f'(x) \end{aligned}$, and so
+  \[
+\begin{gathered}
+  (x-a)g(x) = f(x) \\ 
+  f'(x) = g(x) + (x-a) g'(x) = (x-a)h(x) \\
+  (x-a)f'(x) = (x-a)g(x) + (x-a)^2 g'(x) = (x-a)^2 h(x) = f(x) + (x-a)^2 g'(x) \\
+  \Longrightarrow f(x) = (x-a)^2 (h(x) -g'(x)) \Longrightarrow \boxed{ (x-a)^2 | f(x) }
+\end{gathered}
+  \]
+  \end{enumerate}
 
 \subsection{ Greatest Common Divisors }
 
