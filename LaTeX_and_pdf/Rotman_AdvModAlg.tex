@@ -2067,9 +2067,50 @@ s.t. $\forall \, m,m' \in M$, $\forall \, r,r',1 \in R$
 \end{definition}
 
 Example 7.1 \begin{enumerate}
-\item[(i)]
-\item[(ii)]
-\item[(iii)]
+\item[(i)] $\forall \, $ \emph{vector space} over field $k$ is a $k$-module.  (by inspection of the axioms for a vector space, associativity, distributivity!)
+\item[(ii)] $\forall \, $ abelian group is a $\mathbb{Z}$-module, by laws of exponents (Prop. 2.23)
+
+  Indeed, for
+  \[
+\begin{aligned}
+  \mathbb{Z} \times M & \to M \\ 
+  (r,m) & \mapsto rm \equiv m^r 
+  \end{aligned}
+\]
+and so
+\[
+r(m\cdot m') \equiv (m\cdot m')^r = m^r (m')^r = rm + rm' 
+\]
+(since $M$ abelian)
+\item[(iii)] For commutative ring, scalar multiplication, defined to be given multiplication of elements of $R$
+  \[
+\begin{aligned}
+  R\times R & \to R \\
+ (a,b) & \mapsto ab 
+  \end{aligned}
+\]
+For reference, recall some of the properties of a commutative ring:
+\[
+\begin{aligned}
+  & ab = ba \\ 
+  & a(bc) = (ab)c \\ 
+  & 1a = a \\ 
+  & a(b+c) = ab + ac
+  \end{aligned}
+\]
+
+$\forall \, $ ideal $I$ in $R$ is an $R$-module, \\
+for if $\begin{aligned} & \quad \\
+  & i \in I \\
+  & r\in R \end{aligned}$ , then $ri \in I$.
+
+$0\in I$ \\
+$\forall \, a,b \in I, \, a+b \in I$
+
+
+If $a\in I$, $r\in R$, then $ra \in I$.
+
+
 \item[(iv)]
 \item[(v)] Let linear $T:V \to V$, $V$ finite-dim. vector space over field $k$.  
 
@@ -2415,9 +2456,339 @@ if short exact sequence $0 \to A \xrightarrow{i} B \xrightarrow{p} C \to 0$ spli
 \end{tikzpicture}
 
 
+\subsection{Categories}
+
+
+
+We can force 2 overlapping subsets $A,B$ to be disjoint by ``disjointifying'' them: e.g. consider $(A\cup B) \times \lbrace 1,2 \rbrace$, consider $\begin{aligned} & \quad \\
+  & A' = A\times \lbrace 1 \rbrace \\
+  & B' = B\times \lbrace 2 \rbrace \end{aligned}$.
+
+\[
+\Longrightarrow A' \cap B' = \emptyset 
+\]
+since $(a,1) \neq (b,2)$ \, $\forall \, a \in A$, $\forall \, b \in B$.
+
+Let bijections $\begin{aligned} & \quad \\
+  & \alpha : A \to A' \\
+  & \beta : B \to B' \end{aligned}$, \qquad \, $\begin{aligned} & \quad \\
+  & \alpha : a \mapsto (a,1) \\
+  & \beta : b\mapsto (b,2) \end{aligned}$, denote $A'\bigcup B' \equiv A \coprod B$.
+
+From Rotman, pp. 447,
+\begin{definition}
+\textbf{coproduct} $A \coprod B \equiv C \in \text{Obj}(\mathcal{C})$
+  \end{definition}
+
+In my notation,
+
+\textbf{coproduct}
+\begin{equation}
+  \begin{aligned}
+    & (\mu_1 , A_1 \coprod A_2 ) \\ 
+        & (\mu_2 , A_1 \coprod A_2 ) 
+    \end{aligned}
+\end{equation}
+where injection (morphisms)
+\begin{equation}
+  \begin{aligned}
+    & \mu_1 : A_1 \to A_1 \coprod A_2 \\ 
+      & \mu_2 : A_1 \to A_1 \coprod A_2 
+    \end{aligned}
+  \end{equation}
+s.t.
+\[
+\forall \, A \in \text{Obj}\mathbf{A}, \, \forall \, f_1 ,f_2 \in \text{Mor}\mathbf{A} \text{ s.t. } \begin{aligned} & \quad \\
+  & f_1 : A_1 \to A \\
+  & f_2 : A_2 \to A \end{aligned}
+\]
+then
+\begin{equation}
+\begin{gathered}
+  \exists \, ! [ f_i ] \equiv [f_1, f_2 ] \in \text{Mor} \mathbf{A}, \, [f_1, f_2] : A_1 \coprod A_2 \to A \text{ s.t. } \\ 
+  \begin{aligned}
+    & [f_1,f_2] \mu_1 = f_1 \\ 
+       & [f_1,f_2] \mu_2 = f_2 \\
+    \end{aligned}
+  \end{gathered}
+  \end{equation}
+i.e. 
+\begin{equation}
+  \begin{gathered}
+      \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A  \\ 
+A_1  &  A_1 \coprod A_2   \\
+A_2 & \\
+  };
+  \path[->]
+  (m-2-1) edge node [above] {$f_1$} (m-1-2)
+  edge node [above] {$\mu_1$} (m-2-2)
+  (m-3-1) edge node [right] {$f_2$} (m-1-2)
+  edge node [below] {$\mu_2$} (m-2-2)
+  ;
+  \path[dashed,->]
+  (m-2-2) edge node [right] {$[f_1,f_2]$} (m-1-2)
+;
+      \end{tikzpicture}
+  \end{gathered}
+  \end{equation}
+
+So to generalized, for $i\in I$, (finite set $I$?)
+
+\textbf{coproduct} $(\mu_j, \coprod_{i\in I} A_i)_{j\in I}$, where \\
+(family of) injection (morphisms) $\mu_j : A_j \to \coprod_{i \in I } A_i$
+
+s.t.
+
+\[
+\forall \, A \in \text{Obj}\mathbf{A}, \, \forall \, f_i \in \text{Mor}\mathbf{A}, \, i \in I, \, f_i : A_i \to A
+\]
+then
+\begin{equation}
+\begin{gathered}
+  \exists \, ! \, [f_i ] \equiv [f_i]_{i\in I} \in \text{Mor}\mathbf{A} , \, [f_i] : \coprod_{i\in I} A_i \to A \text{ s.t. } \\ 
+ [f_i] \mu_j = f_j \qquad \, \forall \, j \in I
+  \end{gathered}
+  \end{equation}
+i.e.
+
+\begin{equation}
+\begin{gathered}
+ \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A  \\ 
+A_j  & \coprod_{i\in I} A_i   \\
+};
+  \path[->]
+  (m-2-1) edge node [above] {$f_j$} (m-1-2)
+  edge node [above] {$\mu_j$} (m-2-2)
+  ;
+  \path[dashed,->]
+  (m-2-2) edge node [right] {$[f_i]$} (m-1-2)
+;
+\end{tikzpicture} 
+  \end{gathered}
+  \end{equation}
+
+
+
+For notation purposes only, recall that it's denoted the sets $\text{Hom}(A,B)$ in ${}_R\textbf{Mod}$ by
+\[
+\text{Hom}_R(A,B)
+\]
+i.e., in my notation, for $A,B \in \text{Obj}{ {}_R \textbf{Mod}}$, $\text{Hom}(A,B) \subset \text{Mor}( {}_R\textbf{Mod})$, $\text{Hom}(A,B) \equiv \text{Hom}_R(A,B)$
+
+cf. Thm. 7.32 of Rotman 
+\begin{theorem}[7.32, Rotman]
+  Let commutative ring $R$.  \\
+  $\forall \, R$-module $A$, $\forall \,$ family $\lbrace B_i | i \in I \rbrace$ of $R$-modules,
+  \begin{equation}
+\begin{gathered}
+  \text{Hom}_R(A, \coprod_{i\in I} B_i ) \simeq \coprod_{i \in I} \text{Hom}_R(A,B_i)
+  \end{gathered}
+  \end{equation}
+  via $R$-isomorphism
+  \[
+\varphi : f\mapsto (p_if)
+\]
+where $p_i $ are projections of product $\coprod_{i\in I }B_i$
+  \end{theorem}
+
+\begin{proof}
+  Let $a\in A$, $f,g \in \text{Hom}_R(A,\coprod_{i\in I} B_i)$.
+  \[
+\varphi(f+g)(a) = (p_i(f+g))(a) = (p_i(f(a) + g(a))) = (p_if + p_ig)(a)
+\]
+$\varphi$ additive.
+
+$\forall \, i, \, \forall \, r \in R$, $p_i rf = rp_i f$ (since product of $R$-modules, $\coprod_{i\in I}B_i$ is also an $R$-module of $\text{Obj}{}_R\textbf{Mod}$, by def. of product).
+\[
+\varphi rf \mapsto (p_i rf) = (r p_i f) = r(p_i f) = r\varphi(f)
+\]
+So $\varphi$ is $R$-map.
+
+If $(f_i) \in \coprod_i \text{Hom}{}_R(A,B_i)$, then $f_i : A\to B_i$ \, $\forall \, i$
+
+By Rotman's Prop. 7.31 (If family of $R$-modules $\lbrace A_i | i \in I \rbrace$, then direct product $C = \coprod_{i\in I} A_i$ is their product in ${}_R \textbf{Mod}$), \\
+\phantom{ \qquad \, } By def. or product, $\exists \, ! \, R$-map , \, $\theta : A \to \coprod_{i\in I} B_i$ s.t. $p_i \theta = f_i$ \, $\forall \, i$
+
+\[
+\begin{gathered}
+  \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A  \\ 
+B_i  & \prod_{i\in I} B_i   \\
+};
+  \path[->]
+  (m-1-2) edge node [above] {$f_i$} (m-2-1)
+  (m-2-2) edge node [below] {$p_i$} (m-2-1)
+  ;
+  \path[dashed,->]
+  (m-1-2)        edge node [right] {$\theta$} (m-2-2)
+  ;
+\end{tikzpicture}  
+\end{gathered}
+\]
+
+
+
+
+Then 
+\[
+f_i) = (p_i\theta) = \varphi(\theta)
+\]
+, and so $\varphi$ \emph{surjective}.
+
+Suppose $f\in \text{ker}\varphi$, so $\theta = \varphi(f) = (p_if)$.  Thus $p_i f=0$ \, $\forall \, i$
+
+\[
+\begin{gathered}
+  \begin{tikzpicture}
+  \matrix (m) [matrix of math nodes, row sep=5em, column sep=4em, minimum width=3em]
+  {
+& A  \\ 
+B_i  & \prod_{i\in I} B_i   \\
+};
+  \path[->]
+  (m-1-2) edge node [above] {$0$} (m-2-1)
+  edge node [right] {$f$} (m-2-2)
+  (m-2-2) edge node [below] {$p_i$} (m-2-1)
+  ;
+\end{tikzpicture}  
+\end{gathered}
+\]
+
+But $0$-homomorphism also makes this diagram commute, so uniqueness of homomorphism $A \to \prod B_i$ gives $f=0$.  
+
+
+
+
+  \end{proof}
+
+
+
+
+
 \section{Algebras }
 
-\subsection{}
+\subsection{Noncommutative Rings}
+
+\begin{definition}
+\textbf{left $R$-module}, for ring $R$, is (additive) abelian group $M$, equipped with scalar multiplication
+\begin{equation}
+	\begin{aligned}
+	& R\times M \to M \\
+	& (r,m) \mapsto rm 
+\end{aligned}
+\end{equation}
+s.t. $\forall \, m,m' \in M$, $\forall \, r,r', 1 \in R$
+\begin{enumerate}
+\item $r(m+m')  = rm + rm'$ 
+\item $(r+r')m = rm +r'm$
+\item $(rr')m = r(r'm)$
+\item $1m = m$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+\textbf{right $R$-module}, for ring $R$, (additive) abelian group $M$, equipped with scalar multiplication.  
+\begin{equation}
+\begin{aligned}	
+	& M\times R \to M \\ 
+	& (m,r) \mapsto mr 
+\end{aligned}
+\end{equation}
+s.t. $\forall \, m,m' \in M$, $\forall \, r,r', 1 \in R$,  
+\begin{enumerate}
+\item $(m+m')r= mr+m'r$
+\item $m(r+r') = mr + mr'$
+\item $m(rr') = (mr)r'$
+\item $m1=m$
+\end{enumerate}
+\end{definition}
+Denote left $R$-module ${\,}_{R}M$  \\
+\phantom{Denote} right $R$-module $M_R$  \\
+
+Example 8.7.  
+\begin{definition}
+If $M$ is left $R$-module, then $R$-map
+\begin{equation}
+f:M \to M
+\end{equation}
+is an $R$-\textbf{endomorphism} of $M$
+\end{definition}
+
+\begin{definition}
+\textbf{Endomorphism ring} $\text{End}_R(M)$ 
+\begin{equation}
+	\text{End}_R(M):= \lbrace R-\text{endomorphisms of $M$} \rbrace
+\end{equation}
+as a set, 
+\begin{equation}
+\text{End}_R(M) = \text{Hom}_R(M,M)
+\end{equation}
+\end{definition}
+
+\begin{definition}
+	representation of ring $R$ is ring homomorphism $\sigma$
+\begin{equation}
+	\sigma: R \to \text{End}_{\mathbb{Z}}(M)
+\end{equation}	
+where $M$ is an abelian group
+\end{definition}
+
+\begin{proposition}[8.8]
+$\forall \, $ representation $\sigma:R \to \text{End}_{\mathbb{Z}}(M)$, where $M$ abelian group equips $M$ with structure of left $R$-module.  
+
+Conversely, $\forall \,$ left $R$-module $M$ determines representation $\sigma:R \to \text{End}_{\mathbb{Z}}(M)$
+\end{proposition}
+
+\begin{proof}
+	Given homomorphism $\begin{aligned} & \quad \\ 
+	& \sigma: R\to \text{End}_{\mathbb{Z}}(M) \\
+	& \sigma(r):M \to M \end{aligned}$, denote $\sigma(r) \equiv \sigma_r$
+
+Define scalar multiplication 
+\[
+\begin{aligned}
+	& R\times M \to M \\
+	& rm = \sigma_r(m) \qquad \, \forall \, m \in M
+\end{aligned}
+\]
+Indeed, 
+\[
+\begin{gathered}
+	r(m+m') = \sigma_r(m+m') = \sigma_rm + \sigma_r m' = rm + rm' \\
+ (r+r')m = \sigma_{(r+r')}m = \sigma(r+r')m = (\sigma(r) + \sigma(r')) m = \sigma(r) m + \sigma(r') m = \sigma_r m + \sigma_{r'}m = rm + r'm  \\
+(rr')m = \sigma_{rr'}m = \sigma(rr')m = \sigma(r)\sigma(r') m = \sigma_r(\sigma_{r'}m) = r(r'm) \\
+1m = \sigma_1 m = \sigma(1)m = m 
+\end{gathered}
+\]
+Assume $M$ left $R$-module.  \\
+If $r\in R$, then $m\mapsto rm$ defines endomorphism $T_r:M\to M$
+\[
+\begin{aligned}
+	& \sigma : R \to \text{End}_{\mathbb{Z}}(M) \\ 
+	& \sigma :r \mapsto T_r 
+\end{aligned}
+\]
+\[
+\begin{aligned}
+	& \sigma(rr') m= T_{rr'} m = (r+r')m = T_r(T_{r'}m) = \sigma(r) \sigma(r') m \\ 
+	& \sigma(r+r')m = T_{r+r'}m = (r+r')m = (T_r + T_{r'})m = \sigma(r)m + \sigma(r') m 
+\end{aligned}
+\]
+So $\sigma$ is a homomorphism.  
+
+
+\end{proof}
+
+
+
 
 \subsection{Chain Conditions}
 
@@ -2458,7 +2829,7 @@ where $V$ is vector space over field $k$
 \subsection{Graded Algebras}
 
 \begin{definition}
-  $R$-algebra $A$ is graded $R$-algebra if $\exists \, R$-submmodules $A^p$ \, $\forall \, p \geq 0$, s.t. 
+  $R$-algebra $A$ is graded $R$-algebra if $\exists \, R$-submodules $A^p$ \, $\forall \, p \geq 0$, s.t. 
 \begin{enumerate}
   \item[(i)] $A = \sum_{p\geq 0 } A^p$
 \item[(ii)] $\forall \, p ,q \geq 0$, if $\begin{aligned} & \quad \\
