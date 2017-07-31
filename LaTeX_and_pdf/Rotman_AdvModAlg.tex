@@ -908,6 +908,22 @@ inverse: $a^{-1} K$.  $(a^{-1}K)(aK) = 1 K = (aK)(a^{-1}K)$ $G/K$ group.
 
 \end{proof}
 
+\begin{definition}[quotient group] \qquad \, \\
+\textbf{quotient group} $G\mod{K} \equiv G/K$ -  
+
+if $G/K = $ family of all left cosets of subgroups $K\subset G = $
+\[ 
+= \lbrace gK | g\in G, K = \lbrace gk | k \in K \rbrace 
+\]
+and 
+
+$K = $ normal subgroup of $G$, i.e. $K \lhd G$, and so 
+\[
+aK bK = abK \qquad \, \forall \, a,b \in G, 
+\]
+so $G/K $ group.  
+\end{definition}
+
 
 \begin{corollary}[2.69] $\forall \, $ normal subgroup $K \lhd G$, $K = \text{ker}{f}$, $f$ some homomorphism.  \end{corollary}
 
@@ -2136,7 +2152,7 @@ $T(w) = Ax$ and so $(k^n)^T = (k^n)^A$  (EY : 20151015 because of induction?)
 \end{enumerate}
 
 \begin{definition}
-if ring $R$, $R$-modules $M,N$, then function $f:M\to N$ is $R$-homomorphism (or $R$-map) if $\forall \, m,m' \in M$, $\forall \, r \in R$, 
+if ring $R$, $R$-modules $M,N$, then function $f:M\to N$ is \textbf{ $R$-homomorphism (or $R$-map) } if $\forall \, m,m' \in M$, $\forall \, r \in R$, 
 \begin{enumerate}
   \item[(i)] $f(m+m') = f(m)+f(m')$
   \item[(ii)] $f(rm)=rf(m)$
@@ -2264,6 +2280,142 @@ Also
 \varphi \varphi^{-1}(y) = \varphi[m] = f(m) = y
 \]
 \end{proof}
+
+Another look at this theorem:  
+
+\begin{theorem}[1st Isomorphism Theorem (Modules) Thm. 7.8 of Rotman (201) \cite{JRotman2010}]
+If $f:M\to N$ is $R$-map of modules, then $\exists \, R$-isomorphism s.t. 
+\begin{equation}
+	\begin{aligned}
+	& \varphi : M /\text{ker}f \to \text{im}f \\ 
+	& \varphi: m + \text{ker}f \mapsto f(m)
+\end{aligned} \qquad \qquad \, \begin{tikzpicture}
+%\matrix(m)[matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex]
+\matrix(m)[matrix of math nodes, row sep=4em, column sep=4em]
+{
+M   &  N \\
+M/\text{ker}f  &  \\};
+%\path[->,font=\scriptsize]
+\path[->]
+(m-1-1) edge node[auto]{$f$} (m-1-2)
+edge node[auto]{$\pi$} (m-2-1) 
+(m-2-1) edge node[right]{$\varphi = \cong$} (m-1-2);
+\end{tikzpicture} 
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+	View $M,N$ as abelian groups.  
+
+Recall natural map $ \begin{aligned} & \quad \\ 
+	& \pi : M \to M/N \\
+& m\mapsto m + N \end{aligned}$  
+
+Define $\varphi$ s.t. $\varphi \pi = f$.  
+
+($\varphi$ well-defined).  Let $m+\text{ker}f = m' + \text{ker}f$, $m,m' \in M$, then $\exists \,  n \in \text{ker}f$ s.t. $m=m'+n$.  
+\[
+\varphi(m+\text{ker}f) = \varphi\pi (m) = f(m) = f(m' +n ) = f(m') + f(n) = \varphi \pi(m') + 0 = \varphi(m' + \text{ker}f )
+\]
+$\Longrightarrow \varphi $ well-defined.  
+
+($\varphi$ surjective).  Clearly, $\text{im}\varphi \subseteq  \text{im} f$.   \\
+Let $y\in \text{im}f$.  So $\exists \,  m \in M$ s.t. $y=f(m)$.  $f(m) = \varphi \pi (m) = \varphi(m+\text{ker}f) = y$.  So $y\in \text{im}\varphi$.  $\text{im}f\subseteq \text{im}\varphi$.  \\
+$\Longrightarrow \varphi $ surjective.  
+
+($\varphi$ injective)  If $\varphi(a+\text{ker}f) = \varphi(b+\text{ker}f)$, then 
+\[
+\begin{gathered}
+\varphi\pi(a) = \varphi\pi(b) \text{ or } f(a) = f(b) \text{ or } 0 = f(a) -f(b) = f(a-b) \text{ so } a-b \in \text{ker}f
+	(a-b) + \text{ker}f = \text{ker}f \text{ so } a + \text{ker}f = b +\text{ker}f 
+\end{gathered}
+\]
+$\varphi$ isomorphism.  
+
+$\varphi$ $R$-map.  $\varphi(r(m+N)) = \varphi(rm+N) = f(rm)$.    \\
+Since $f$ $R$-map, $f(rm) = rf(m) = r\varphi(m+N)$.  $\varphi$ is $R$-map indeed.  
+
+
+\end{proof}
+
+\begin{theorem}[2nd Isomorphism Theorem (Modules) Thm. 7.9 of Rotman (2011) \cite{JRotman2010}]
+If $S,T$ are submodules of module $M$, i.e. $S,T \in M$, then $\exists \, $ $R-$isomorphism  
+\begin{equation}
+\begin{gathered}
+	S/(S\cap T) \to (S+T)/T
+\end{gathered} \qquad \, 
+\qquad \qquad \, \begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=4em, column sep=4em]
+{
+S   &  (S+T)/T = \text{im}h \\
+S/(S\cap T) = S/\text{ker}h  &  \\};
+\path[->]
+(m-1-1) edge node[auto]{$h$} (m-1-2)
+edge node[auto]{$\left. \pi \right|_S$} (m-2-1) 
+(m-2-1) edge node[right]{$ \cong$} (m-1-2);
+\end{tikzpicture} 
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let natural map $\pi : M \to M/T$.   \\
+\phantom{Let} So $\text{ker}\pi = T$.  
+
+Define $h:= \left. \pi \right|_S$, so $h: S\to M/T$, so $\text{ker}h = S\cap T$, 
+\[
+(S+T)/T = \lbrace (s+t) + T | a\in S+T, s\in S, t\in T \rbrace
+\]
+i.e. $(S+T)/T$ consists of all those cosets in $M/T$ having a representation in $S$.  
+
+By 1st. isomorphism theorem, 
+\[
+S/S\cap T \xrightarrow{ \cong} (S+T)/T
+\]
+
+\end{proof}  % END of pf. of 2nd Isomorphism Theorem (Modules) Thm. 7.9 of Rotman (2011)
+
+\begin{theorem}[3rd Isomorphism Theorem (Modules) Thm. 7.10 of Rotman (2011) \cite{JRotman2010}]
+If $T\subseteq S \subseteq M$ is a tower of submodules, then $\exists \, $ $R$-isomorphism
+\begin{equation}
+\begin{gathered}
+	(M/T)/(S/T) \to M/S
+\end{gathered} \qquad \,  \begin{tikzpicture}
+\matrix(m)[matrix of math nodes, row sep=4em, column sep=4em]
+{
+M/T   &  M/S\\
+(M/T)/(S/ T) = (M/T)/\text{ker}g  &  \\};
+\path[->]
+(m-1-1) edge node[auto]{$g$} (m-1-2)
+edge node[auto]{$ \pi $} (m-2-1) 
+(m-2-1) edge node[right]{$ \cong$} (m-1-2);
+\end{tikzpicture} 
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+	Define $g:M/T \to M/S$ to be \textbf{coset enlargement}, i.e. 
+\begin{equation}
+	g:M +T \mapsto m+S
+\end{equation}
+$g$ well-defined: if $m+T = m'+T$, then $m-m' \in T\subseteq S$, and $m+S = m'+S \Longrightarrow g(m+T) = g(m'+T)$
+
+$\text{ker}g = S/T$ since 
+\[
+\begin{aligned}
+	& g(s+T) = s+S = S  \qquad \, (S/T \subseteq \text{ker}g)   \\
+	& g(m+T) = m + S = 0 = S = s + S, \text{ so } m=s \Longrightarrow \text{ker}g \subseteq S/T
+\end{aligned}
+\]
+$\text{im}g = M/S $ since 
+\[
+\begin{aligned}
+	& g(m+T) = m+S \Longrightarrow \text{ im}g \subseteq M/S \\ 
+ 	& m+S = g(m+T)
+\end{aligned}
+\]
+Then by 1st isomorphism, and commutative diagram, done.  
+\end{proof}  % END of pr. of 3rd Isomorphism Theorem (Modules) Thm. 7.10 of Rotman (2011) 
+
 
 \begin{definition}
   \textbf{exact sequence} if $\text{im}f_{n+1} = \text{ker}f_n$ \, $\forall \, n$, for sequence of $R$-maps (i.e. homomorphisms linear in $R$) and $R$-modules 
